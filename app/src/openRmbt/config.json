@@ -7,42 +7,42 @@
     },
     {
       "name": "CONTROL_SERVER_HOST",
-      "value": "sdev.example.com",
+      "value": "testnet2.akostest.net",
       "visible": false
     },
     {
       "name": "CONTROL_SERVER_CHECK_PRIVATE_IPV4_HOST",
-      "value": "sdevv4.example.com",
+      "value": "testnet2.akostest.net",
       "visible": false
     },
     {
       "name": "CONTROL_SERVER_CHECK_PRIVATE_IPV6_HOST",
-      "value": "sdevv6.example.com",
+      "value": "rtr6.mulaz.org",
       "visible": false
     },
     {
       "name": "CONTROL_SERVER_CHECK_PUBLIC_IPV4_URL",
-      "value": "sdevv4.example.com/RMBTControlServer/ip",
+      "value": "https://testnet2v4.akostest.net/RMBTControlServer/ip",
       "visible": false
     },
     {
       "name": "CONTROL_SERVER_CHECK_PUBLIC_IPV6_URL",
-      "value": "sdevv6.example.com/RMBTControlServer/ip",
+      "value": "https://testnet2v6.akostest.net/RMBTControlServer/ip",
       "visible": false
     },
     {
       "name": "CAPTIVE_PORTAL_WALLED_GARDEN_URL",
-      "value": "http://webtest.example.com/generate_204",
+      "value": "https://www.akos-rs.si",
       "visible": false
     },
     {
       "name": "CONTROL_SERVER_NEW_HOST",
-      "value": "api-test.example.org",
+      "value": "testnet2.akostest.net",
       "visible": false
     },
     {
       "name": "CONTROL_SERVER_NEW_ROUTE",
-      "value": "rtr",
+      "value": "RMBTControlServer",
       "visible": false
     },
     {
@@ -57,7 +57,7 @@
     },
     {
       "name": "QOS_SSL",
-      "value": "true",
+      "value": "false",
       "visible": false
     },
     {
@@ -77,7 +77,7 @@
     },
     {
       "name": "SKIP_QOS_TESTS_FOR_PERIOD",
-      "value": "false",
+      "value": "true",
       "visible": true
     },
     {
@@ -172,18 +172,18 @@
     },
     {
       "name": "EXPERT_MODE_ENABLED",
-      "value": "false",
+      "value": "true",
       "visible": true
     },
     {
       "name": "EXPERT_MODE_IPV4_ONLY",
-      "value": "false",
+      "value": "true",
       "visible": true
     },
     {
       "name": "USER_SERVER_SELECTION_ENABLED",
-      "value": "false",
-      "visible": false
+      "value": "true",
+      "visible": true
     },
     {
       "line1": "=======================================",
@@ -212,7 +212,7 @@
     },
     {
       "name": "DEVELOPER_ACTIVATE_CODE",
-      "value": "qwerty",
+      "value": "2222",
       "visible": false
     },
     {
@@ -222,7 +222,7 @@
     },
     {
       "name": "COVERAGE_ACTIVATE_CODE",
-      "value": "qwerty",
+      "value": "2222",
       "visible": false
     },
     {
@@ -247,22 +247,22 @@
     },
     {
       "name": "WEBSITE_URL",
-      "value": "https://www.example.com",
+      "value": "https://www.akos-rs.si",
       "visible": false
     },
     {
       "name": "EMAIL_ADDRESS",
-      "value": "RMBT Support <support@example.com>",
+      "value": "info.box@akos-rs.si",
       "visible": false
     },
     {
       "name": "DATA_PRIVACY_AND_TERMS_URL",
-      "value": "https://example.com/%s/tk/netztestterms",
+      "value": "https://testnet2.akostest.net/si/tc_android.html",
       "visible": true
     },
     {
       "name": "TERMS_FOR_ACCEPTANCE_URL",
-      "value": "https://example.com/%s/tc_android.html",
+      "value": "https://testnet2.akostest.net/si/tc_android.html",
       "visible": true
     },
     {
@@ -277,7 +277,7 @@
     },
     {
       "name": "MAP_SERVER_HOST",
-      "value": "sdev.example.com",
+      "value": "maps.qmon.eu",
       "visible": false
     },
     {
@@ -292,12 +292,12 @@
     },
     {
       "name": "MAP_SERVER_ROUTE",
-      "value": "RMBTMapServer",
+      "value": "maps",
       "visible": false
     },
     {
       "name": "MAP_TILES_ENDPOINT",
-      "value": "tiles/%s/%d/%d/%d.png",
+      "value": "/%d/%d/%d.png",
       "visible": false
     },
     {

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.Netztest.Splash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenAnimatedIcon">@drawable/rtr_splash_image</item>
-        <item name="windowSplashScreenBackground">#0071D7</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/logowhite_round</item>
+        <item name="windowSplashScreenBackground">#87A3D3</item>
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowTranslucentNavigation">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>

@@ -1,0 +1,417 @@
+<!--
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="toolbar_title">AKOS Test Net</string>
+
+    <!-- Navigation menu titles -->
+    <string name="menu_button_title_page">Domov</string>
+    <string name="menu_button_history">Zgodovina</string>
+    <string name="menu_button_statistics">Statistika</string>
+    <string name="menu_button_map">Zemljevid</string>
+
+    <!-- Error dialog messages -->
+    <string name="dialog_title_error">Napaka…</string>
+    <string name="error_unknown">Slaba internetna povezava. Prosim poskusite kasneje</string>
+    <string name="no_internet_connection_not_load_data">Brez internetne povezave. Podatkov ni bilo mogoče naložiti.</string>
+
+    <!-- Terms and conditions screen -->
+    <!-- Terms and conditions screen - content labeling -->
+    <string name="tc_tobottom">Pomik navzdol</string>
+
+    <!-- Home screen -->
+    <string name="home_signal">Signal</string>
+    <string name="home_frequency">Frekvenca</string>
+    <string name="home_no_internet_connection">Ni internetne povezave!</string>
+    <string name="home_no_internet_connection_details">Testiranje je onemogočeno.</string>
+    <string name="home_signal_value">%1$d dBm</string>
+    <string name="home_signal_secondary_value" translatable="false">%1$d/%2$d dBm</string>
+    <string name="home_frequency_value" translatable="false">%1$s MHz</string>
+<!--    <string name="home_start_test_info">Press the button to start the test now!</string>-->
+    <string name="home_start_test_info">Pritisnite gumb za začetek meritve!</string>
+    <string name="home_wifi">WLAN</string>
+    <string name="home_vpn" translatable="false">VPN</string>
+    <string name="home_bluetooth" translatable="false">Bluetooth</string>
+    <string name="home_coverage_mode">Način pokritosti</string>
+    <string name="public_ip_address">Javni naslov</string>
+    <string name="private_ip_address">Lokalni naslov</string>
+    <!-- Home screen - content labeling -->
+    <string name="home_ipv4">IPv4 naslov</string>
+    <string name="home_ipv6">IPv6 naslov</string>
+    <string name="home_location">Lokacija</string>
+    <string name="home_settings">Nastavitve</string>
+    <string name="home_home">Domov</string>
+    <string name="home_map">Zemljevid</string>
+    <string name="home_statistics">Statistika</string>
+    <string name="home_history">Zgodovina</string>
+    <string name="home_loop_mode_active">Ponovitveni način omogočen</string>
+
+
+    <!-- Preference titles -->
+    <string name="options">Možnosti</string>
+    <string name="preferences_general_settings">Splošne nastavitve</string>
+    <string name="preferences_ndt">NDT</string>
+    <string name="preferences_qos_measurement">QoS meritve</string>
+    <string name="preferences_qos_measurement_only_after_some_time">Vsaki 2 uri</string>
+    <string name="preferences_qos_measurement_only_after_some_time_summary">Ne izvedi QoS meritev, če od zadnje meritve nista minili 2 uri.</string>
+    <string name="preferences_location">Lokacija</string>
+    <string name="preferences_loop_mode">Ponovitveni način</string>
+    <string name="preferences_advanced_settings">Napredne nastavitve</string>
+    <string name="preferences_loop_mode_summary">Nov test po čakalnem času ali premagani razdalji. Največ 2 dni.</string>
+    <string name="preferences_loop_mode_min_delay">Čakalni čas (v minutah)</string>
+    <string name="preferences_loop_mode_max_movement">Razdalja (v metrih)</string>
+    <string name="preferences_expert_mode">Napredni način</string>
+    <string name="preferences_expert_mode_summary">Prikaži naprednje nastavitve in informacije</string>
+    <string name="preferences_ipv4_only">Samo IPv4</string>
+    <string name="preferences_ipv4_only_sum">Nikoli ne uporabi IPv6</string>
+    <string name="preferences_radio_info">Radijske informacije</string>
+    <string name="preferences_radio_info_sum">Podrobnejše informacije o radijskih nastavitvah</string>
+    <string name="preferences_contact">Kontakt</string>
+    <string name="preferences_go_to_website">Obišči spletno stran</string>
+    <string name="preferences_contact_us">Kontaktirajte nas</string>
+    <string name="preferences_additional_Information">Dodatne informacije</string>
+    <string name="preferences_client_uuid">UUID odjemalca</string>
+    <string name="preferences_test_cases">Število izvedenih testov</string>
+    <string name="preferences_about">Info</string>
+    <string name="preferences_source_code">Izvorna koda</string>
+    <string name="preferences_data_protection">Splošni pogoji in politika zasebnosti</string>
+    <string name="preferences_developed_by">Razvito s strani Internet Institute</string>
+    <string name="preferences_developer_page" translatable="false">https://www.qmon.eu/</string>
+    <string name="preferences_design_by">Dizajnirano s strani Feinblick</string>
+    <string name="preferences_design_page" translatable="false">https://www.feinblick.com</string>
+    <string name="preferences_network_info_by">Informacije o omrežju prek NetMonster Core</string>
+    <string name="preferences_network_info_page" translatable="false">https://netmonster.app/</string>
+    <string name="preferences_version">Verzija</string>
+    <string name="preferences_commit_hash">Unikaten ID verzije kode (commit hash)</string>
+    <string name="preferences_enter_code">Vnesite tajno kodo</string>
+    <string name="preferences_developer_control_server">Kontrolni strežnik</string>
+    <string name="preferences_override_control_server">Razveljavi kontrolni strežnik</string>
+    <string name="preferences_override_control_server_sum">Uporabi nastavitve po meri za kontrolni strežnik</string>
+    <string name="preferences_override_control_server_host">Kontrolni gostitelj</string>
+    <string name="preferences_override_control_server_port">Kontrolna vrata</string>
+    <string name="preferences_override_control_server_ssl">SSL - kontrolni strežnik</string>
+    <string name="preferences_override_control_server_ssl_sum">Uporabi šifrirano povezavo do kontrolnega strežnika</string>
+    <string name="preferences_developer_options_disabled">Možnosti za razvijalce so onemogočene</string>
+    <string name="preferences_developer_options_available">Možnosti za razvijalce so na voljo</string>
+    <string name="preferences_coverage_mode_disabled">Način pokritosti je onemogočen</string>
+    <string name="preferences_coverage_mode_available">Način pokritosti je na voljo</string>
+    <string name="preferences_developer_try_again">Poskusite ponovno!</string>
+    <string name="preferences_developer_map_server">Strežnik z zemljevidi</string>
+    <string name="preferences_developer_map_override">Razveljavi strežnik z zemljevidi</string>
+    <string name="preferences_developer_map_override_sum">Uporabi nastavitve po meri za strežnik z zemljevidi</string>
+    <string name="preferences_developer_map_host">Gostitelj z zemljevidi</string>
+    <string name="preferences_developer_map_port">Vrata za zemljevide</string>
+    <string name="preferences_developer_map_ssl">SSL - strežnik z zemljevidi</string>
+    <string name="preferences_developer_map_ssl_sum">Uporabi šifrirano povezavo do strežnika z zemljevidi</string>
+    <string name="preferences_category_developer_qos_server">QoS strežnik za test omrežnih storitev</string>
+    <string name="preferences_developer_qos_ssl">SSL - QoS strežnik za test omrežnih storitev</string>
+    <string name="preferences_developer_qos_ssl_sum">Uporabi šifrirano povezavo do strežnika za test omrežnih storitev</string>
+    <string name="preferences_all_disabled">Vse deaktivirano.</string>
+    <string name="preferences_server_selection">Izbira strežnika</string>
+    <string name="preferences_default_server_selection">Privzet strežnik</string>
+    <string name="label_server_selection">Izbira strežnika</string>
+    <string name="preferences_tag">Oznaka</string>
+
+    <!-- Location Dialog -->
+    <string name="location_dialog_label_title">Lokacija</string>
+    <string name="location_dialog_label_position">Položaj</string>
+    <string name="location_dialog_label_accuracy">Natančnost</string>
+    <string name="location_dialog_label_age">Starost</string>
+    <string name="location_dialog_label_source">Vir</string>
+    <string name="location_dialog_label_altitude">Višina</string>
+    <string name="location_dialog_label_speed">Hitrost</string>
+    <string name="location_dialog_label_satellites">Sateliti</string>
+    <string name="location_dialog_label_location_progress_message">Pridobivanje lokacije, prosim počakajte…</string>
+    <string name="open_gps_setting_dialog_label_gps_not_enabled">Lokacijske storitve niso omogočene. Želite odpreti nastavitve lokacije?</string>
+    <string name="open_gps_setting_dialog_label_open_gps_setting">Prikaži nastavitve lokacije</string>
+    <string name="open_gps_setting_dialog_label_cancel">Prekliči</string>
+    <string name="location_dialog_not_available">Ni na voljo</string>
+    <string name="location_dialog_age">%1$s s</string>
+    <string name="location_dialog_accuracy">%1$s m</string>
+    <string name="location_dialog_speed">%1$s km/h</string>
+    <string name="location_dialog_position" translatable="false">%1$s %2$s</string>
+    <string name="location_location_direction_n">S %1$s</string>
+    <string name="location_location_direction_e">V %1$s</string>
+    <string name="location_location_direction_s">J %1$s</string>
+    <string name="location_location_direction_w">Z %1$s</string>
+    <string name="open_location_permission_dialog_label_location_not_permitted">AKOS Test Net nima dovoljenja za uporabo vaše lokacije. Ali želite AKOS Test Net aplikaciji dovoliti uporabo vaše lokacije?</string>
+    <string name="open_location_permission_dialog_label_open_permission_setting">Odprite nastavitve aplikacije</string>
+
+
+    <string name="text_ip_address_not_available">IP naslov ni na voljo</string>
+    <string name="input_setting_dialog_ok">V redu</string>
+    <string name="input_setting_dialog_cancel">Prekliči</string>
+    <string name="loop_mode_max_delay_invalid" tools:ignore="PluralsCandidate">Vnesite število med %1$d in %2$d.</string>
+    <string name="about_client_uuid_copied">UUID odjemalca je bil kopiran v odložišče.</string>
+    <string name="client_not_registered">Aplikacija ni registrirana, poskusite znova pozneje.</string>
+
+    <!-- Measurement screen -->
+    <string name="measurement_ping_value">%1$s ms</string>
+    <string name="measurement_ping_value_1f">%1$.1f ms</string>
+    <string name="measurement_download_upload_speed">%1$s Mbit/s</string>
+    <string name="measurement_download">Pritočna hitrost</string>
+    <string name="measurement_upload">Odtočna hitrost</string>
+    <string name="measurement_dash">-</string>
+    <string name="measurement_speed_chart_x_label_min">0s</string>
+    <string name="measurement_speed_chart_x_label_max">8s</string>
+    <string name="measurement_ping">Ping</string>
+    <string name="measurement_down">Dol</string>
+    <string name="measurement_up">Gor</string>
+    <string name="measurement_qos">Test omrežnih storitev (QoS)</string>
+    <string name="measurement_qos_web_site">Spletna stran</string>
+    <string name="measurement_qos_transparent_connection">Transparentna povezava</string>
+    <string name="measurement_qos_dns">DNS</string>
+    <string name="measurement_qos_tcp_ports">TCP vrata</string>
+    <string name="measurement_qos_udp_ports">UDP vrata</string>
+    <string name="measurement_qos_unmodified_content">Nespremenjena vsebina</string>
+    <string name="measurement_qos_traceroute">Traceroute</string>
+    <string name="measurement_qos_voip">VoIP</string>
+
+    <string-array name="measurement_speed_chart_y_labels">
+        <item>1M</item>
+        <item>10M</item>
+        <item>100M</item>
+        <item>1G</item>
+    </string-array>
+
+    <string name="strength_signal_value" translatable="false">%d dBm</string>
+    <string name="scale_value_1000" translatable="false">1G</string>
+    <string name="scale_value_100" translatable="false">100M</string>
+    <string name="scale_value_10" translatable="false">10M</string>
+    <string name="scale_value_1" translatable="false">1M</string>
+    <string name="scale_value_0_1" translatable="false">0</string>
+
+    <string name="label_qos">QoS</string>
+    <string name="label_upload">Gor</string>
+    <string name="label_download">Dol</string>
+    <string name="label_ping">Ping</string>
+    <string name="label_init">Start</string>
+    <string name="measurement_progress_units" translatable="false">%</string>
+    <string name="label_signal_strength">Signal</string>
+    <string name="network_label">Omrežje</string>
+    <string name="technology_label">Tehnologija</string>
+
+    <string name="speed_progress_units" translatable="false">Mbit/s</string>
+    <string name="title_cancel_measurement">Ali želite zares prekiniti test?</string>
+    <string name="text_continue_measurement">Nadaljuj s testom</string>
+    <string name="text_cancel_measurement">Prekini test</string>
+    <string name="text_stop_measurement">Ustavi test</string>
+
+    <string name="notification_test_title">AKOS Test Net se izvaja.</string>
+
+    <string name="test_dialog_error_text">Neuspešen test. Poskusite znova pozneje.</string>
+
+    <!-- Measurement screen - content labeling -->
+    <string name="measurement_cancel">Prekliči</string>
+
+
+    <!-- History -->
+    <string name="history_item_header_test">Datum</string>
+    <string name="history_item_header_down">Dol</string>
+    <string name="history_item_header_up">Gor</string>
+    <string name="history_item_header_ping">Ping</string>
+    <string name="history_item_header_ms">ms</string>
+    <string name="history_no_data">Podatki niso na voljo.</string>
+
+    <!-- History screen - content labeling -->
+    <string name="history_settings">Nastavitve</string>
+    <string name="history_sync">Sinhronizacija</string>
+    <string name="history_items">Zgodovinski podatki</string>
+
+    <!-- Results -->
+    <string name="results_other_details">Podrobnosti</string>
+    <string name="results_qoe_videos_sd">Video SD</string>
+    <string name="results_qoe_videos_hd">Video HD</string>
+    <string name="results_qoe_videos_uhd">Video UHD</string>
+    <string name="results_qoe_gaming">Igranje</string>
+    <string name="results_qoe_gaming_cloud">Igranje prek oblaka</string>
+    <string name="results_qoe_gaming_streaming">Igranje s pretakanjem</string>
+    <string name="results_qoe_gaming_download">Igranje dol</string>
+    <string name="results_qoe_audio_streaming">Zvok s pretakanjem</string>
+    <string name="results_qoe_voip">VoIP</string>
+    <string name="results_qoe_video_telephony">Video telefonija</string>
+    <string name="results_qoe_video_conferencing">Video konferenca</string>
+    <string name="results_qoe_messaging">Sporočila</string>
+    <string name="results_qoe_web">Splet</string>
+    <string name="results_qoe_cloud">Oblak</string>
+    <string name="results_qoe_qos">QoS testi</string>
+    <string name="results_quality">Kvaliteta</string>
+    <string name="results_network_type">Tip</string>
+    <string name="results_network_provider">Ponudnik</string>
+    <string name="results_network_ssid">SSID brezžične dostopne točke</string>
+    <string name="result_test_details">Podrobnosti testa</string>
+    <string name="qos_result_success_count" translatable="false">%1$d / %2$d</string>
+    <string name="qos_test_number" translatable="false"># %1$d</string>
+    <string name="label_information">Informacije</string>
+    <string name="label_tests">Testi</string>
+    <string name="label_succeeded">USPEŠNO</string>
+    <string name="label_failed">NEUSPEŠNO</string>
+    <string name="label_description">OPIS</string>
+    <string name="label_detail">PODROBNOSTI</string>
+
+    <!-- Map -->
+    <string name="map_layer_communities">Skupnosti</string>
+    <string name="map_layer_points">Točke</string>
+    <string name="map_layer_automatic">Samodejno</string>
+    <string name="map_label_overlay_type">Vrsta prikaza</string>
+    <string name="map_style_hybrid" translatable="false">Hibridni</string>
+    <string name="map_style_satellite" translatable="false">Satelitski</string>
+    <string name="map_style_standard" translatable="false">Splošni</string>
+    <string name="map_label_map_appearance">Videz zemljevida</string>
+    <string name="title_marker_item_details">Pokaži več podrobnosti</string>
+
+    <string name="map_search_location_dialog_title">Iskanje</string>
+    <string name="map_search_location_dialog_info">Poišči naslov ali mesto:</string>
+    <string name="map_search_location_dialog_not_found">Naslova ni mogoče najti.</string>
+    <string name="map_search_location_not_supported">Vaša naprava žal ne podpira te funkcije.</string>
+
+    <!-- Map - content labeling -->
+    <string name="map_filters">Filter zemljevida</string>
+    <string name="map_layers">Spremeni prikaz</string>
+    <string name="map_location">Premik na trenutno lokacijo</string>
+    <string name="map_search">Poišči lokacijo</string>
+
+
+    <!-- Other -->
+
+    <string name="text_wait_loading">Nalaganje rezultatov</string>
+
+    <string name="title_sync">Sinhronizacija</string>
+    <string name="text_sync_info">Združite lahko rezultate testa iz dveh različnih naprav. Če želite to storiti, vnesite kodo za sinhronizacijo, za katero ste zaprosili, ali pa zaprosite za novo kodo.</string>
+    <string name="button_sync_request_code">Zaprosi za kodo</string>
+    <string name="button_sync_enter_code">Vnesi kodo</string>
+    <string name="text_sync_code_received">Prosimo, vnesite spodnjo kodo na drugo naprava za sinhronizacijo rezultatov.</string>
+    <string name="text_sync_enter_code_desc">Prosimo, vnesite kodo, ki ste jo prejeli na drugi napravi.</string>
+    <string name="button_close">Zapri</string>
+    <string name="toast_sync_code_copied_to_clipboard">Kopiraj kodo</string>
+    <string name="hint_sync_code">Koda</string>
+    <string name="error_sync_code_short">Koda mora biti dolga 12 znakov</string>
+
+    <string name="notification_signal_test_title">Merjenje signala poteka</string>
+    <string name="notification_signal_test_text">AKOS Test Net merjenje signala poteka v ozadju</string>
+
+    <string name="notification_loop_mode_finished_title">Ponovitveni način končan</string>
+
+    <string name="toast_signal_measurement_enabled">Merjenje signala se je začelo.</string>
+    <string name="error_no_connection">Brez internetne povezave. Podatkov ni bilo mogoče naložiti.</string>
+
+    <string name="label_map_filters">Nastavitve zemljevida</string>
+    <string name="text_filter_confirm">Strinjam se</string>
+    <string name="text_filter_continue">Nadaljuj</string>
+    <string name="title_filters_type">Vrsta zemljevida</string>
+    <string name="title_filters_subtype">Možnosti</string>
+
+    <string name="about_email_subject">Podpora</string>
+    <string name="about_email_sending">Pošlji e-pošto…</string>
+
+    <string name="graph_signal_value">-%1$s dBm</string>
+
+    <string name="notification_loop_mode_title_active">Ponovitveni način je aktiven</string>
+    <string name="notification_loop_mode_title_running">Ponovitveni način je v teku (%1$d/%2$d)</string>
+
+    <string name="title_loop_mode">Ponovitveni način</string>
+    <string name="title_loop_count">Izberite število testov</string>
+    <string name="text_loop_start">Začni testiranje</string>
+    <string name="text_loop_mode">Naslednji test po času čakanja ali premagani razdalji. Največ 2 dni</string>
+    <string name="text_button_decline">Zavrni</string>
+    <string name="text_button_accept">Sprejmi</string>
+    <string name="text_loop_instruction_1">Možnost ponovitvenega načina za tehnično zainteresirane uporabnike omogoča samodejno ponavljanje AKOS Test Net. Prvi test se začne takoj po aktivaciji ponovitvenega načina; nadaljnji testi se izvedejo, ko poteče čas čakanja ali ko se izvede premik za določeno razdaljo. Testi se bodo izvajali dokler ne bo doseženo nastavljeno število testov. Moč signala se meri neprekinjeno, tudi med dvema testoma. Ponovitveni način je mogoče kadar koli ustaviti oziroma se ustavi samodejno po 48 urah. Izrecno je treba poudariti, da zaradi izvajanja ponovitvenega načina ni mogoče izključiti identifikacijo testerja.</string>
+    <string name="text_loop_instruction_2">V primeru velikega povpraševanja ali zelo velikega števila testov na določenem območju lahko testni sistem zavrne ponovitveni način v izogib preobremenitev. Upoštevajte, da je ponovitveni način namenjen samo v uporabi v EU in EGP. Ponovitveni način lahko porabi veliko količino podatkov. Pri hitrih povezavah lahko 10 testov porabi 1 GB ali več podatkov. Zato je zelo priporočljivo, da se ponovitveni način uporablja le pri realnih pavšalnih tarifah, kjer dodatna količina podatkov ne povzroča dodatnih stroškov. Ponovitveni način lahko hitro izprazni baterijo. V pavzah med testi ostaneta GPS in zaslon aktivna, meritve signala pa se nadaljujejo, kar pomeni, da se energija porablja veliko hitreje kot v stanju pripravljenosti. Ponovitveni način izvajanja testov naj se zato uporablja samo, če je na voljo zunanji vir napajanja.</string>
+    <string name="title_loop_instruction_1">Aktivacija</string>
+    <string name="title_loop_instruction_2">Uporaba</string>
+
+    <string name="text_filter_devices">Naprave</string>
+    <string name="text_filter_networks">Omrežje</string>
+    <string name="label_filter_options">Možnosti</string>
+    <string name="label_filter">Filter</string>
+
+    <string name="loop_mode_next_test">Naslednji test</string>
+    <string name="loop_mode_minutes">Minute</string>
+    <string name="loop_mode_meters">Metri</string>
+    <string name="loop_mode_no_gps">Ni GPS</string>
+    <string name="or">ali</string>
+    <string name="loop_mode_finished">AKOS Test Net ponovitveni način je končan!</string>
+    <string name="loop_continue_to_results">Prikaži rezultate</string>
+    <string name="loop_run_again">Zaženi ponovno</string>
+    <string name="title_privacy_policy">Politika zasebnosti</string>
+    <string name="text_terms_agree">Strinjam se z AKOS politiko zasebnosti in pogoji uporabe za AKOS Test Net</string>
+    <string name="text_terms_agree_empty">Za nadaljevanje se morate strinjati s politiko zasebnosti in pogoji uporabe.</string>
+
+    <string name="dialog_title_config_check">Prosimo spremenite naslednje vrednosti:</string>
+    <string name="label_ip_processing">Procesiranje…</string>
+    <string name="radio_info_warning_title">Radijske nastavitve</string>
+    <string name="radio_info_warning_message">Previdno: spreminjanje naprednih nastavitev radijske konfiguracije lahko škoduje stabilnosti ali delovanju vaše naprave.</string>
+    <string name="accept_risk">Sprejemam tveganje</string>
+    <string name="preferences_connection_details_not_supported">Podrobnosti o razširjeni povezavi v tej napravi niso podprte</string>
+
+    <string name="dialog_signal_info_band">Pas</string>
+    <string name="dialog_signal_info_connection_status" translatable="false">Status</string>
+    <string name="dialog_signal_info_channel">Kanal</string>
+    <string name="text_local_results">Samo lokalni rezultati</string>
+    <string name="signal_measurement_terms_title">Aktivacija in uporaba</string>
+    <string name="signal_measurement_terms_content">Možnost ponovitvenega načina izključno za merjenje signala za tehnično zainteresirane uporabnike omogoča samodejno ponavljanje meritev signala - brez izvajanja kakršnih koli preskusov hitrosti ali kakovosti. Ponovitveni način meritve samo za signal je mogoče kadar koli ustaviti oziroma se samodejno ustavi po 48 urah. Ponovitveni način merjenja signala je namenjen samo v uporabi znotraj EU in EFTA. Meritve signala lahko hitro izpraznijo baterijo. V pavzah med testi ostaneta GPS in zaslon aktivna, meritve signala pa se nadaljujejo, kar pomeni, da se energija porablja veliko hitreje kot v stanju pripravljenosti. Ponovitveni način naj se zato uporablja samo, če je na voljo zunanji vir napajanja. Izrecno je treba poudariti, da zaradi izvajanja ponovitvenega načina merjenja signala ni mogoče izključiti identifikacijo testerja.</string>
+    <string name="home_ethernet" translatable="false">Ethernet</string>
+
+    <!-- Other - content labeling -->
+    <string name="content_label_close">Zapri</string>
+    <string name="ip_info_ip_address">IP naslov</string>
+
+    <!-- Signal details -->
+    <string name="cell_info_nr_arfcn" translatable="false">ARFCN</string>
+    <string name="cell_info_ssrsrp" translatable="false">RSRP</string>
+    <string name="cell_info_ssrsrq" translatable="false">RSRQ</string>
+    <string name="cell_info_earfcn" translatable="false">EARFCN</string>
+    <string name="cell_info_ci" translatable="false">CI</string>
+    <string name="cell_info_subscriptionId" translatable="false">SubId</string>
+    <string name="cell_info_eNB" translatable="false">eNB</string>
+    <string name="cell_info_cid" translatable="false">CID</string>
+    <string name="cell_info_tac" translatable="false">TAC</string>
+    <string name="cell_info_pci" translatable="false">PCI</string>
+    <string name="cell_info_bw" translatable="false">BW</string>
+    <string name="cell_info_rssi" translatable="false">RSSI</string>
+    <string name="cell_info_rsrp" translatable="false">RSRP</string>
+    <string name="cell_info_rsrq" translatable="false">RSRQ</string>
+    <string name="cell_info_snr" translatable="false">SNR</string>
+    <string name="cell_info_ta" translatable="false">TA</string>
+
+    <string name="cell_info_rnc" translatable="false">RNC</string>
+    <string name="cell_info_psc" translatable="false">PSC</string>
+    <string name="cell_info_lac" translatable="false">LAC</string>
+    <string name="cell_info_uarfcn" translatable="false">UARFCN</string>
+    <string name="cell_info_rscp" translatable="false">RSCP</string>
+
+    <string name="cell_info_bsic" translatable="false">BSIC</string>
+    <string name="cell_info_arfcn" translatable="false">ARFCN</string>
+    <string name="cell_info_rxl" translatable="false">RXL</string>
+
+    <string name="cell_info_BSSID" translatable="false">BSSID</string>
+    <string name="cell_info_SSID" translatable="false">SSID</string>
+    <string name="cell_info_NCI" translatable="false">NCI</string>
+    
+    <string name="label_location_access_disabled">Manjkajoče dovoljenje za uporabo lokacijskih storitev</string>
+    <string name="label_location_access_disabled_explanation">V nastavitvah uredite dovoljenje za lokacijske storitve.</string>
+    <string name="label_some_permission_denied">Manjkajoče dovoljenje za aplikacijo</string>
+    <string name="label_some_permission_denied_explanation">V nastavitvah uredite dovoljenja aplikacije.</string>
+    <string name="title_open_nettest_accuracy">Dovoljenja za AKOS Test Net</string>
+    <string name="subtitle_open_nettest_accuracy">AKOS Test Net za delovanje potrebuje določena dovoljenja.</string>
+    <string name="phone_permission_title">1. Dovoljenje za uporabo telefonskih storitev</string>
+    <string name="location_permission_title">2. Dovoljenje za uporabo lokacijskih storitev</string>
+    <string name="phone_permission_explanation">AKOS Test Net ne izvaja telefonskih klicev. Za identifikacijo ponudnika storitev je potrebno telefonsko dovoljenje.</string>
+    <string name="location_permission_explanation">Dovoljenje za lokacijo je potrebno za identifikacijo merilne lokacije in njen prikaz na zemljevidu. Brez natančnega dovoljenja za lokacijo moč signala v mnogih napravah ni na voljo. Uporaba ponovitvenega načina med premikanjem je mogoča le z dovoljenjem za lokacijo.</string>
+    <string name="location_permissions_disclaimer">AKOS Test Net uporablja dovoljenje za lokacijo samo med meritvijo, dovoljenje za uporabo v ozadju je potrebno za izvajanje ponovitvenega načina.</string>
+
+    <!-- Signal details - content labeling -->
+
+
+</resources>
