@@ -57,7 +57,7 @@
     },
     {
       "name": "QOS_SSL",
-      "value": "false",
+      "value": "true",
       "visible": false
     },
     {
@@ -292,13 +292,13 @@
     },
     {
       "name": "MAP_SERVER_ROUTE",
-      "value": "maps",
-      "visible": false
+      "value": "RMBTMapServer",
+      "visible": true
     },
     {
       "name": "MAP_TILES_ENDPOINT",
-      "value": "/%d/%d/%d.png",
-      "visible": false
+      "value": "tiles/%s/%d/%d/%d.png",
+      "visible": true
     },
     {
       "name": "MAP_MARKERS_ENDPOINT",
@@ -312,8 +312,8 @@
     },
     {
       "name": "MAP_FILTERS_ENDPOINT",
-      "value": "tiles/info",
-      "visible": false
+      "value": "v2/tiles/info",
+      "visible": true
     },
     {
       "line1": "=======================================",

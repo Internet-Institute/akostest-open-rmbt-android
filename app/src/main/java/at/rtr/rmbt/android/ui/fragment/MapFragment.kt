@@ -51,9 +51,9 @@ private const val ANCHOR_V = 0.865f
 // derived from Github/graydon/country-bounding-boxes.py
 // extracted from http//www.naturalearthdata.com/download/110m/cultural/ne_110m_admin_0_countries.zip
 // under public domain terms
-private const val DEFAULT_LAT = (49.0390742051F + 46.4318173285F) / 2F
-private const val DEFAULT_LONG = (16.9796667823F + 9.47996951665F) / 2F
-private const val DEFAULT_ZOOM_LEVEL = 6F
+private const val DEFAULT_LAT = (46.46694444F + 46.28361111F) / 2F
+private const val DEFAULT_LONG = (14.1549516F + 15.6950152F) / 2F
+private const val DEFAULT_ZOOM_LEVEL = 7F
 private val DEFAULT_PRESENTATION_TYPE = MapPresentationType.AUTOMATIC
 
 class MapFragment : BaseFragment(), MapMarkerDetailsAdapter.MarkerDetailsCallback,
@@ -119,7 +119,7 @@ class MapFragment : BaseFragment(), MapMarkerDetailsAdapter.MarkerDetailsCallbac
 
         if (!mapViewModel.state.playServicesAvailable.get()) {
             binding.webMap.settings.javaScriptEnabled = true
-            binding.webMap.loadUrl("https://www.netztest.at/en/Karte")
+            binding.webMap.loadUrl("https://testnet2.akostest.net/en/Karte")
         }
     }
 
@@ -208,7 +208,6 @@ class MapFragment : BaseFragment(), MapMarkerDetailsAdapter.MarkerDetailsCallbac
         updateLocationPermissionRelatedUi()
 
         setDefaultMapPosition()
-
         mapViewModel.markersLiveData.listen(this) {
             adapter.items = it as MutableList<MarkerMeasurementRecord>
             if (it.isNotEmpty()) {
@@ -310,6 +309,7 @@ class MapFragment : BaseFragment(), MapMarkerDetailsAdapter.MarkerDetailsCallbac
     }
 
     private fun drawMarker(record: MarkerMeasurementRecord) {
+
         if (record.networkTypeLabel != ServerNetworkType.TYPE_UNKNOWN.stringValue) {
             record.networkTypeLabel?.let {
                 val icon = when (NetworkTypeCompat.fromString(it)) {
