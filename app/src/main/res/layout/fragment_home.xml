@@ -125,7 +125,8 @@
             app:layout_constraintStart_toEndOf="@+id/ivIsConnectedCircle"
             app:layout_constraintTop_toBottomOf="@+id/ivIsConnectedCircle"
             app:layout_constraintVertical_bias="0.75"
-            app:visibleOrGone="@{state.ipV4Info.captivePortalStatus == captiveState.FOUND || state.ipV6Info.captivePortalStatus == captiveState.FOUND}" />
+            app:visibleOrGone="@{false}" />
+<!--            app:visibleOrGone="@{state.ipV4Info.captivePortalStatus == captiveState.FOUND || state.ipV6Info.captivePortalStatus == captiveState.FOUND}" />-->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/icon_loop_mode"
