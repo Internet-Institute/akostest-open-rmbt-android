@@ -7,7 +7,9 @@ import at.rmbt.util.Maybe
 import okhttp3.ResponseBody
 import retrofit2.Response
 import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 class MapServerClient @Inject constructor(
     private val endpointProvider: MapEndpointProvider,
@@ -33,7 +35,9 @@ class MapServerClient @Inject constructor(
     }
 
     fun prepareDetailsLink(openUUID: String) =
-        MutableLiveData<String>().apply { postValue(String.format(endpointProvider.mapMarkerShowDetailsUrl, openUUID)) }
+        MutableLiveData<String>().apply {
+            postValue(String.format(endpointProvider.mapMarkerShowDetailsUrl, Locale.getDefault().language, openUUID))
+        }
 
     fun obtainMapFiltersInfo(body: FilterLanguageRequestBody): Maybe<MapFilterResponse> = api.getFilters(endpointProvider.mapFilterInfoUrl, body).exec()
 

@@ -307,7 +307,7 @@
     },
     {
       "name": "MAP_MARKER_SHOW_DETAILS_ROUTE",
-      "value": "en/Opentest?%s#noMMenu",
+      "value": "%s/Opentest?%s#noMMenu",
       "visible": false
     },
     {

@@ -24,7 +24,7 @@ class MapServerProviderImpl @Inject constructor(private val config: Config) : Ma
         get() = "$host/$route/${config.mapTilesEndpoint}"
 
     override val mapMarkerShowDetailsUrl: String
-        get() = "$host/$route/${config.mapMarkerShowDetailsRoute}"
+        get() = "$host/${config.mapMarkerShowDetailsRoute}"
 
     override val mapFilterInfoUrl: String
         get() = "$host/$route/${config.mapFilterInfoEndpoint}"
