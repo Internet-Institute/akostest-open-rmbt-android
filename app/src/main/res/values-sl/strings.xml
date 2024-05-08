@@ -410,7 +410,13 @@
     <string name="phone_permission_explanation">AKOS Test Net ne izvaja telefonskih klicev. Za identifikacijo ponudnika storitev je potrebno telefonsko dovoljenje.</string>
     <string name="location_permission_explanation">Dovoljenje za lokacijo je potrebno za identifikacijo merilne lokacije in njen prikaz na zemljevidu. Brez natančnega dovoljenja za lokacijo moč signala v mnogih napravah ni na voljo. Uporaba ponovitvenega načina med premikanjem je mogoča le z dovoljenjem za lokacijo.</string>
     <string name="location_permissions_disclaimer">AKOS Test Net uporablja dovoljenje za lokacijo samo med meritvijo, dovoljenje za uporabo v ozadju je potrebno za izvajanje ponovitvenega načina.</string>
-
+    <string name="PDF" translatable="false">PDF</string>
+    <string name="CSV" translatable="false">CSV</string>
+    <string name="XLSX" translatable="false">XLSX</string>
+    <string name="error_during_download">Napaka pri prenosu</string>
+    <string name="error_opening_file">Napak pri odpiranju datoteke</string>
+    <string name="download_complete">Prenos končan</string>
+    <string name="download_complete_description">Datoteka %1$s uspešno prenešena.</string>
     <!-- Signal details - content labeling -->
 
 
