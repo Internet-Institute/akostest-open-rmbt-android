@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
+import java.util.*
 import javax.inject.Inject
 
 class ResultViewModel @Inject constructor(
@@ -124,9 +125,14 @@ class ResultViewModel @Inject constructor(
     }
 
     fun downloadFile(format: String) {
+        var language = "en"
+        if (Locale.getDefault().language == "sl"){
+            language = "sl"
+        }
+
         val url =
-            if (format == "pdf") "https://m-cloud.netztest.at/RMBTStatisticServer/export/pdf/de"
-            else "https://m-cloud.netztest.at/RMBTStatisticServer/opentests/search"
+            if (format == "pdf") "https://testnet2.akostest.net/RMBTStatisticServer/export/pdf/" + language
+            else "https://testnet2.akostest.net/RMBTStatisticServer/opentests/search"
         this.testServerResultLiveData.value?.testOpenUUID?.let { openUUID ->
             viewModelScope.launch {
                 fileDownloader.downloadFile(
