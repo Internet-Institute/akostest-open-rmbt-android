@@ -61,7 +61,7 @@ class SpeedLineChart @JvmOverloads constructor(
         typedArray.recycle()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
         if (pathStroke.isEmpty && chartPoints.isNotEmpty()) {

@@ -62,7 +62,7 @@ class CalmSpriteView @JvmOverloads constructor(
         viewTreeObserver.addOnGlobalLayoutListener(layoutListener)
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         path?.let {
             canvas?.drawPath(it, paint)

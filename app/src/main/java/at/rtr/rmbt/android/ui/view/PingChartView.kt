@@ -98,7 +98,7 @@ open class PingChartView @JvmOverloads constructor(
         invalidate()
     }
 
-    override fun onDraw(canvas: Canvas?) {
+    override fun onDraw(canvas: Canvas) {
 
         val endX = width - endPadding
         val endY = height.toFloat()

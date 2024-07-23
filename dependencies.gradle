@@ -4,11 +4,11 @@ buildscript {
 
         // All project module configs should be in config map
         config = [
-                applicationId    : "at.alladin.rmbt.android.prod",
+                applicationId    : "com.specure.rmbt.akos",
                 minSdkVersion    : 23,
-                targetSdkVersion : 33,
-                versionCode      : (project.hasProperty('buildVersionCode') ? Integer.parseInt(buildVersionCode) : 41000),
-                versionName      : (project.hasProperty('buildVersionName') ? buildVersionName : '4.10.0')
+                targetSdkVersion : 34,
+                versionCode      : (project.hasProperty('buildVersionCode') ? Integer.parseInt(buildVersionCode) : 366),
+                versionName      : (project.hasProperty('buildVersionName') ? buildVersionName : 'V2.7.80')
         ]
 
         // All project modules dependency versions should be in versions map
