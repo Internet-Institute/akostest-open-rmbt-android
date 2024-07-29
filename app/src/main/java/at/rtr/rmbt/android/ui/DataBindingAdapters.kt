@@ -876,13 +876,13 @@ fun AppCompatTextView.speedDownloadResult(speedDownloadResult: Long, speedDownlo
     text = if (speedDownloadResult > 0) {
         if (isExpert) { //do not format for experts
             context.getString(
-                R.string.measurement_download_upload_speed,
-                ((speedDownloadResult.toFloat() / 1000f).expertFormat())
+                //R.string.measurement_download_upload_speed,((speedDownloadResult.toFloat() / 1000f).expertFormat())
+                R.string.measurement_download_upload_speed, String.format("%.1f", ((speedDownloadResult.toFloat() / 1000f)))
             )
         } else
             context.getString(
-                R.string.measurement_download_upload_speed,
-                ((speedDownloadResult.toFloat() / 1000f).format())
+                //R.string.measurement_download_upload_speed,((speedDownloadResult.toFloat() / 1000f).format())
+                R.string.measurement_download_upload_speed, String.format("%.1f", ((speedDownloadResult.toFloat() / 1000f)))
             )
     } else {
         context.getString(R.string.measurement_dash)
@@ -918,13 +918,13 @@ fun AppCompatTextView.speedUploadResult(speedUploadResult: Long, speedUploadClas
     text = if (speedUploadResult > 0) {
         if (isExpert) { //do not format for experts
             context.getString(
-                R.string.measurement_download_upload_speed,
-                ((speedUploadResult.toFloat() / 1000f).expertFormat())
+                //R.string.measurement_download_upload_speed, ((speedUploadResult.toFloat() / 1000f).expertFormat())
+                R.string.measurement_download_upload_speed, String.format("%.1f", ((speedUploadResult.toFloat() / 1000f)))
             )
         } else
             context.getString(
-                R.string.measurement_download_upload_speed,
-                ((speedUploadResult.toFloat() / 1000f).format())
+                //R.string.measurement_download_upload_speed, ((speedUploadResult.toFloat() / 1000f).format())
+                R.string.measurement_download_upload_speed, String.format("%.1f", ((speedUploadResult.toFloat() / 1000f)))
             )
     } else {
         context.getString(R.string.measurement_dash)
