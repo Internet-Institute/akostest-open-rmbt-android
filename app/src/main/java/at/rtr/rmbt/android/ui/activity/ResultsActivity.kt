@@ -16,6 +16,7 @@ import at.rtr.rmbt.android.map.wrapper.MapWrapper
 import at.rtr.rmbt.android.ui.adapter.QosResultAdapter
 import at.rtr.rmbt.android.ui.adapter.ResultChartFragmentPagerAdapter
 import at.rtr.rmbt.android.ui.adapter.ResultQoEAdapter
+import at.rtr.rmbt.android.ui.setVisibleOrGone
 import at.rtr.rmbt.android.util.isGmsAvailable
 import at.rtr.rmbt.android.util.listen
 import at.rtr.rmbt.android.viewmodel.ResultViewModel
@@ -147,6 +148,10 @@ class ResultsActivity : BaseActivity() {
         viewModel.qosCategoryResultLiveData.listen(this) {
             viewModel.state.qosCategoryRecords.set(it)
             qosAdapter.submitList(it)
+
+            if(it.isEmpty()){
+                binding.titleQuality.setVisibleOrGone(false)
+            }
         }
 
         qosAdapter.actionCallback = {
