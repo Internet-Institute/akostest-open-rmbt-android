@@ -218,7 +218,7 @@
 
     <!-- History -->
     <string name="history_item_header_test">Datum</string>
-    <string name="history_item_header_down">Dol2</string>
+    <string name="history_item_header_down">Dol</string>
     <string name="history_item_header_up">Gor</string>
     <string name="history_item_header_ping">Ping</string>
     <string name="history_item_header_ms">ms</string>
