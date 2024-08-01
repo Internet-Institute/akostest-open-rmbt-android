@@ -305,6 +305,7 @@
     <string name="home_statistics">Statistik</string>
     <string name="home_history">Verlauf</string>
     <string name="home_loop_mode_active">Wiederholungsmodus aktiv</string>
+    <string name="label_download_files">Export data</string>
     <string name="error_during_download">Download-Fehler</string>
     <string name="error_opening_file">Fehler beim Öffnen der Datei</string>
     <string name="download_complete">Download abgeschlossen</string>

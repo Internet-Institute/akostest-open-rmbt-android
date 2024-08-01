@@ -410,6 +410,7 @@
     <string name="location_permission_explanation">The location permission is necessary to identify the measurement location and to display it on the map. Without precise location permission, signal strength is unavailable on many devices. Use of loop mode while on the move is only possible with location permission.</string>
 
     <string name="location_permissions_disclaimer">AKOS Test Net uses the location permission only during the measurement, the background permission is required to allow to run the loop mode in background.</string>
+    <string name="label_download_files">Export data</string>
     <string name="PDF" translatable="false">PDF</string>
     <string name="CSV" translatable="false">CSV</string>
     <string name="XLSX" translatable="false">XLSX</string>

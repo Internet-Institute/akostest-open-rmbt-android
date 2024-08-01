@@ -517,7 +517,7 @@
                         android:id="@+id/downloadFileSectionTitle"
                         android:layout_width="wrap_content"
                         visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.testOpenUUID != null}"
-                        android:text="@string/label_download"
+                        android:text="@string/label_download_files"
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="@dimen/padding_large"
                         android:paddingVertical="@dimen/padding_medium"
