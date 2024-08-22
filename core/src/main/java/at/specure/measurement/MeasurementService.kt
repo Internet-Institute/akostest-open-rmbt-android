@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.BroadcastReceiver
 import android.content.ServiceConnection
+import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.wifi.WifiManager
@@ -695,18 +696,34 @@ class MeasurementService : CustomLifecycleService(), CoroutineScope {
     }
 
     private fun attachToForeground() {
-        Timber.d("MeasurementViewModel: Attached to foreground notification")
-        startForeground(
-            NOTIFICATION_ID,
-            notificationProvider.measurementServiceNotification(
-                0,
-                MeasurementState.INIT,
-                true,
-                stateRecorder.loopModeRecord,
-                config.loopModeNumberOfTests,
-                stopTestsIntent(this@MeasurementService)
+        Timber.d("MeasurementViewModel: Attached to foreground notification");
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.UPSIDE_DOWN_CAKE){
+            startForeground(
+                NOTIFICATION_ID,
+                notificationProvider.measurementServiceNotification(
+                    0,
+                    MeasurementState.INIT,
+                    true,
+                    stateRecorder.loopModeRecord,
+                    config.loopModeNumberOfTests,
+                    stopTestsIntent(this@MeasurementService)
+                )
             )
-        )
+        }
+        else{
+            startForeground(
+                NOTIFICATION_ID,
+                notificationProvider.measurementServiceNotification(
+                    0,
+                    MeasurementState.INIT,
+                    true,
+                    stateRecorder.loopModeRecord,
+                    config.loopModeNumberOfTests,
+                    stopTestsIntent(this@MeasurementService)
+                ),FOREGROUND_SERVICE_TYPE_DATA_SYNC
+            )
+        }
 
         if (!producer.isTestsRunning) {
             notificationManager.cancel(NOTIFICATION_ID)
