@@ -14,6 +14,9 @@
     <uses-permission
         android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC"
         android:minSdkVersion="34" />
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_LOCATION"
+        android:minSdkVersion="34" />
 
     <uses-feature
         android:name="android.hardware.touchscreen"
@@ -116,7 +119,7 @@
 
         <service
             android:name="at.specure.measurement.MeasurementService"
-            android:foregroundServiceType="dataSync"
+            android:foregroundServiceType="dataSync|location"
             tools:node="merge" />
 
     </application>
