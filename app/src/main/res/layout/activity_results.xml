@@ -461,6 +461,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="@dimen/margin_large"
                         android:drawablePadding="@dimen/padding_very_small"
+                        android:maxLength="20"
                         app:layout_constraintBottom_toBottomOf="@+id/labelNetworkName"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="@+id/labelNetworkName"
