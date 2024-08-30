@@ -168,6 +168,8 @@
     <string name="measurement_ping">Ping</string>
     <string name="measurement_down">Dol</string>
     <string name="measurement_up">Gor</string>
+    <string name="measurement_results_down">Pritočna hitrost</string>
+    <string name="measurement_results_up">Odtočna hitrost</string>
     <string name="measurement_qos">Test omrežnih storitev (QoS)</string>
     <string name="measurement_qos_web_site">Spletna stran</string>
     <string name="measurement_qos_transparent_connection">Transparentna povezava</string>

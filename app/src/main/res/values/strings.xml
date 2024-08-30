@@ -167,6 +167,8 @@
     <string name="measurement_ping">Ping</string>
     <string name="measurement_down">Down</string>
     <string name="measurement_up">Up</string>
+    <string name="measurement_results_down">Down</string>
+    <string name="measurement_results_up">Up</string>
     <string name="measurement_qos">Quality of service (QoS)</string>
     <string name="measurement_qos_web_site">Web site</string>
     <string name="measurement_qos_transparent_connection">Transparent connection</string>
