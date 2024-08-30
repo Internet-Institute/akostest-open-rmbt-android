@@ -441,33 +441,46 @@
                         app:visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.networkProviderName != null}"
                         tools:text="SANET SK" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/labelNetworkName"
-                        style="@style/RobotoRegularStyle.Small"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/networkNameAll"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_large"
+                        android:orientation="horizontal"
                         android:drawablePadding="@dimen/padding_very_small"
-                        android:text="@string/results_network_ssid"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/labelProvider"
-                        app:visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.networkName != null &amp;&amp; !state.testResult.networkName.isEmpty()}"
-                        tools:text="WLAN SSID" />
+                        app:visibleOrGone="@{state.testResult != null}">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/textNetworkName"
-                        style="@style/RobotoRegularStyle.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_large"
-                        android:drawablePadding="@dimen/padding_very_small"
-                        android:maxLength="20"
-                        app:layout_constraintBottom_toBottomOf="@+id/labelNetworkName"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/labelNetworkName"
-                        app:text="@{state.testResult.networkName}"
-                        app:visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.networkName != null &amp;&amp; !state.testResult.networkName.isEmpty()}"
-                        tools:text="WIFIFINKA" />
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/labelNetworkName"
+                            style="@style/RobotoRegularStyle.Small"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_large"
+                            android:drawablePadding="@dimen/padding_very_small"
+                            android:text="@string/results_network_ssid"
+                            app:visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.networkName != null &amp;&amp; !state.testResult.networkName.isEmpty()}"
+                            tools:text="WLAN SSID" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/textNetworkName"
+                            style="@style/RobotoRegularStyle.Small"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:layout_marginEnd="@dimen/margin_large"
+                            android:layout_marginStart="@dimen/margin_large"
+                            android:drawablePadding="@dimen/padding_very_small"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            app:text="@{state.testResult.networkName}"
+                            app:visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.networkName != null &amp;&amp; !state.testResult.networkName.isEmpty()}"
+                            tools:text="WIFIFINKA" />
+
+                    </LinearLayout>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/titleQuality"
@@ -478,7 +491,7 @@
                         android:gravity="center_vertical"
                         android:text="@string/results_quality"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/labelNetworkName"
+                        app:layout_constraintTop_toBottomOf="@+id/networkNameAll"
                         />
 
                     <androidx.recyclerview.widget.RecyclerView

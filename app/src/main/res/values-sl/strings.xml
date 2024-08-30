@@ -249,7 +249,7 @@
     <string name="results_quality">Kvaliteta</string>
     <string name="results_network_type">Tip</string>
     <string name="results_network_provider">Ponudnik</string>
-    <string name="results_network_ssid">SSID brezžične dostopne točke</string>
+    <string name="results_network_ssid">SSID dostopne točke</string>
     <string name="result_test_details">Podrobnosti testa</string>
     <string name="qos_result_success_count" translatable="false">%1$d / %2$d</string>
     <string name="qos_test_number" translatable="false"># %1$d</string>
