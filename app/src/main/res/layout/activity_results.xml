@@ -414,32 +414,46 @@
                         app:visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.networkTypeText != null}"
                         tools:text="WLAN" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/labelProvider"
-                        style="@style/RobotoRegularStyle.Small"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:id="@+id/providerAll"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_large"
+                        android:orientation="horizontal"
                         android:drawablePadding="@dimen/padding_very_small"
-                        android:text="@string/results_network_provider"
+                        app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/labelConnection"
-                        app:visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.networkProviderName != null}"
-                        tools:text="Provider" />
+                        app:visibleOrGone="@{state.testResult != null}">
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/textProvider"
-                        style="@style/RobotoRegularStyle.Small"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_large"
-                        android:drawablePadding="@dimen/padding_very_small"
-                        app:layout_constraintBottom_toBottomOf="@+id/labelProvider"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/labelProvider"
-                        app:text="@{state.testResult.networkProviderName}"
-                        app:visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.networkProviderName != null}"
-                        tools:text="SANET SK" />
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/labelProvider"
+                                style="@style/RobotoRegularStyle.Small"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_large"
+                                android:drawablePadding="@dimen/padding_very_small"
+                                android:text="@string/results_network_provider"
+                                app:visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.networkProviderName != null}"
+                                tools:text="Provider" />
+
+                            <androidx.appcompat.widget.AppCompatTextView
+                                android:id="@+id/textProvider"
+                                style="@style/RobotoRegularStyle.Small"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:layout_height="wrap_content"
+                                android:gravity="end"
+                                android:layout_marginEnd="@dimen/margin_large"
+                                android:layout_marginStart="@dimen/margin_large"
+                                android:drawablePadding="@dimen/padding_very_small"
+                                android:maxLines="1"
+                                android:ellipsize="end"
+                                app:text="@{state.testResult.networkProviderName}"
+                                app:visibleOrGone="@{state.testResult != null &amp;&amp; state.testResult.networkProviderName != null}"
+                                tools:text="SANET SK" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:id="@+id/networkNameAll"
@@ -449,7 +463,7 @@
                         android:drawablePadding="@dimen/padding_very_small"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/labelProvider"
+                        app:layout_constraintTop_toBottomOf="@+id/providerAll"
                         app:visibleOrGone="@{state.testResult != null}">
 
                         <androidx.appcompat.widget.AppCompatTextView
