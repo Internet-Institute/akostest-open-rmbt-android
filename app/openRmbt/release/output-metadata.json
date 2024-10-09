@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.specure.rmbt.akos",
+  "variantName": "openRmbtRelease",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "attributes": [],
+      "versionCode": 366,
+      "versionName": "V2.7.80",
+      "outputFile": "app-openRmbt-release.apk"
+    }
+  ],
+  "elementType": "File"
+}
