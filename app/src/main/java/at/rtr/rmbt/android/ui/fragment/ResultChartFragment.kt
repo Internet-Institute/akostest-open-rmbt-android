@@ -40,11 +40,11 @@ class ResultChartFragment : BaseFragment() {
 
         graphView = when (viewModel.state.chartType) {
             TestResultGraphItemRecord.Type.DOWNLOAD -> {
-                binding.textChartType.text = getString(R.string.label_download)
+                binding.textChartType.text = getString(R.string.measurement_download)
                 layoutInflater.inflate(R.layout.layout_speed_chart, null)
             }
             TestResultGraphItemRecord.Type.UPLOAD -> {
-                binding.textChartType.text = getString(R.string.label_upload)
+                binding.textChartType.text = getString(R.string.measurement_upload)
                 layoutInflater.inflate(R.layout.layout_speed_chart, null)
             }
             TestResultGraphItemRecord.Type.PING -> {
