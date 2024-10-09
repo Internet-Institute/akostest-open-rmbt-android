@@ -212,27 +212,27 @@
     },
     {
       "name": "DEVELOPER_ACTIVATE_CODE",
-      "value": "2222",
+      "value": "629203",
       "visible": false
     },
     {
       "name": "DEVELOPER_DEACTIVATE_CODE",
-      "value": "1111",
+      "value": "360422",
       "visible": false
     },
     {
       "name": "COVERAGE_ACTIVATE_CODE",
-      "value": "2222",
+      "value": "731293",
       "visible": false
     },
     {
       "name": "COVERAGE_DEACTIVATE_CODE",
-      "value": "1111",
+      "value": "546790",
       "visible": false
     },
     {
       "name": "ALL_DEACTIVATE_CODE",
-      "value": "0000",
+      "value": "902571",
       "visible": false
     },
     {
