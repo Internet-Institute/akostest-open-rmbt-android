@@ -20,10 +20,11 @@
             style="@style/RobotoMediumStyle.Large"
             android:layout_width="0dp"
             android:layout_height="?attr/actionBarSize"
-            android:gravity="center"
+            android:gravity="start|center_vertical"
             android:text="@string/menu_button_history"
             android:textColor="@color/text_dark_gray"
             app:layout_constraintEnd_toEndOf="parent"
+            android:paddingStart="@dimen/padding_large"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -40,6 +41,22 @@
             android:src="@drawable/ic_history_menu"
             app:layout_constraintBottom_toBottomOf="@+id/labelTitle"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/labelTitle" />
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/buttonDownload"
+            android:contentDescription="@{@string/label_download}"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackgroundBorderless"
+            android:paddingStart="@dimen/padding_large"
+            android:paddingTop="@dimen/padding_large"
+            android:paddingEnd="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_large"
+            android:src="@drawable/ic_download_24"
+            visibleOrGone="@{state.isHistoryEmpty() == false}"
+            app:layout_constraintBottom_toBottomOf="@+id/labelTitle"
+            app:layout_constraintEnd_toStartOf="@+id/buttonSync"
             app:layout_constraintTop_toTopOf="@+id/labelTitle" />
 
         <androidx.appcompat.widget.AppCompatImageButton

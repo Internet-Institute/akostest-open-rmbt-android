@@ -120,31 +120,31 @@ open class LineChart @JvmOverloads constructor(
         for (index in 0..numberOfRows) {
 
             val positionY = endY - rowHeight * index
-            canvas?.drawLine(startPadding, positionY, endX, positionY, gridPaint)
+            canvas.drawLine(startPadding, positionY, endX, positionY, gridPaint)
         }
 
         // Draw vertical dotted line
         gridDottedLinePath.moveTo(endX, 0.0f)
         gridDottedLinePath.lineTo(endX, endY)
-        canvas?.drawPath(gridDottedLinePath, gridDottedLinePaint)
+        canvas.drawPath(gridDottedLinePath, gridDottedLinePaint)
 
         // Draw Y Labels text
         for (index in 0 until yLabels.size) {
 
             val positionY = (endY - rowHeight * index) - rowHeight + (bottomPadding)
-            canvas?.drawText(yLabels[index], endX + endPadding / 8, positionY, yLabelPaint)
+            canvas.drawText(yLabels[index], endX + endPadding / 8, positionY, yLabelPaint)
         }
 
         // Draw X Labels text
         xLabelPaint.textAlign = Paint.Align.LEFT
-        canvas?.drawText(xLabelMin, startPadding, height.toFloat(), xLabelPaint)
+        canvas.drawText(xLabelMin, startPadding, height.toFloat(), xLabelPaint)
         xLabelPaint.textAlign = Paint.Align.RIGHT
-        canvas?.drawText(xLabelMax, endX, height.toFloat(), xLabelPaint)
+        canvas.drawText(xLabelMax, endX, height.toFloat(), xLabelPaint)
     }
 
     companion object {
 
-        private const val DEFAULT_NUMBER_OF_ROWS_IN_GRID: Int = 4
+        public const val DEFAULT_NUMBER_OF_ROWS_IN_GRID: Int = 4
         private const val DEFAULT_Y_LABEL_TEXT: String = "100000"
     }
 }

@@ -67,8 +67,8 @@ class SignalBarChartView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
-        canvas?.drawPath(fillPath, fillPaint)
-        canvas?.drawPath(strokePath, linePaint)
+        canvas.drawPath(fillPath, fillPaint)
+        canvas.drawPath(strokePath, linePaint)
     }
 
     /**

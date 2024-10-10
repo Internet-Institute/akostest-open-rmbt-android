@@ -13,6 +13,7 @@ import at.rtr.rmbt.android.di.viewModelLazy
 import at.rtr.rmbt.android.ui.activity.ResultsActivity
 import at.rtr.rmbt.android.ui.adapter.FilterLabelAdapter
 import at.rtr.rmbt.android.ui.adapter.HistoryLoopAdapter
+import at.rtr.rmbt.android.ui.dialog.HistoryDownloadDialog
 import at.rtr.rmbt.android.ui.dialog.HistoryFiltersDialog
 import at.rtr.rmbt.android.ui.dialog.SyncDevicesDialog
 import at.rtr.rmbt.android.util.ToolbarTheme
@@ -21,6 +22,7 @@ import at.rtr.rmbt.android.util.listen
 import at.rtr.rmbt.android.viewmodel.HistoryViewModel
 
 private const val CODE_FILTERS = 13
+private const val CODE_DOWNLOAD = 14
 
 class HistoryFragment : BaseFragment(), SyncDevicesDialog.Callback, HistoryFiltersDialog.Callback {
 
@@ -60,9 +62,9 @@ class HistoryFragment : BaseFragment(), SyncDevicesDialog.Callback, HistoryFilte
 
         historyViewModel.historyLiveData.listen(this) {
             historyViewModel.state.isHistoryEmpty.set(it.isEmpty())
-
             adapter.submitList(it)
         }
+
 
         historyViewModel.isLoadingLiveData.listen(this) {
             historyViewModel.state.isLoadingLiveData.set(it)
@@ -76,6 +78,13 @@ class HistoryFragment : BaseFragment(), SyncDevicesDialog.Callback, HistoryFilte
         binding.buttonSync.setOnClickListener {
             SyncDevicesDialog.show(childFragmentManager)
         }
+
+        binding.buttonDownload.setOnClickListener {
+            if (adapter.itemCount > 0) {
+                HistoryDownloadDialog.instance(this, CODE_DOWNLOAD).show(parentFragmentManager)
+            }
+        }
+
 
         binding.buttonMenu.setOnClickListener {
             if (adapter.itemCount > 0) {
@@ -104,6 +113,7 @@ class HistoryFragment : BaseFragment(), SyncDevicesDialog.Callback, HistoryFilte
         adapter.onSaveInstanceState(outState)
         super.onSaveInstanceState(outState)
     }
+
 
     private fun refreshHistory() {
         historyViewModel.refreshHistory()

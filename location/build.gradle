@@ -48,4 +48,5 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
     implementation "com.jakewharton.timber:timber:$versions.timber"
     implementation "androidx.appcompat:appcompat:$versions.appcompat"
+    implementation "androidx.test.ext:junit-ktx:$versions.kotlin_junit"
 }

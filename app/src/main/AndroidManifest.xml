@@ -9,6 +9,11 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+    <uses-permission
+        android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE"
+        android:minSdkVersion="34" />
+
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
@@ -116,11 +121,6 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${googleMapsApiKey}" />
-
-        <service
-            android:name="at.specure.measurement.MeasurementService"
-            android:foregroundServiceType="dataSync|location"
-            tools:node="merge" />
 
     </application>
 

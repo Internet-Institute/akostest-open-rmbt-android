@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import at.rmbt.util.exception.HandledException
 import at.rtr.rmbt.android.config.AppConfig
 import at.rtr.rmbt.android.ui.viewstate.ResultViewState
+import at.specure.data.ControlServerSettings
 import at.specure.data.entity.QoeInfoRecord
 import at.specure.data.entity.QosCategoryRecord
 import at.specure.data.entity.TestResultDetailsRecord
@@ -18,13 +19,14 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
-import java.util.*
+import java.util.Locale
 import javax.inject.Inject
 
 class ResultViewModel @Inject constructor(
     private val appConfig: AppConfig,
     private val testResultsRepository: TestResultsRepository,
-    private val fileDownloader: FileDownloader
+    private val fileDownloader: FileDownloader,
+    private val controlServerSettings: ControlServerSettings
 ) : BaseViewModel() {
 
     val state = ResultViewState(appConfig)
@@ -125,6 +127,7 @@ class ResultViewModel @Inject constructor(
     }
 
     fun downloadFile(format: String) {
+
         var language = "en"
         if (Locale.getDefault().language == "sl"){
             language = "sl"
@@ -133,6 +136,7 @@ class ResultViewModel @Inject constructor(
         val url =
             if (format == "pdf") "https://testnet2.akostest.net/RMBTStatisticServer/export/pdf/" + language
             else "https://testnet2.akostest.net/RMBTStatisticServer/opentests/search"
+
         this.testServerResultLiveData.value?.testOpenUUID?.let { openUUID ->
             viewModelScope.launch {
                 fileDownloader.downloadFile(

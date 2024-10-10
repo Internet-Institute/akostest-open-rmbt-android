@@ -1,8 +1,5 @@
 package at.specure.util.download
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -10,10 +7,8 @@ import android.os.Build
 import android.os.Environment
 import android.text.TextUtils
 import android.webkit.MimeTypeMap
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
-import at.specure.core.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,19 +23,10 @@ import javax.inject.Inject
 
 class FileDownloader @Inject constructor(
     private val context: Context,
-    private val notificationManager: NotificationManager
 ) {
     private val _downloadStateFlow: MutableStateFlow<DownloadState> =
         MutableStateFlow(DownloadState.Initial)
     val downloadStateFlow: StateFlow<DownloadState> = _downloadStateFlow
-
-    private val notificationId = 12358 // Unique ID for the notification
-    private val channelId = "download_channel"
-    private val channelName = "Download Channel"
-
-    init {
-        createNotificationChannel()
-    }
 
     sealed class DownloadState {
         object Initial : DownloadState()
@@ -49,21 +35,31 @@ class FileDownloader @Inject constructor(
         object Error : DownloadState()
     }
 
-    suspend fun downloadFile(urlString: String, openUuid: String, format: String) {
+    suspend fun downloadFile(
+        urlString: String,
+        openUuid: String,
+        format: String,
+        fileName: String? = null
+    ) {
         withContext(Dispatchers.IO) {
-            val outputFile = if (Build.VERSION_CODES.Q >= Build.VERSION.SDK_INT) {
-                File(
-                    context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
-                    "$openUuid.$format"
-                )
-            } else {
-                File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
-                    "$openUuid.$format"
-                )
-            }
-
             try {
+                _downloadStateFlow.value = DownloadState.Downloading(1)
+                val name = if (fileName != null) {
+                    "$fileName.$format"
+                } else {
+                    "$openUuid.$format"
+                }
+                val outputFile = if (Build.VERSION_CODES.Q >= Build.VERSION.SDK_INT) {
+                    File(
+                        context.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS),
+                        name
+                    )
+                } else {
+                    File(
+                        Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS),
+                        name
+                    )
+                }
                 val url = URL(urlString)
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "POST"
@@ -94,21 +90,17 @@ class FileDownloader @Inject constructor(
                                 downloadedSize += bytesRead
                                 val progress = (downloadedSize * 100) / totalSize
                                 _downloadStateFlow.value = DownloadState.Downloading(progress)
-                                updateNotificationProgress(progress)
                             }
                         }
                     }
                     _downloadStateFlow.value = DownloadState.Success(outputFile)
-                    showDownloadCompleteNotification(outputFile)
                 } else {
                     // Handle HTTP error response
                     _downloadStateFlow.value = DownloadState.Error
-                    notificationManager.cancel(notificationId)
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
                 _downloadStateFlow.value = DownloadState.Error
-                notificationManager.cancel(notificationId)
             }
         }
     }
@@ -116,7 +108,6 @@ class FileDownloader @Inject constructor(
     fun openFile(file: File, onError: (e: Exception) -> Unit) {
         val parsedUri = convertUriForUseInIntent(file.path)
         parsedUri?.let { fileUri ->
-            // Open the downloaded file
             val intent = if (Build.VERSION_CODES.Q >= Build.VERSION.SDK_INT) {
                 createOpenFileIntentV29(fileUri)
             } else {
@@ -176,56 +167,6 @@ class FileDownloader @Inject constructor(
             MimeTypeMap.getSingleton().getMimeTypeFromExtension(
                 MimeTypeMap.getFileExtensionFromUrl(uri.toString())
             )
-        }
-    }
-
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(
-                channelId,
-                channelName,
-                NotificationManager.IMPORTANCE_DEFAULT
-            )
-            notificationManager.createNotificationChannel(channel)
-        }
-    }
-
-    private fun updateNotificationProgress(progress: Int) {
-        val notification = NotificationCompat.Builder(context, channelId)
-            .setContentTitle("Downloading")
-            .setContentText("Downloaded $progress%")
-            .setSmallIcon(R.drawable.ic_download_24)
-            .setProgress(100, progress, false)
-            .build()
-
-        notificationManager.notify(notificationId, notification)
-    }
-
-    private fun showDownloadCompleteNotification(file: File) {
-        val parsedUri = convertUriForUseInIntent(file.path)
-        parsedUri?.let { fileUri ->
-            // Open the downloaded file
-            val intent = if (Build.VERSION_CODES.Q >= Build.VERSION.SDK_INT) {
-                createOpenFileIntentV29(fileUri)
-            } else {
-                createOpenFileIntent(fileUri)
-            }
-            val pendingIntent = PendingIntent.getActivity(
-                context, 0, intent,
-                PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
-            )
-
-            val filename = file.path.getFileNameWithExtFromUriOrDefault()
-
-            val notification = NotificationCompat.Builder(context, channelId)
-                .setContentTitle(context.getString(R.string.download_complete))
-                .setContentText(context.getString(R.string.download_complete_description, filename))
-                .setSmallIcon(R.drawable.ic_download_24)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true)
-                .build()
-
-            notificationManager.notify(notificationId, notification)
         }
     }
 

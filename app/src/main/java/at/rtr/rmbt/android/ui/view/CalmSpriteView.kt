@@ -65,7 +65,7 @@ class CalmSpriteView @JvmOverloads constructor(
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
         path?.let {
-            canvas?.drawPath(it, paint)
+            canvas.drawPath(it, paint)
         }
     }
 

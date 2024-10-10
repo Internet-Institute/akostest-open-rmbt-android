@@ -554,7 +554,9 @@ data class Urls(
     @SerializedName("url_map_server")
     val mapServerUrl: String?,
     @SerializedName("statistics")
-    val statisticsUrl: String?
+    val statisticsUrl: String?,
+    @SerializedName("url_statistic_server")
+    val statisticsMasterServerUrl: String?
 )
 
 @Keep
@@ -654,6 +656,8 @@ data class HistoryItemResponse(
     val signalClassification: Int?,
     @SerializedName("test_uuid")
     val testUUID: String,
+    @SerializedName("open_test_uuid")
+    val openTestUUID: String,
     @SerializedName("loop_uuid")
     val loopUUID: String?,
     val time: Long,

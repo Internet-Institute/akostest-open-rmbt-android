@@ -9,15 +9,18 @@ import at.specure.data.entity.HistoryContainer
 import at.specure.data.repository.HistoryLoader
 import at.specure.data.repository.HistoryRepository
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.consumeAsFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class HistoryViewModel @Inject constructor(private val repository: HistoryRepository, private val loader: HistoryLoader) : BaseViewModel() {
+class HistoryViewModel @Inject constructor(
+    private val repository: HistoryRepository,
+    private val loader: HistoryLoader,
+) : BaseViewModel() {
 
     private val _isLoadingLiveData = MutableLiveData<Boolean>()
+    private var _historyLiveData: LiveData<PagedList<HistoryContainer>> = MutableLiveData<PagedList<HistoryContainer>>()
 
     val state = HistoryViewState()
 
@@ -25,7 +28,10 @@ class HistoryViewModel @Inject constructor(private val repository: HistoryReposi
         get() = _isLoadingLiveData
 
     val historyLiveData: LiveData<PagedList<HistoryContainer>>
-        get() = loader.historyLiveData
+        get() {
+            _historyLiveData = loader.historyLiveData
+            return _historyLiveData
+        }
 
     init {
         addStateSaveHandler(state)
