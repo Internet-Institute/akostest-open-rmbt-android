@@ -119,7 +119,7 @@ class MapFragment : BaseFragment(), MapMarkerDetailsAdapter.MarkerDetailsCallbac
 
         if (!mapViewModel.state.playServicesAvailable.get()) {
             binding.webMap.settings.javaScriptEnabled = true
-            binding.webMap.loadUrl("https://testnet2.akostest.net/en/Karte")
+            binding.webMap.loadUrl("https://novi.akostest.net/en/Karte")
         }
     }
 

@@ -7,12 +7,12 @@
     },
     {
       "name": "CONTROL_SERVER_HOST",
-      "value": "testnet2.akostest.net",
+      "value": "novi.akostest.net",
       "visible": false
     },
     {
       "name": "CONTROL_SERVER_CHECK_PRIVATE_IPV4_HOST",
-      "value": "testnet2.akostest.net",
+      "value": "novi.akostest.net",
       "visible": false
     },
     {
@@ -22,12 +22,12 @@
     },
     {
       "name": "CONTROL_SERVER_CHECK_PUBLIC_IPV4_URL",
-      "value": "https://testnet2v4.akostest.net/RMBTControlServer/ip",
+      "value": "https://noviv4.akostest.net/RMBTControlServer/ip",
       "visible": false
     },
     {
       "name": "CONTROL_SERVER_CHECK_PUBLIC_IPV6_URL",
-      "value": "https://testnet2v6.akostest.net/RMBTControlServer/ip",
+      "value": "https://noviv6.akostest.net/RMBTControlServer/ip",
       "visible": false
     },
     {
@@ -37,7 +37,7 @@
     },
     {
       "name": "CONTROL_SERVER_NEW_HOST",
-      "value": "testnet2.akostest.net",
+      "value": "novi.akostest.net",
       "visible": false
     },
     {
@@ -257,12 +257,12 @@
     },
     {
       "name": "DATA_PRIVACY_AND_TERMS_URL",
-      "value": "https://testnet2.akostest.net/si/tc_android.html",
+      "value": "https://novi.akostest.net/si/tc_android.html",
       "visible": true
     },
     {
       "name": "TERMS_FOR_ACCEPTANCE_URL",
-      "value": "https://testnet2.akostest.net/si/tc_android.html",
+      "value": "https://novi.akostest.net/si/tc_android.html",
       "visible": true
     },
     {

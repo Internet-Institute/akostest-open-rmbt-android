@@ -134,8 +134,8 @@ class ResultViewModel @Inject constructor(
         }
 
         val url =
-            if (format == "pdf") "https://testnet2.akostest.net/RMBTStatisticServer/export/pdf/" + language
-            else "https://testnet2.akostest.net/RMBTStatisticServer/opentests/search"
+            if (format == "pdf") "https://novi.akostest.net/RMBTStatisticServer/export/pdf/" + language
+            else "https://novi.akostest.net/RMBTStatisticServer/opentests/search"
 
         this.testServerResultLiveData.value?.testOpenUUID?.let { openUUID ->
             viewModelScope.launch {
