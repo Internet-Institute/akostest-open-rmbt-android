@@ -53,3 +53,6 @@ akep/*
 
 # Private folder
 private
+
+# Config JSON
+app/src/openRmbt/config.json
