@@ -1,5 +1,7 @@
 ## ABOUT
 
+AKOS TestNet is released under the [Apache License, Version 2.0]. The Android App was developed by [InternetInstitute](AKOS TestNet is released under the [Apache License, Version 2.0]. The iOS App was developed by [InternetInstitute](https://iinstitute.eu/) and financed by the [Agency for Communication Networks and Services of the Republic of Slovenia (AKOS)](https://www.akos-rs.si/en/).) and financed by the [Agency for Communication Networks and Services of the Republic of Slovenia (AKOS)](https://www.akos-rs.si/en/).
+
 Open-RMBT is an open source, multi-threaded bandwidth test used in [RTR-Netztest](https://www.netztest.at/de/) (RTR-Nettest in English).</p>
 This repository contains the source code of the new version of the RTR-Netztest application for Android.</br> The source code of the new implementation is developed by [Specure GmbH](https://martes-specure.com/), based on the [previous app](https://github.com/rtr-nettest/open-rmbt) developed by the Austrian Regulatory Authority for Broadcasting and Telecommunications ([RTR GmbH](https://www.rtr.at/)) and alladin-IT GmbH.</p>
 The source code is published under [Apache version 2.0 license](https://github.com/rtr-nettest/open-rmbt-android/blob/master/LICENSE).
