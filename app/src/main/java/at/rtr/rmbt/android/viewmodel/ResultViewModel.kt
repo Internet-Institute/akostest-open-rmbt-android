@@ -1,5 +1,6 @@
 package at.rtr.rmbt.android.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -19,6 +20,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.zip
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.Locale
 import javax.inject.Inject
 
@@ -134,8 +136,12 @@ class ResultViewModel @Inject constructor(
         }
 
         val url =
-            if (format == "pdf") "https://novi.akostest.net/RMBTStatisticServer/export/pdf/" + language
-            else "https://novi.akostest.net/RMBTStatisticServer/opentests/search"
+            //if (format == "pdf") "https://novi.akostest.net/RMBTStatisticServer/export/pdf/" + language
+            //else "https://novi.akostest.net/RMBTStatisticServer/opentests/search"
+
+
+            if (format == "pdf") "https://testnet3.akostest.net/RMBTStatisticServer/export/pdf/" + language
+            else "https://testnet3.akostest.net/RMBTStatisticServer/opentests/search"
 
         this.testServerResultLiveData.value?.testOpenUUID?.let { openUUID ->
             viewModelScope.launch {
