@@ -86,7 +86,7 @@
     <string name="preferences_source_code">Source code</string>
     <string name="preferences_data_protection">Privacy policy and terms of use</string>
     <string name="preferences_developed_by">Developed by  Internet Institute</string>
-    <string name="preferences_developer_page" translatable="false">https://www.qmon.eu/</string>
+    <string name="preferences_developer_page" translatable="false">https://iinstitute.eu/</string>
     <string name="preferences_design_by">Design by Feinblick</string>
     <string name="preferences_design_page" translatable="false">https://www.feinblick.com</string>
     <string name="preferences_network_info_by">Network information by NetMonster Core</string>
@@ -144,7 +144,7 @@
     <string name="location_location_direction_e">E %1$s</string>
     <string name="location_location_direction_s">S %1$s</string>
     <string name="location_location_direction_w">W %1$s</string>
-    <string name="open_location_permission_dialog_label_location_not_permitted">AKOS Test Net is not allowed to use your location. Would you like to allow RTR-NetTest to use your location?</string>
+    <string name="open_location_permission_dialog_label_location_not_permitted">AKOS Test Net is not allowed to use your location. Would you like to allow AKOS Test Net to use your location?</string>
     <string name="open_location_permission_dialog_label_open_permission_setting">Open application settings</string>
 
 
@@ -425,7 +425,7 @@
 
     <string name="downloading">Downloading</string>
     <string name="download_progress">Downloaded %1$d%%</string>
-    <string name="history_filename">NetztestHistoryExport</string>
+    <string name="history_filename">all-tests</string>
 
     <!-- Signal details - content labeling -->
     <string name="notification_permission_title">3. Notification permission</string>
