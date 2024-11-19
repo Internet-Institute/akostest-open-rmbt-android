@@ -87,7 +87,7 @@
     <string name="preferences_source_code">Izvorna koda</string>
     <string name="preferences_data_protection">Splošni pogoji in politika zasebnosti</string>
     <string name="preferences_developed_by">Razvito s strani Internet Institute</string>
-    <string name="preferences_developer_page" translatable="false">https://www.qmon.eu/</string>
+    <string name="preferences_developer_page" translatable="false">https://iinstitute.eu/</string>
     <string name="preferences_design_by">Dizajnirano s strani Feinblick</string>
     <string name="preferences_design_page" translatable="false">https://www.feinblick.com</string>
     <string name="preferences_network_info_by">Informacije o omrežju prek NetMonster Core</string>
