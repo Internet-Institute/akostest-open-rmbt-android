@@ -13,11 +13,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import java.io.BufferedInputStream
 import java.io.File
 import java.io.FileOutputStream
 import java.net.HttpURLConnection
 import java.net.URL
+import java.time.Instant
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -43,9 +47,15 @@ class FileDownloader @Inject constructor(
     ) {
         withContext(Dispatchers.IO) {
             try {
+
+                val timestamp = DateTimeFormatter
+                    .ofPattern("HH-mm-ss-MM-dd-yyyy")
+                    .withZone(ZoneOffset.UTC)
+                    .format(Instant.now())
+
                 _downloadStateFlow.value = DownloadState.Downloading(1)
                 val name = if (fileName != null) {
-                    "$fileName.$format"
+                    "$fileName-$timestamp.$format"
                 } else {
                     "$openUuid.$format"
                 }
@@ -102,6 +112,7 @@ class FileDownloader @Inject constructor(
                 e.printStackTrace()
                 _downloadStateFlow.value = DownloadState.Error
             }
+
         }
     }
 

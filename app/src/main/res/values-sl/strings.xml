@@ -423,7 +423,7 @@
     <!-- Signal details - content labeling -->
     <string name="downloading">Prenašanje</string>
     <string name="download_progress">%1$d%% prenašanje v teku</string>
-    <string name="history_filename">AKOS zgodovina prenos</string>
+    <string name="history_filename">AKOS-zgodovina-prenos</string>
     <string name="notification_permission_title">3. Dovoljenje za obvestila</string>
     <string name="notification_permission_explanation">Dovoljenje za obvestila je potrebno za ohranjanje delovanja aplikacije med meritvami, ki se izvajajo v ozadju. Brez dovoljenja za obvestila ne boste mogli spremljati napredka meritev, ko je aplikacija v ozadju. Za zagon načina zanke v ozadju je potrebno dovoljenje za obvestila.</string>
 

@@ -425,7 +425,7 @@
 
     <string name="downloading">Downloading</string>
     <string name="download_progress">Downloaded %1$d%%</string>
-    <string name="history_filename">all-tests</string>
+    <string name="history_filename">AKOS-history</string>
 
     <!-- Signal details - content labeling -->
     <string name="notification_permission_title">3. Notification permission</string>
