@@ -105,7 +105,7 @@ class HistoryDownloadViewModel @Inject constructor(
             val languageCode = Locale.getDefault().toLanguageTag().split("-")[0]
             val statisticServerUrl = controlServerSettings.statisticsMasterServerUrl
                 //?: "https://novi.akostest.net/RMBTStatisticServer"
-                ?: "https://testnet3.akostest.net/RMBTStatisticServer"
+                ?: "https://akostest.net/RMBTStatisticServer"
             val url =
                 if (format == "pdf") "$statisticServerUrl/export/pdf/$languageCode"
                 else "$statisticServerUrl/opentests/search"
