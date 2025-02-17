@@ -185,6 +185,7 @@
         <item>10M</item>
         <item>100M</item>
         <item>1G</item>
+        <item>10G</item>
     </string-array>
 
     <string name="strength_signal_value" translatable="false">%d dBm</string>
@@ -330,8 +331,10 @@
     <string name="text_button_accept">Sprejmi</string>
     <string name="text_loop_instruction_1">Možnost ponovitvenega načina za tehnično zainteresirane uporabnike omogoča samodejno ponavljanje AKOS Test Net. Prvi test se začne takoj po aktivaciji ponovitvenega načina; nadaljnji testi se izvedejo, ko poteče čas čakanja ali ko se izvede premik za določeno razdaljo. Testi se bodo izvajali dokler ne bo doseženo nastavljeno število testov. Moč signala se meri neprekinjeno, tudi med dvema testoma. Ponovitveni način je mogoče kadar koli ustaviti oziroma se ustavi samodejno po 48 urah. Izrecno je treba poudariti, da zaradi izvajanja ponovitvenega načina ni mogoče izključiti identifikacijo testerja.</string>
     <string name="text_loop_instruction_2">V primeru velikega povpraševanja ali zelo velikega števila testov na določenem območju lahko testni sistem zavrne ponovitveni način v izogib preobremenitev. Upoštevajte, da je ponovitveni način namenjen samo v uporabi v EU in EGP. Ponovitveni način lahko porabi veliko količino podatkov. Pri hitrih povezavah lahko 10 testov porabi 1 GB ali več podatkov. Zato je zelo priporočljivo, da se ponovitveni način uporablja le pri realnih pavšalnih tarifah, kjer dodatna količina podatkov ne povzroča dodatnih stroškov. Ponovitveni način lahko hitro izprazni baterijo. V pavzah med testi ostaneta GPS in zaslon aktivna, meritve signala pa se nadaljujejo, kar pomeni, da se energija porablja veliko hitreje kot v stanju pripravljenosti. Ponovitveni način izvajanja testov naj se zato uporablja samo, če je na voljo zunanji vir napajanja.</string>
+    <string name="text_loop_instruction_3">AKOS Test Net uporablja dovoljenje za lokacijo samo med meritvijo, dovoljenje v ozadju je potrebno za izvajanje načina zanke v ozadju.\n\nAKOS Test Net zbira podatke o lokaciji, da zabeleži lokacijo meritve med načinom zanke tudi ko se aplikacija izvaja v ozadju.</string>
     <string name="title_loop_instruction_1">Aktivacija</string>
     <string name="title_loop_instruction_2">Uporaba</string>
+    <string name="title_loop_instruction_3">Dovoljenje</string>
 
     <string name="text_filter_devices">Naprave</string>
     <string name="text_filter_networks">Omrežje</string>
@@ -356,6 +359,7 @@
     <string name="radio_info_warning_message">Previdno: spreminjanje naprednih nastavitev radijske konfiguracije lahko škoduje stabilnosti ali delovanju vaše naprave.</string>
     <string name="accept_risk">Sprejemam tveganje</string>
     <string name="preferences_connection_details_not_supported">Podrobnosti o razširjeni povezavi v tej napravi niso podprte</string>
+    <string name="preferences_unable_to_find_browser_app">Ni mogoče odpreti privzete aplikacije brskalnika.</string>
 
     <string name="dialog_signal_info_band">Pas</string>
     <string name="dialog_signal_info_connection_status" translatable="false">Status</string>
@@ -426,6 +430,97 @@
     <string name="history_filename">AKOS-zgodovina-prenos</string>
     <string name="notification_permission_title">3. Dovoljenje za obvestila</string>
     <string name="notification_permission_explanation">Dovoljenje za obvestila je potrebno za ohranjanje delovanja aplikacije med meritvami, ki se izvajajo v ozadju. Brez dovoljenja za obvestila ne boste mogli spremljati napredka meritev, ko je aplikacija v ozadju. Za zagon načina zanke v ozadju je potrebno dovoljenje za obvestila.</string>
+    <!-- TODO prevod -->
+    <string name="unknown_signal_mobile">Neznan mobilni signal</string>
+    <string name="unknown_signal_2G">Neznan signal 2G</string>
+    <string name="unknown_signal_3G">Neznan signal 3G</string>
+    <string name="unknown_signal_4G">Neznan signal 4G</string>
+    <string name="unknown_signal_5G">Neznan signal 5G</string>
+    <string name="unknown_signal_wifi">Neznan signal WIFI</string>
+    <string name="unknown_network_type">Neznana tip omrežja</string>
 
+    <string name="bad_signal_2g">"2G slab signal "</string>
+    <string name="normal_signal_2g">2G normalen signal</string>
+    <string name="good_signal_2g">2G dober signal</string>
+    <string name="excellent_signal_2g">2G odličen signal</string>
 
+    <string name="bad_signal_3g">"3G slab signal "</string>
+    <string name="normal_signal_3g">3G normalen signal</string>
+    <string name="good_signal_3g">3G dober signal</string>
+    <string name="excellent_signal_3g">3G odličen signal</string>
+
+    <string name="bad_signal_4g">"4G slab signal "</string>
+    <string name="normal_signal_4g">4G v signal</string>
+    <string name="good_signal_4g">4G dober signal</string>
+    <string name="excellent_signal_4g">4G odličen signal</string>
+
+    <string name="bad_signal_5g">"5G slab signal "</string>
+    <string name="normal_signal_5g">5G normalen signal</string>
+    <string name="good_signal_5g">5G dober signal</string>
+    <string name="excellent_signal_5g">5G odličen signal</string>
+
+    <string name="bad_signal_wifi">"WIFI slab signal "</string>
+    <string name="normal_signal_wifi">WIFI normalen signal</string>
+    <string name="good_signal_wifi">WIFI dober signal</string>
+    <string name="excellent_signal_wifi">WIFI odličen signal</string>
+
+    <string name="network_type_bluetooth">Bluetooth tip omrežja</string>
+    <string name="network_type_vpn">VPN tip omrežja</string>
+    <string name="network_type_lan">LAN tip omrežja</string>
+    <string name="network_type_browser">Vrsta omrežnega brskalnika</string>
+
+    <string name="toggle_loop_mode">Preklopi v način zanke</string>
+
+    <string name="previous_result">Prejšnji rezultat</string>
+    <string name="next_result">Naslednji rezultat</string>
+
+    <string name="download_history_as_pdf">Zgodovina prenosov PDF</string>
+    <string name="download_history_as_xlsx">Zgodovina prenosov XLSX</string>
+    <string name="download_history_as_csv">Zgodovina prenosov CSV</string>
+
+    <string name="history_list_header_date">Glava seznama zgodovine: datum</string>
+    <string name="history_list_header_download_speed">Glava seznama zgodovine: hitrost prenosa</string>
+    <string name="history_list_header_download_speed_units">Glava seznama zgodovine: enote hitrosti prenosa: Mbit/s </string>
+    <string name="history_list_header_upload_speed">Glava seznama zgodovine: hitrost nalaganja</string>
+    <string name="history_list_header_upload_speed_units">Glava seznama zgodovine: enote hitrosti nalaganja: Mbit/s </string>
+    <string name="history_list_header_ping">Glava seznama zgodovine: ping</string>
+    <string name="history_list_header_ping_units">Glava seznama zgodovine: enote ping: milisekunde </string>
+
+    <string name="home_start_measurement">Začni meritev</string>
+    <string name="title">Naslov: </string>
+    <string name="subtitle">Podnaslov: </string>
+
+    <string name="home_signal_measurement_toggle_on">Vklop merjenja signala</string>
+    <string name="home_signal_measurement_toggle_off">Izklop merjenja signala</string>
+
+    <string name="ipv4_no_info">IP verzija 4: ni informacije</string>
+    <string name="ipv4_no_address">IP verzija 4: ni naslova</string>
+    <string name="ipv4_no_nat">IP verzija 4: ni NAT</string>
+    <string name="ipv4">IP verzija 4: NAT</string>
+    <string name="ipv6_no_info">IP verzija 6: ni informacije</string>
+    <string name="ipv6_no_address">IP verzija 6: ni naslova</string>
+    <string name="ipv6_no_nat">IP verzija 6: ni NAT</string>
+    <string name="ipv6">IP verzija 6: NAT</string>
+
+    <string name="bottom_navigation_area">Navigacijsko območje na dnu</string>
+    <string name="active_history_filters_container">Vsebnik filtrov zgodovine</string>
+    <string name="history_list_header_container">Vsebnik glave seznama zgodovine</string>
+    <string name="remove_filter">Odstrani filter</string>
+
+    <string name="share_result">Deli rezultate</string>
+    <string name="test_result_from">"Rezultat testa iz: "</string>
+
+    <string name="classification_undefined">Razvrstitev: brez</string>
+    <string name="classification_bad">Razvrstitev: slaba</string>
+    <string name="classification_normal">Razvrstitev: normalna</string>
+    <string name="classification_good">Razvrstitev: dobra</string>
+    <string name="classification_excellent">Razvrstitev: odlična</string>
+    <string name="title_test_details">Podrobnosti testa</string>
+
+    <string name="test_result_status">Stanje rezultata testa:</string>
+    <string name="more_sims_active_dialog_title">Dual SIM aktiven</string>
+    <string name="more_sims_active_dialog_text">Merjenje signala podpira le eno kartico SIM. Deaktivirajte drugo kartico SIM.</string>
+    <string name="confirm">Potrdi</string>
+    <string name="wrong_network_type_active_dialog_title">Ni na mobilnem</string>
+    <string name="wrong_network_type_active_dialog_text">Deaktivirajte Wifi (ali katero drugo nemobilno povezavo)</string>
 </resources>

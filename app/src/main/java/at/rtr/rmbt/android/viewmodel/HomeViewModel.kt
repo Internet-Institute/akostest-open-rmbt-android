@@ -16,6 +16,7 @@ import at.specure.data.MeasurementServers
 import at.specure.data.repository.NewsRepository
 import at.specure.data.repository.SettingsRepository
 import at.specure.info.TransportType
+import at.specure.info.cell.CellNetworkInfo
 import at.specure.info.connectivity.ConnectivityInfoLiveData
 import at.specure.info.ip.IpV4ChangeLiveData
 import at.specure.info.ip.IpV6ChangeLiveData
@@ -27,6 +28,7 @@ import at.specure.measurement.signal.SignalMeasurementProducer
 import at.specure.measurement.signal.SignalMeasurementService
 import at.specure.test.SignalMeasurementType
 import at.specure.util.permission.PermissionsWatcher
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
@@ -144,7 +146,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun getNews() = launch {
+    fun getNews() = launch(CoroutineName("HomeViewModelGetNews")) {
         settingsRepository.refreshSettingsByFlow()
             .flowOn(Dispatchers.IO)
             .collect {
@@ -202,4 +204,17 @@ class HomeViewModel @Inject constructor(
         // allow cell infos is expert mode is enabled or if always enabled by configuration
         return ((isExpertModeOn || isalwaysAllowCellInfosOn ) && (state.activeNetworkInfo.get()?.networkInfo?.type == TransportType.WIFI || state.activeNetworkInfo.get()?.networkInfo?.type == TransportType.CELLULAR))
     }
+
+    fun isMobileNetworkActive(): Boolean {
+        return state.activeNetworkInfo.get()?.networkInfo?.type == TransportType.CELLULAR
+    }
+
+    fun isOnlyOneSimActive(): Boolean {
+        return if (state.activeNetworkInfo.get()?.networkInfo is CellNetworkInfo && appConfig.shouldCheckActiveSimsCount) {
+            (state.activeNetworkInfo.get()?.networkInfo as CellNetworkInfo).subscriptionsCount <= 1
+        } else {
+            false
+        }
+    }
+
 }

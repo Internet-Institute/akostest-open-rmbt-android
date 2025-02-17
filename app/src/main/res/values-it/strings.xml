@@ -137,10 +137,12 @@
     <string name="measurement_upload">Upload</string>
     <string name="measurement_dash">-</string>
     <string name="measurement_speed_chart_x_label_min">0s</string>
-    <string name="measurement_speed_chart_x_label_max">8s</string>
+    <string name="measurement_speed_chart_x_label_max">7s</string>
     <string name="measurement_ping">Ping</string>
     <string name="measurement_down">Down</string>
     <string name="measurement_up">Up</string>
+    <string name="measurement_results_down">Down</string>
+    <string name="measurement_results_up">Up</string>
     <string name="measurement_qos">Qualità del servizio (QoS)</string>
     <string name="measurement_qos_web_site">Sito web</string>
     <string name="measurement_qos_transparent_connection">Connessione trasparente</string>
@@ -259,8 +261,10 @@
     <string name="text_button_accept">Accetta</string>
     <string name="text_loop_instruction_1">La modalità loop per gli utenti tecnicamente interessati consente la ripetizione automatica di RTR-NetTest. La prima prova inizia subito dopo l’attivazione della modalità loop; ulteriori prove sono effettuate quando è trascorso il tempo di attesa o quando è stata percorsa la distanza specificata. Le prove saranno eseguite fino al raggiungimento del numero configurato di prove. L\'intensità del segnale viene misurata continuamente, anche tra due prove. La modalità loop può essere interrotta in qualsiasi momento e si ferma comunque dopo 48 ore. Va sottolineato esplicitamente che a causa della modalità loop non si può escludere che il tester sia identificato.</string>
     <string name="text_loop_instruction_2">Nel caso di una grande domanda o di un numero molto elevato di test in un determinato settore, la modalità loop può essere rifiutata dal sistema di prova per evitare sovraccarichi. Si prega di notare che il loop-modus è (solo) destinato all\'uso all\'interno dell\'UE e del SEE. Il loop-modus consuma una grande quantità di dati. Con connessioni rapide, 10 test possono consumare 1 GB o più di dati. Si raccomanda pertanto vivamente che il loop-modus venga utilizzato solo con tariffe forfettarie reali, dove il volume di dati aggiuntivi non comporta costi aggiuntivi. Il loop-modus svuota rapidamente la batteria. Nelle pause tra le prove, il GPS e il display rimangono attivi e le misurazioni del segnale continuano, il che significa che l\'energia viene utilizzata molto più velocemente che durante la modalità stand-by. Il loop-modus dovrebbe pertanto essere utilizzato solo se è disponibile un alimentatore esterno.</string>
+    <string name="text_loop_instruction_3">AKOS Test Net uses the location permission only during the measurement, the background permission is required to allow to run the loop mode in background.\n\nAKOS Test Net collects location data in order to record the location of a measurement during the loop mode, even when the app is running in background.</string>
     <string name="title_loop_instruction_1">Attivazione</string>
     <string name="title_loop_instruction_2">Utilizzo</string>
+    <string name="title_loop_instruction_3">Permissions</string>
     <string name="text_filter_devices">Dispositivi</string>
     <string name="text_filter_networks">Reti</string>
     <string name="label_filter_options">Opzioni</string>
@@ -282,6 +286,7 @@
     <string name="radio_info_warning_message">Attenzione: la modifica delle impostazioni avanzate della configurazione radio potrebbe essere dannosa per la stabilità e le prestazioni del dispositivo.</string>
     <string name="accept_risk">Accetto il rischio</string>
     <string name="preferences_connection_details_not_supported">I dettagli estesi di connessione non sono supportati su questo dispositivo</string>
+    <string name="preferences_unable_to_find_browser_app">Unable to open default browser application.</string>
     <string name="dialog_signal_info_band">Banda</string>
     <string name="dialog_signal_info_channel">Canale</string>
     <string name="text_local_results">Solo risultati locali</string>
@@ -301,10 +306,10 @@
     <string name="phone_permission_explanation">RTR-NetTest non effettua chiamate. L\'autorizzazione al telefono è necessaria per identificare il fornitore del servizio.</string>
     <string name="location_permission_explanation">The location permission is necessary to identify the measurement location and to display it on the map. Without precise location permission, signal strength is unavailable on many devices. Use of loop mode while on the move is only possible with location permission.</string>
     <string name="location_permissions_disclaimer">RTR-NetTest utilizza il permesso alla localizzazione solo durante la misurazione, il permesso all\'accesso in background è necessario per consentire l\'esecuzione della modalità loop in background.</string>
-    <string name="home_home">Home</string>
-    <string name="home_map">Map</string>
-    <string name="home_statistics">Statistics</string>
-    <string name="home_history">History</string>
+    <string name="home_home">Navigazione principale: Home</string>
+    <string name="home_map">Navigazione principale: Mappa</string>
+    <string name="home_statistics">Navigazione principale: Statistiche</string>
+    <string name="home_history">Navigazione principale: Cronologia</string>
     <string name="home_loop_mode_active">Loop mode</string>
     <string name="label_download_files">Export data</string>
     <string name="error_during_download">Errore di download</string>
@@ -316,4 +321,98 @@
     <string name="history_filename">AKOS-history</string>
     <string name="notification_permission_title">3. Autorizzazione di notifica</string>
     <string name="notification_permission_explanation">Il permesso di notifica è necessario per mantenere attiva l\'app durante le misurazioni eseguite in background. Senza l\'autorizzazione alle notifiche, non sarai in grado di monitorare l\'avanzamento della misurazione quando l\'app è in background. L\'autorizzazione alla notifica è necessaria per consentire l\'esecuzione della modalità loop in background.</string>
+
+    <string name="unknown_signal_mobile">Unknown signal mobile</string>
+    <string name="unknown_signal_2G">Unknown signal 2G</string>
+    <string name="unknown_signal_3G">Unknown signal 3G</string>
+    <string name="unknown_signal_4G">Unknown signal 4G</string>
+    <string name="unknown_signal_5G">Unknown signal 5G</string>
+    <string name="unknown_signal_wifi">Unknown signal WIFI</string>
+    <string name="unknown_network_type">Unknown network type</string>
+
+    <string name="bad_signal_2g">"2G bad signal "</string>
+    <string name="normal_signal_2g">2G normal signal</string>
+    <string name="good_signal_2g">2G good signal</string>
+    <string name="excellent_signal_2g">2G excellent signal</string>
+
+    <string name="bad_signal_3g">"3G bad signal "</string>
+    <string name="normal_signal_3g">3G normal signal</string>
+    <string name="good_signal_3g">3G good signal</string>
+    <string name="excellent_signal_3g">3G excellent signal</string>
+
+    <string name="bad_signal_4g">"4G bad signal "</string>
+    <string name="normal_signal_4g">4G normal signal</string>
+    <string name="good_signal_4g">4G good signal</string>
+    <string name="excellent_signal_4g">4G excellent signal</string>
+
+    <string name="bad_signal_5g">"5G bad signal "</string>
+    <string name="normal_signal_5g">5G normal signal</string>
+    <string name="good_signal_5g">5G good signal</string>
+    <string name="excellent_signal_5g">5G excellent signal</string>
+
+    <string name="bad_signal_wifi">"WIFI bad signal "</string>
+    <string name="normal_signal_wifi">WIFI normal signal</string>
+    <string name="good_signal_wifi">WIFI good signal</string>
+    <string name="excellent_signal_wifi">WIFI excellent signal</string>
+
+    <string name="network_type_bluetooth">Bluetooth network type</string>
+    <string name="network_type_vpn">VPN network type</string>
+    <string name="network_type_lan">LAN network type</string>
+    <string name="network_type_browser">Browser network type</string>
+
+    <string name="toggle_loop_mode">Toggle loop mode</string>
+
+    <string name="previous_result">Previous result</string>
+    <string name="next_result">Next result</string>
+
+    <string name="download_history_as_pdf">Download history as PDF</string>
+    <string name="download_history_as_xlsx">Download history as XLSX</string>
+    <string name="download_history_as_csv">Download history as CSV</string>
+
+    <string name="history_list_header_date">History list header: date</string>
+    <string name="history_list_header_download_speed">History list header: download speed</string>
+    <string name="history_list_header_download_speed_units">History list header: download speed units: Mbit/s </string>
+    <string name="history_list_header_upload_speed">History list header: upload speed</string>
+    <string name="history_list_header_upload_speed_units">History list header: upload speed units: Mbit/s </string>
+    <string name="history_list_header_ping">History list header: ping</string>
+    <string name="history_list_header_ping_units">History list header: ping units: milliseconds </string>
+
+    <string name="home_start_measurement">Start measurement</string>
+    <string name="title">Title: </string>
+    <string name="subtitle">Subtitle: </string>
+
+    <string name="home_signal_measurement_toggle_on">Signal measurement toggle on</string>
+    <string name="home_signal_measurement_toggle_off">Signal measurement toggle off</string>
+
+    <string name="ipv4_no_info">IP version 4: no information</string>
+    <string name="ipv4_no_address">IP version 4: no address</string>
+    <string name="ipv4_no_nat">IP version 4: no NAT</string>
+    <string name="ipv4">IP version 4: NAT</string>
+    <string name="ipv6_no_info">IP version 6: no information</string>
+    <string name="ipv6_no_address">IP version 6: no address</string>
+    <string name="ipv6_no_nat">IP version 6: no NAT</string>
+    <string name="ipv6">IP version 6: NAT</string>
+
+    <string name="bottom_navigation_area">Bottom navigation area</string>
+    <string name="active_history_filters_container">History filters container</string>
+    <string name="history_list_header_container">History list header container</string>
+    <string name="remove_filter">Remove filter</string>
+
+    <string name="share_result">Share result</string>
+    <string name="test_result_from">"Test result from: "</string>
+
+    <string name="classification_undefined">Classification: none</string>
+    <string name="classification_bad">Classification: bad</string>
+    <string name="classification_normal">Classification: normal</string>
+    <string name="classification_good">Classification: good</string>
+    <string name="classification_excellent">Classification: excellent</string>
+    <string name="title_test_details">Test details</string>
+
+    <string name="test_result_status">Test result status:</string>
+    <string name="more_sims_active_dialog_title">Dual SIM active</string>
+    <string name="more_sims_active_dialog_text">Signal measurement only supports single SIM. Please deactivate second SIM.</string>
+    <string name="confirm">Confirm</string>
+    <string name="wrong_network_type_active_dialog_title">Not on mobile</string>
+    <string name="wrong_network_type_active_dialog_text">Please deactivate Wifi (or some other non-mobile connection)</string>
+
 </resources>

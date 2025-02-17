@@ -137,10 +137,12 @@
     <string name="measurement_upload">Feltöltés</string>
     <string name="measurement_dash">-</string>
     <string name="measurement_speed_chart_x_label_min">0s</string>
-    <string name="measurement_speed_chart_x_label_max">8s</string>
+    <string name="measurement_speed_chart_x_label_max">7s</string>
     <string name="measurement_ping">Ping</string>
     <string name="measurement_down">Le</string>
     <string name="measurement_up">Fel</string>
+    <string name="measurement_results_down">Down</string>
+    <string name="measurement_results_up">Up</string>
     <string name="measurement_qos">QoS</string>
     <string name="measurement_qos_web_site">Weboldal</string>
     <string name="measurement_qos_transparent_connection">Transzparens összeköttetés</string>
@@ -259,8 +261,10 @@
     <string name="text_button_accept">Elfogadom</string>
     <string name="text_loop_instruction_1">Az ismétlődő mérés opció a műszaki érdeklődésű felhasználók számára lehetővé teszi az RTR-NetTest mérés folyamatos megismétlését. Az első mérésre az ismétlődő mérési mód bekapcsolását követően azonnnal sor kerül. A további mérések a meghatározott várakozási idő elteltét követően vagy a mérési pontnak a beállított távolságot meghaladó mértékű elmozdulása esetén kerül sor. A mérések addig ismétlődnek, amíg számuk el nem éri a beállított értéket. A jelerősség mérése folyamatosan történik, az ismétlődő mérések között is. Az ismétlődő mérés mód bármikor leálllítható, de 48 óra elteltével automatikusan is leáll. Felhívjuk a figyelmet arra, hogy az ismétlődő mérési módban nem zárható ki a tesztelést végző azonosítása.</string>
     <string name="text_loop_instruction_2">Amennyiben egy területen túl sok egyidejű folyamatos mérési igény jelentkezik, a túlterhelés elkerülése érdekében a rendszer a folyamatos mérési igényeket visszautasíthatja. Kérjük, vegye figyelembe, hogy a folyamatos mérési funkció kizárólag az EU tagállamokban, illetve az EU gazdasági térség országaiban történő használatra készült. A folyamatos mérés nagy mennyiségű adatforgalmat generál. Nagy sebességű hálózat esetén 10 mérés elvégzése 1 GB vagy ennél nagyobb adatforgalmat is jelenthet. Erre tekintettel, nyomatékosan javasoljuk, hogy a folyamatos mérési mód beállítását kizárólag ténylegesen rögzített díjszabás esetén végezze el, amely esetén a mérés miatt megnövekedett adatforgalom nem jár többletköltségekkel. A folyamatos mérés gyorsan az akkumulátor lemerülésével járhat. A mérések szüneteiben a GPS és a képernyő bekapcsolva marad, ami jelentős többlet energiafogyasztást eredményez az energiatakarékos üzemmódhoz képest. Erre tekintettel a folyamatos mérés csak külső tápegység csatlakoztatása mellett javasolt.</string>
+    <string name="text_loop_instruction_3">AKOS Test Net uses the location permission only during the measurement, the background permission is required to allow to run the loop mode in background.\n\nAKOS Test Net collects location data in order to record the location of a measurement during the loop mode, even when the app is running in background.</string>
     <string name="title_loop_instruction_1">Aktiválás</string>
-    <string name="title_loop_instruction_2">Használat</string>
+    <string name="title_loop_instruction_2">Használat</string>g>
+    <string name="title_loop_instruction_3">Permissions</string>
     <string name="text_filter_devices">Készülékek</string>
     <string name="text_filter_networks">Hálózatok</string>
     <string name="label_filter_options">Választási lehetőségek</string>
@@ -282,6 +286,7 @@
     <string name="radio_info_warning_message">Figyelmeztetés: A szakértői módban elérhető rádiófrekvenciás beállítások megváltoztatása a készülék stabilitását és teljesítményét ronthatja.</string>
     <string name="accept_risk">I accept the risk</string>
     <string name="preferences_connection_details_not_supported">Részletes kapcsolati jellemzők megjelenítését nem támogatja a készülék</string>
+    <string name="preferences_unable_to_find_browser_app">Unable to open default browser application.</string>
     <string name="dialog_signal_info_band">Sáv</string>
     <string name="dialog_signal_info_channel">Csatorna</string>
     <string name="text_local_results">Csak helyi eredmények</string>
@@ -301,10 +306,10 @@
     <string name="phone_permission_explanation">Az RTR-NetTest alkalmazás nem kezdeményez hívásokat. A telefon adatokhoz történő hozzáférés a mobilszolgáltató azonosítása érdekében szükséges.</string>
     <string name="location_permission_explanation">The location permission is necessary to identify the measurement location and to display it on the map. Without precise location permission, signal strength is unavailable on many devices. Use of loop mode while on the move is only possible with location permission.</string>
     <string name="location_permissions_disclaimer">Az RTR-NetTest alkalmazás kizárólag a mérés ideje alatt használja a helyadatokhoz történő hozzáférési engedélyt, a háttérben történő futtatásra vonatkozó engedély a mérési sorozat háttérben történő elvégzéséhez szükséges.</string>
-    <string name="home_home">Home</string>
-    <string name="home_map">Map</string>
-    <string name="home_statistics">Statistics</string>
-    <string name="home_history">History</string>
+    <string name="home_home">Fő navigáció: Kezdőlap</string>
+    <string name="home_map">Fő navigáció: Térkép</string>
+    <string name="home_statistics">Fő navigáció: Statisztikák</string>
+    <string name="home_history">Fő navigáció: Előzmények</string>
     <string name="home_loop_mode_active">Loop mode</string>
     <string name="label_download_files">Export data</string>
     <string name="error_during_download">Letöltési hiba</string>
@@ -313,7 +318,100 @@
     <string name="download_complete_description">A %1$s fájl sikeresen letöltve. Koppintson a megnyitásához.</string>
     <string name="downloading">Letöltés</string>
     <string name="download_progress">%1$d%% letöltve</string>
-    <string name="history_filename">AKOS-history</string>
     <string name="notification_permission_title">3. Értesítési engedély</string>
     <string name="notification_permission_explanation">Az értesítési engedély szükséges ahhoz, hogy az alkalmazás életben maradjon a háttérben végzett mérések során. Értesítési engedély nélkül nem tudja nyomon követni a mérés előrehaladását, ha az alkalmazás a háttérben működik. Az értesítési engedély szükséges ahhoz, hogy a hurok mód a háttérben futhasson.</string>
+    <string name="history_filename">AKOS-history</string>
+
+    <string name="unknown_signal_mobile">Unknown signal mobile</string>
+    <string name="unknown_signal_2G">Unknown signal 2G</string>
+    <string name="unknown_signal_3G">Unknown signal 3G</string>
+    <string name="unknown_signal_4G">Unknown signal 4G</string>
+    <string name="unknown_signal_5G">Unknown signal 5G</string>
+    <string name="unknown_signal_wifi">Unknown signal WIFI</string>
+    <string name="unknown_network_type">Unknown network type</string>
+
+    <string name="bad_signal_2g">"2G bad signal "</string>
+    <string name="normal_signal_2g">2G normal signal</string>
+    <string name="good_signal_2g">2G good signal</string>
+    <string name="excellent_signal_2g">2G excellent signal</string>
+
+    <string name="bad_signal_3g">"3G bad signal "</string>
+    <string name="normal_signal_3g">3G normal signal</string>
+    <string name="good_signal_3g">3G good signal</string>
+    <string name="excellent_signal_3g">3G excellent signal</string>
+
+    <string name="bad_signal_4g">"4G bad signal "</string>
+    <string name="normal_signal_4g">4G normal signal</string>
+    <string name="good_signal_4g">4G good signal</string>
+    <string name="excellent_signal_4g">4G excellent signal</string>
+
+    <string name="bad_signal_5g">"5G bad signal "</string>
+    <string name="normal_signal_5g">5G normal signal</string>
+    <string name="good_signal_5g">5G good signal</string>
+    <string name="excellent_signal_5g">5G excellent signal</string>
+
+    <string name="bad_signal_wifi">"WIFI bad signal "</string>
+    <string name="normal_signal_wifi">WIFI normal signal</string>
+    <string name="good_signal_wifi">WIFI good signal</string>
+    <string name="excellent_signal_wifi">WIFI excellent signal</string>
+
+    <string name="network_type_bluetooth">Bluetooth network type</string>
+    <string name="network_type_vpn">VPN network type</string>
+    <string name="network_type_lan">LAN network type</string>
+    <string name="network_type_browser">Browser network type</string>
+
+    <string name="toggle_loop_mode">Toggle loop mode</string>
+
+    <string name="previous_result">Previous result</string>
+    <string name="next_result">Next result</string>
+
+    <string name="download_history_as_pdf">Download history as PDF</string>
+    <string name="download_history_as_xlsx">Download history as XLSX</string>
+    <string name="download_history_as_csv">Download history as CSV</string>
+
+    <string name="history_list_header_date">History list header: date</string>
+    <string name="history_list_header_download_speed">History list header: download speed</string>
+    <string name="history_list_header_download_speed_units">History list header: download speed units: Mbit/s </string>
+    <string name="history_list_header_upload_speed">History list header: upload speed</string>
+    <string name="history_list_header_upload_speed_units">History list header: upload speed units: Mbit/s </string>
+    <string name="history_list_header_ping">History list header: ping</string>
+    <string name="history_list_header_ping_units">History list header: ping units: milliseconds </string>
+
+    <string name="home_start_measurement">Start measurement</string>
+    <string name="title">Title: </string>
+    <string name="subtitle">Subtitle: </string>
+
+    <string name="home_signal_measurement_toggle_on">Signal measurement toggle on</string>
+    <string name="home_signal_measurement_toggle_off">Signal measurement toggle off</string>
+
+    <string name="ipv4_no_info">IP version 4: no information</string>
+    <string name="ipv4_no_address">IP version 4: no address</string>
+    <string name="ipv4_no_nat">IP version 4: no NAT</string>
+    <string name="ipv4">IP version 4: NAT</string>
+    <string name="ipv6_no_info">IP version 6: no information</string>
+    <string name="ipv6_no_address">IP version 6: no address</string>
+    <string name="ipv6_no_nat">IP version 6: no NAT</string>
+    <string name="ipv6">IP version 6: NAT</string>
+
+    <string name="bottom_navigation_area">Bottom navigation area</string>
+    <string name="active_history_filters_container">History filters container</string>
+    <string name="history_list_header_container">History list header container</string>
+    <string name="remove_filter">Remove filter</string>
+
+    <string name="share_result">Share result</string>
+    <string name="test_result_from">"Test result from: "</string>
+
+    <string name="classification_undefined">Classification: none</string>
+    <string name="classification_bad">Classification: bad</string>
+    <string name="classification_normal">Classification: normal</string>
+    <string name="classification_good">Classification: good</string>
+    <string name="classification_excellent">Classification: excellent</string>
+    <string name="title_test_details">Test details</string>
+
+    <string name="test_result_status">Test result status:</string>
+    <string name="more_sims_active_dialog_title">Dual SIM active</string>
+    <string name="more_sims_active_dialog_text">Signal measurement only supports single SIM. Please deactivate second SIM.</string>
+    <string name="confirm">Confirm</string>
+    <string name="wrong_network_type_active_dialog_title">Not on mobile</string>
+    <string name="wrong_network_type_active_dialog_text">Please deactivate Wifi (or some other non-mobile connection)</string>
 </resources>

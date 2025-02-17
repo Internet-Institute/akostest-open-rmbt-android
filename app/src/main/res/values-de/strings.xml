@@ -137,7 +137,7 @@
     <string name="measurement_upload">Upload</string>
     <string name="measurement_dash">-</string>
     <string name="measurement_speed_chart_x_label_min">0s</string>
-    <string name="measurement_speed_chart_x_label_max">8s</string>
+    <string name="measurement_speed_chart_x_label_max">7s</string>
     <string name="measurement_ping">Ping</string>
     <string name="measurement_down">Down</string>
     <string name="measurement_up">Up</string>
@@ -261,8 +261,10 @@
     <string name="text_button_accept">Akzeptieren</string>
     <string name="text_loop_instruction_1">Der Wiederholungsmodus (Loop-Mode) für technisch Interessierte ermöglicht, dass der RTR-Netztest automatisiert wiederholt durchgeführt wird. Der erste Test wird unmittelbar nach dem Start des Wiederholungsmodus gestartet; weitere Tests sobald entweder die Wartezeit abgelaufen ist oder die festgelegte Distanz zurückgelegt wurde. Tests werden durchgeführt bis die eingestellte Testanzahl erreicht ist. Zwischen zwei Tests wird die Signalstärke weiter gemessen. Der Wiederholungsmodus kann jederzeit gestoppt werden bzw endet automatisch nach 48 Stunden.\nEs wird ausdrücklich darauf hingewiesen, dass aufgrund des Wiederholungsmodus ein Rückschluss auf die testende Person nicht ausgeschlossen ist. Es wird darauf hingewiesen, dass er (nur) zur Nutzung innerhalb der EU- und des EWR gedacht ist.</string>
     <string name="text_loop_instruction_2">Der Wiederholungsmodus verbraucht eine große Menge an Daten. Mit schnellen Verbindungen können 10 Tests 1 GB oder mehr an Daten verbrauchen. Er sollte nur mit echten Flatrate Tarifen genutzt werden. In den Pausen zwischen den Tests bleiben GPS und die Anzeige aktiv und es werden weiter Signalmessungen durchgeführt, deshalb wird die Batterie schnell entleert. Daher sollte der Wiederholungsmodus nur genutzt werden, wenn externe Stromversorgung zur Verfügung steht.\n Damit Messungen stattfinden und einem Standort zugeordnet werden können, wenn sich die Anwendung im Hintergrund befindet, ist die Systemberechtigung zum Erfassen des Standorts bei Hintergrundnutzung notwendig. Diese Standortberechtigung wird verwendet, um den erfolgten Messungen Standorte zuzuordnen.</string>
+    <string name="text_loop_instruction_3">Der AKOS Test Net verwendet die Standortberechtigung nur während der Messung, die Hintergrundberechtigung ist beim Wiederholungsmodus notwendig um diesen auch im Hintergrund ausführen zu können.\n\nRTR-Netztest sammelt Standortdaten, um den Standort einer Messung im Wiederholungsmodus aufzuzeichnen, auch wenn die App im Hintergrund läuft.</string>
     <string name="title_loop_instruction_1">Aktivierung</string>
     <string name="title_loop_instruction_2">Nutzung</string>
+    <string name="title_loop_instruction_3">Permissions</string>
     <string name="text_filter_devices">Gerät</string>
     <string name="text_filter_networks">Zugang</string>
     <string name="label_filter_options">Einstellungen</string>
@@ -284,6 +286,7 @@
     <string name="radio_info_warning_message">Achtung: Änderungen in den erweiterten Einstellungen der Mobilfunkkonfiguration können Auswirkungen auf Funktion, Stabilität und Performance Ihres Gerätes haben.</string>
     <string name="accept_risk">Ich bin mir der Gefahren bewusst</string>
     <string name="preferences_connection_details_not_supported">Erweiterte Verbindungsdetails werden auf diesem Gerät nicht unterstützt</string>
+    <string name="preferences_unable_to_find_browser_app">Unable to open default browser application.</string>
     <string name="dialog_signal_info_band">Band</string>
     <string name="dialog_signal_info_channel">Kanal</string>
     <string name="text_local_results">Nur lokale Ergebnisse</string>
@@ -303,10 +306,10 @@
     <string name="phone_permission_explanation">Der RTR-Netztest tätigt keine Telefonanrufe. Die Telefonberechtigung ist jedoch notwendig, um die Messung einem Anbieter zuzuordnen.</string>
     <string name="location_permission_explanation">Die Standortberechtigung wird für die Bestimmung des Mess-Standorts und zur Darstellung auf der Karte benötigt. Ohne Berechtigung für den genauen Standort kann die Signalstärke auf vielen Geräten nicht angezeigt werden. Die Verwendung des Wiederholungsmodus in Bewegung ist nur mit Standortberechtigung möglich.</string>
     <string name="location_permissions_disclaimer">Der RTR-Netztest verwendet die Standortberechtigung nur während der Messung, die Hintergrundberechtigung ist beim Wiederholungsmodus notwendig um diesen auch im Hintergrund ausführen zu können.</string>
-    <string name="home_home">Home</string>
-    <string name="home_map">Karte</string>
-    <string name="home_statistics">Statistik</string>
-    <string name="home_history">Verlauf</string>
+    <string name="home_home">Hauptnavigation: Home</string>
+    <string name="home_map">Hauptnavigation: Karte</string>
+    <string name="home_statistics">Hauptnavigation: Statistik</string>
+    <string name="home_history">Hauptnavigation: Verlauf</string>
     <string name="home_loop_mode_active">Wiederholungsmodus aktiv</string>
     <string name="label_download_files">Export data</string>
     <string name="error_during_download">Download-Fehler</string>
@@ -318,4 +321,98 @@
     <string name="history_filename">AKOS-history</string>
     <string name="notification_permission_title">3. Benachrichtigungsberechtigung</string>
     <string name="notification_permission_explanation">Die Benachrichtigungsberechtigung ist erforderlich, um die App während im Hintergrund ausgeführter Messungen am Leben zu halten. Ohne Benachrichtigungsberechtigung können Sie den Messfortschritt nicht verfolgen, wenn die App im Hintergrund läuft. Die Benachrichtigungsberechtigung ist erforderlich, damit der Schleifenmodus im Hintergrund ausgeführt werden kann.</string>
+
+    <string name="unknown_signal_mobile">Unknown signal mobile</string>
+    <string name="unknown_signal_2G">Unknown signal 2G</string>
+    <string name="unknown_signal_3G">Unknown signal 3G</string>
+    <string name="unknown_signal_4G">Unknown signal 4G</string>
+    <string name="unknown_signal_5G">Unknown signal 5G</string>
+    <string name="unknown_signal_wifi">Unknown signal WIFI</string>
+    <string name="unknown_network_type">Unknown network type</string>
+
+    <string name="bad_signal_2g">"2G bad signal "</string>
+    <string name="normal_signal_2g">2G normal signal</string>
+    <string name="good_signal_2g">2G good signal</string>
+    <string name="excellent_signal_2g">2G excellent signal</string>
+
+    <string name="bad_signal_3g">"3G bad signal "</string>
+    <string name="normal_signal_3g">3G normal signal</string>
+    <string name="good_signal_3g">3G good signal</string>
+    <string name="excellent_signal_3g">3G excellent signal</string>
+
+    <string name="bad_signal_4g">"4G bad signal "</string>
+    <string name="normal_signal_4g">4G normal signal</string>
+    <string name="good_signal_4g">4G good signal</string>
+    <string name="excellent_signal_4g">4G excellent signal</string>
+
+    <string name="bad_signal_5g">"5G bad signal "</string>
+    <string name="normal_signal_5g">5G normal signal</string>
+    <string name="good_signal_5g">5G good signal</string>
+    <string name="excellent_signal_5g">5G excellent signal</string>
+
+    <string name="bad_signal_wifi">"WIFI bad signal "</string>
+    <string name="normal_signal_wifi">WIFI normal signal</string>
+    <string name="good_signal_wifi">WIFI good signal</string>
+    <string name="excellent_signal_wifi">WIFI excellent signal</string>
+
+    <string name="network_type_bluetooth">Bluetooth network type</string>
+    <string name="network_type_vpn">VPN network type</string>
+    <string name="network_type_lan">LAN network type</string>
+    <string name="network_type_browser">Browser network type</string>
+
+    <string name="toggle_loop_mode">Toggle loop mode</string>
+
+    <string name="previous_result">Previous result</string>
+    <string name="next_result">Next result</string>
+
+    <string name="download_history_as_pdf">Download history as PDF</string>
+    <string name="download_history_as_xlsx">Download history as XLSX</string>
+    <string name="download_history_as_csv">Download history as CSV</string>
+
+    <string name="history_list_header_date">History list header: date</string>
+    <string name="history_list_header_download_speed">History list header: download speed</string>
+    <string name="history_list_header_download_speed_units">History list header: download speed units: Mbit/s </string>
+    <string name="history_list_header_upload_speed">History list header: upload speed</string>
+    <string name="history_list_header_upload_speed_units">History list header: upload speed units: Mbit/s </string>
+    <string name="history_list_header_ping">History list header: ping</string>
+    <string name="history_list_header_ping_units">History list header: ping units: milliseconds </string>
+
+    <string name="home_start_measurement">Start measurement</string>
+    <string name="title">Title: </string>
+    <string name="subtitle">Subtitle: </string>
+
+    <string name="home_signal_measurement_toggle_on">Signal measurement toggle on</string>
+    <string name="home_signal_measurement_toggle_off">Signal measurement toggle off</string>
+
+    <string name="ipv4_no_info">IP version 4: no information</string>
+    <string name="ipv4_no_address">IP version 4: no address</string>
+    <string name="ipv4_no_nat">IP version 4: no NAT</string>
+    <string name="ipv4">IP version 4: NAT</string>
+    <string name="ipv6_no_info">IP version 6: no information</string>
+    <string name="ipv6_no_address">IP version 6: no address</string>
+    <string name="ipv6_no_nat">IP version 6: no NAT</string>
+    <string name="ipv6">IP version 6: NAT</string>
+
+    <string name="bottom_navigation_area">Bottom navigation area</string>
+    <string name="active_history_filters_container">History filters container</string>
+    <string name="history_list_header_container">History list header container</string>
+    <string name="remove_filter">Remove filter</string>
+
+    <string name="share_result">Share result</string>
+    <string name="test_result_from">"Test result from: "</string>
+
+    <string name="classification_undefined">Classification: none</string>
+    <string name="classification_bad">Classification: bad</string>
+    <string name="classification_normal">Classification: normal</string>
+    <string name="classification_good">Classification: good</string>
+    <string name="classification_excellent">Classification: excellent</string>
+    <string name="title_test_details">Test details</string>
+
+    <string name="test_result_status">Test result status:</string>
+    <string name="more_sims_active_dialog_title">Dual SIM active</string>
+    <string name="more_sims_active_dialog_text">Signal measurement only supports single SIM. Please deactivate second SIM.</string>
+    <string name="confirm">Confirm</string>
+    <string name="wrong_network_type_active_dialog_title">Not on mobile</string>
+    <string name="wrong_network_type_active_dialog_text">Please deactivate Wifi (or some other non-mobile connection)</string>
+
 </resources>

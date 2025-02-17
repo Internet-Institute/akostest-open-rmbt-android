@@ -19,6 +19,7 @@ import at.rtr.rmbt.android.util.showKeyboard
 import at.rtr.rmbt.android.viewmodel.SyncDevicesViewModel
 import at.specure.util.copyToClipboard
 import at.specure.util.toast
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -60,6 +61,10 @@ class SyncDevicesDialog : FullscreenDialog() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.iconClose.setOnClickListener {
+            this@SyncDevicesDialog.dismiss()
+        }
+
         binding.buttonRequestCode.setOnClickListener {
             viewModel.getSyncCode()
         }
@@ -88,7 +93,7 @@ class SyncDevicesDialog : FullscreenDialog() {
             onCodeEntered()
         }
 
-        launch {
+        launch(CoroutineName("syncDevicesDialog")) {
             binding.editCode.onTextChanged()
                 .collect {
                     binding.inputCode.error = null

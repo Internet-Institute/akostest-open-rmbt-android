@@ -1,5 +1,6 @@
 package at.rtr.rmbt.android.ui.dialog
 
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -52,10 +53,30 @@ class MapFiltersConfirmationDialog : FullscreenDialog() {
             adapter.items[adapter.selected]?.let { it1 -> callback?.onOptionSelected(targetRequestCode, it1) }
             dismiss()
         }
+        setMaxHeightOfView(binding.items, 0.5f)
+    }
 
-        binding.items.post {
-            binding.items.layoutParams.height = min((binding.root.measuredHeight * 0.6f).toInt(), binding.items.measuredHeight)
-            binding.root.requestLayout()
+    private fun setMaxHeightOfView(view: View, partOfScreenHeight: Float) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            val window = dialog?.window
+            val windowManager = window?.windowManager
+            val metrics = windowManager?.currentWindowMetrics
+            val height = metrics?.bounds?.height()
+
+            height?.let { screenHeight ->
+                val maxHeight = (screenHeight * partOfScreenHeight).toInt()
+                view.post {
+                    if (view.height > maxHeight) {
+                        view.layoutParams.height = maxHeight
+                        view.requestLayout()
+                    }
+                }
+            }
+        } else {
+            binding.items.post {
+                binding.items.layoutParams.height = min((binding.root.measuredHeight * partOfScreenHeight).toInt(), binding.items.measuredHeight)
+                binding.root.requestLayout()
+            }
         }
     }
 

@@ -8,7 +8,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.BroadcastReceiver
 import android.content.ServiceConnection
-import android.content.pm.ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC
+import android.content.pm.ServiceInfo
 import android.net.ConnectivityManager
 import android.net.Network
 import android.net.wifi.WifiManager
@@ -49,7 +49,9 @@ import at.specure.test.TestUuidType
 import at.specure.test.toDeviceInfoLocation
 import at.specure.util.CustomLifecycleService
 import at.specure.worker.WorkLauncher
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -624,6 +626,9 @@ class MeasurementService : CustomLifecycleService(), CoroutineScope {
             Timber.d("CountDownTimer scheduled")
         } catch (ex: Exception) {
             Timber.e(ex, "CountDownTimer")
+            if (ex is CancellationException) {
+                throw ex
+            }
         }
     }
 
@@ -697,17 +702,21 @@ class MeasurementService : CustomLifecycleService(), CoroutineScope {
 
     private fun attachToForeground() {
         Timber.d("MeasurementViewModel: Attached to foreground notification")
-        startForeground(
-            NOTIFICATION_ID,
-            notificationProvider.measurementServiceNotification(
-                0,
-                MeasurementState.INIT,
-                true,
-                stateRecorder.loopModeRecord,
-                config.loopModeNumberOfTests,
-                stopTestsIntent(this@MeasurementService)
-            )
+        val notification = notificationProvider.measurementServiceNotification(
+            0,
+            MeasurementState.INIT,
+            true,
+            stateRecorder.loopModeRecord,
+            config.loopModeNumberOfTests,
+            stopTestsIntent(this@MeasurementService)
         )
+
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.TIRAMISU) {
+            startForeground(NOTIFICATION_ID, notification)
+        } else {
+            startForeground(NOTIFICATION_ID, notification,
+                ServiceInfo.FOREGROUND_SERVICE_TYPE_SPECIAL_USE)
+        }
 
         if (!producer.isTestsRunning) {
             notificationManager.cancel(NOTIFICATION_ID)
@@ -902,7 +911,7 @@ class MeasurementService : CustomLifecycleService(), CoroutineScope {
         }
 
         fun removeClient(client: MeasurementClient) {
-            clients.add(client)
+            clients.remove(client)
         }
 
         override fun onProgressChanged(state: MeasurementState, progress: Int) {
@@ -1053,10 +1062,11 @@ class MeasurementService : CustomLifecycleService(), CoroutineScope {
         fun intent(context: Context) = Intent(context, MeasurementService::class.java)
     }
 
-    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, e ->
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { context, e ->
         if (e is HandledException) {
             // do nothing
         } else {
+            Timber.e("My MeasurementService coroutine named: ${context[CoroutineName]} has crashed with: ${e.message}")
             throw e
         }
     }

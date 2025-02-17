@@ -386,7 +386,10 @@ fun AppCompatTextView.setNetworkType(detailedNetworkInfo: DetailedNetworkInfo?) 
      */
     val shortDisplayOfTechnology = true
 
-    text = extractTechnologyString(detailedNetworkInfo, shortDisplayOfTechnology)
+    val technology = extractTechnologyString(detailedNetworkInfo, shortDisplayOfTechnology)
+
+    text = technology
+    contentDescription = "${context.getString(R.string.technology_label)} $technology"
 }
 
 private fun AppCompatTextView.extractTechnologyString(
@@ -480,7 +483,30 @@ fun ImageView.setIPAddressIcon(ipInfo: IpInfo?) {
                 if (isIPV4) R.drawable.ic_ipv4_yellow else R.drawable.ic_ipv6_yellow
             }
         }
+        val contentDescription = when (it.ipStatus) {
+            IpStatus.NO_INFO -> {
+                isClickable = false
+                alpha = 0.25f
+                if (isIPV4) R.string.ipv4_no_info else R.string.ipv6_no_info
+            }
+            IpStatus.NO_ADDRESS -> {
+                isClickable = true
+                alpha = 1f
+                if (isIPV4) R.string.ipv4_no_address else R.string.ipv6_no_address
+            }
+            IpStatus.NO_NAT -> {
+                isClickable = true
+                alpha = 1f
+                if (isIPV4) R.string.ipv4_no_nat else R.string.ipv6_no_nat
+            }
+            else -> {
+                isClickable = true
+                alpha = 1f
+                if (isIPV4) R.string.ipv4 else R.string.ipv6
+            }
+        }
         setImageResource(res)
+        setContentDescription(context.getString(contentDescription))
     }
 }
 
@@ -542,6 +568,40 @@ fun AppCompatTextView.setPing(pingNanos: Long) {
 
 val THRESHOLD_DOWNLOAD = listOf(0L, 5000000L, 10000000L, 100000000L) // 0mb, 5mb, 10mb, 100mb
 
+fun getBigDownloadIconAccordingToSpeed(downloadSpeedBps: Long): Int {
+    return when (downloadSpeedBps) {
+        in THRESHOLD_DOWNLOAD[0] until THRESHOLD_DOWNLOAD[1] -> {
+            R.drawable.ic_speed_download_red
+        }
+        in THRESHOLD_DOWNLOAD[1] until THRESHOLD_DOWNLOAD[2] -> {
+            R.drawable.ic_speed_download_yellow
+        }
+        in THRESHOLD_DOWNLOAD[2] until THRESHOLD_DOWNLOAD[3] -> {
+            R.drawable.ic_speed_download_light_green
+        }
+        else -> {
+            R.drawable.ic_speed_download_dark_green
+        }
+    }
+}
+
+fun getDownloadIconAccordingToSpeed(downloadSpeedBps: Long): Int {
+    return when (downloadSpeedBps) {
+        in THRESHOLD_DOWNLOAD[0] until THRESHOLD_DOWNLOAD[1] -> {
+            R.drawable.ic_small_download_red
+        }
+        in THRESHOLD_DOWNLOAD[1] until THRESHOLD_DOWNLOAD[2] -> {
+            R.drawable.ic_small_download_yellow
+        }
+        in THRESHOLD_DOWNLOAD[2] until THRESHOLD_DOWNLOAD[3] -> {
+            R.drawable.ic_small_download_light_green
+        }
+        else -> {
+            R.drawable.ic_small_download_dark_green
+        }
+    }
+}
+
 /**
  * A binding adapter that is used for show download speed
  */
@@ -553,20 +613,7 @@ fun AppCompatTextView.setDownload(downloadSpeedBps: Long) {
 
         setCompoundDrawablesWithIntrinsicBounds(
 
-            when (downloadSpeedBps) {
-                in THRESHOLD_DOWNLOAD[0] until THRESHOLD_DOWNLOAD[1] -> {
-                    R.drawable.ic_small_download_red
-                }
-                in THRESHOLD_DOWNLOAD[1] until THRESHOLD_DOWNLOAD[2] -> {
-                    R.drawable.ic_small_download_yellow
-                }
-                in THRESHOLD_DOWNLOAD[2] until THRESHOLD_DOWNLOAD[3] -> {
-                    R.drawable.ic_small_download_light_green
-                }
-                else -> {
-                    R.drawable.ic_small_download_dark_green
-                }
-            }, 0, 0, 0
+            getDownloadIconAccordingToSpeed(downloadSpeedBps), 0, 0, 0
         )
         text = context.getString(
             R.string.measurement_download_upload_speed,
@@ -582,6 +629,40 @@ fun AppCompatTextView.setDownload(downloadSpeedBps: Long) {
 
 val THRESHOLD_UPLOAD = listOf(0L, 2500000L, 5000000L, 50000000L) // 0mb, 2.5mb, 5mb, 50mb
 
+fun getBigUploadIconAccordingToSpeed(uploadSpeedBps: Long): Int {
+    return when (uploadSpeedBps) {
+        in THRESHOLD_UPLOAD[0] until THRESHOLD_UPLOAD[1] -> {
+            R.drawable.ic_speed_upload_red
+        }
+        in THRESHOLD_UPLOAD[1] until THRESHOLD_UPLOAD[2] -> {
+            R.drawable.ic_speed_upload_yellow
+        }
+        in THRESHOLD_UPLOAD[2] until THRESHOLD_UPLOAD[3] -> {
+            R.drawable.ic_speed_upload_light_green
+        }
+        else -> {
+            R.drawable.ic_speed_upload_dark_green
+        }
+    }
+}
+
+fun getUploadIconAccordingToSpeed(uploadSpeedBps: Long): Int {
+    return when (uploadSpeedBps) {
+        in THRESHOLD_UPLOAD[0] until THRESHOLD_UPLOAD[1] -> {
+            R.drawable.ic_small_upload_red
+        }
+        in THRESHOLD_UPLOAD[1] until THRESHOLD_UPLOAD[2] -> {
+            R.drawable.ic_small_upload_yellow
+        }
+        in THRESHOLD_UPLOAD[2] until THRESHOLD_UPLOAD[3] -> {
+            R.drawable.ic_small_upload_light_green
+        }
+        else -> {
+            R.drawable.ic_small_upload_dark_green
+        }
+    }
+}
+
 /**
  * A binding adapter that is used for show upload speed
  */
@@ -593,20 +674,7 @@ fun AppCompatTextView.setUpload(uploadSpeedBps: Long) {
 
         setCompoundDrawablesWithIntrinsicBounds(
 
-            when (uploadSpeedBps) {
-                in THRESHOLD_UPLOAD[0] until THRESHOLD_UPLOAD[1] -> {
-                    R.drawable.ic_small_upload_red
-                }
-                in THRESHOLD_UPLOAD[1] until THRESHOLD_UPLOAD[2] -> {
-                    R.drawable.ic_small_upload_yellow
-                }
-                in THRESHOLD_UPLOAD[2] until THRESHOLD_UPLOAD[3] -> {
-                    R.drawable.ic_small_upload_light_green
-                }
-                else -> {
-                    R.drawable.ic_small_upload_dark_green
-                }
-            }, 0, 0, 0
+            getUploadIconAccordingToSpeed(uploadSpeedBps), 0, 0, 0
         )
         text = context.getString(
             R.string.measurement_download_upload_speed,
@@ -776,7 +844,10 @@ fun AppCompatTextView.setHistoryTime(historyTime: Long, historyTimezone: String)
 
 @BindingAdapter("networkType", "historySignalStrength", requireAll = true)
 fun ImageView.setSignalIcon(networkType: NetworkTypeCompat?, signalStrength: Classification) {
-    networkType?.let { setImageResource(getSignalImageResource(it, signalStrength)) }
+    networkType?.let {
+        setImageResource(getSignalImageResource(it, signalStrength))
+        setContentDescription(getSignalImageContentDescription(it, signalStrength, this.context))
+    }
 }
 
 private fun getSignalImageResource(networkType: NetworkTypeCompat, signalStrength: Classification): Int {
@@ -846,6 +917,72 @@ private fun getSignalImageResource(networkType: NetworkTypeCompat, signalStrengt
     }
 }
 
+private fun getSignalImageContentDescription(networkType: NetworkTypeCompat, signalStrength: Classification, context: Context): String {
+    return when (networkType) {
+        NetworkTypeCompat.TYPE_2G -> {
+            when (signalStrength) {
+                Classification.BAD -> ContextCompat.getString(context, R.string.bad_signal_2g)
+                Classification.NORMAL -> ContextCompat.getString(context, R.string.normal_signal_2g)
+                Classification.GOOD -> ContextCompat.getString(context, R.string.good_signal_2g)
+                Classification.EXCELLENT -> ContextCompat.getString(context, R.string.excellent_signal_2g)
+                Classification.NONE -> ContextCompat.getString(context, R.string.unknown_signal_2G)
+            }
+        }
+        NetworkTypeCompat.TYPE_3G -> {
+            when (signalStrength) {
+                Classification.BAD -> ContextCompat.getString(context, R.string.bad_signal_3g)
+                Classification.NORMAL -> ContextCompat.getString(context, R.string.normal_signal_3g)
+                Classification.GOOD -> ContextCompat.getString(context, R.string.good_signal_3g)
+                Classification.EXCELLENT -> ContextCompat.getString(context, R.string.excellent_signal_3g)
+                Classification.NONE -> ContextCompat.getString(context, R.string.unknown_signal_3G)
+            }
+        }
+        NetworkTypeCompat.TYPE_5G_AVAILABLE,
+        NetworkTypeCompat.TYPE_4G -> {
+            when (signalStrength) {
+                Classification.BAD -> ContextCompat.getString(context, R.string.bad_signal_4g)
+                Classification.NORMAL -> ContextCompat.getString(context, R.string.normal_signal_4g)
+                Classification.GOOD -> ContextCompat.getString(context, R.string.good_signal_4g)
+                Classification.EXCELLENT -> ContextCompat.getString(context, R.string.excellent_signal_4g)
+                Classification.NONE -> ContextCompat.getString(context, R.string.unknown_signal_4G)
+            }
+        }
+        NetworkTypeCompat.TYPE_WLAN -> {
+            when (signalStrength) {
+                Classification.BAD -> ContextCompat.getString(context, R.string.bad_signal_wifi)
+                Classification.NORMAL -> ContextCompat.getString(context, R.string.normal_signal_wifi)
+                Classification.GOOD -> ContextCompat.getString(context, R.string.good_signal_wifi)
+                Classification.EXCELLENT -> ContextCompat.getString(context, R.string.excellent_signal_wifi)
+                Classification.NONE -> ContextCompat.getString(context, R.string.unknown_signal_wifi)
+            }
+        }
+        NetworkTypeCompat.TYPE_UNKNOWN -> {
+            ContextCompat.getString(context, R.string.unknown_network_type)
+        }
+        NetworkTypeCompat.TYPE_BLUETOOTH -> {
+            ContextCompat.getString(context, R.string.network_type_bluetooth)
+        }
+        NetworkTypeCompat.TYPE_VPN -> {
+            ContextCompat.getString(context, R.string.network_type_vpn)
+        }
+        NetworkTypeCompat.TYPE_LAN -> {
+            ContextCompat.getString(context, R.string.network_type_lan)
+        }
+        NetworkTypeCompat.TYPE_BROWSER -> {
+            ContextCompat.getString(context, R.string.network_type_browser)
+        }
+        NetworkTypeCompat.TYPE_5G_NSA,
+        NetworkTypeCompat.TYPE_5G -> {
+            when (signalStrength) {
+                Classification.BAD -> ContextCompat.getString(context, R.string.bad_signal_5g)
+                Classification.NORMAL -> ContextCompat.getString(context, R.string.normal_signal_5g)
+                Classification.GOOD -> ContextCompat.getString(context, R.string.good_signal_5g)
+                Classification.EXCELLENT -> ContextCompat.getString(context, R.string.excellent_signal_5g)
+                Classification.NONE -> ContextCompat.getString(context, R.string.unknown_signal_5G)
+            }
+        }
+    }
+}
 /**
  * A binding adapter that is used for show date and time in result details
  */
@@ -856,6 +993,7 @@ fun AppCompatTextView.setResultTime(resultTime: Long?, resultTimezone: String?) 
         calendar.timeInMillis = resultTime
         calendar.timeZone = TimeZone.getTimeZone(resultTimezone)
         text = calendar.format("dd.MM.yy, HH:mm:ss")
+        contentDescription = "$${context.getString(R.string.title)} ${context.getString(R.string.test_result_from)} $text"
     }
 }
 
