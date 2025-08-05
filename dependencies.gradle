@@ -4,16 +4,16 @@ buildscript {
 
         // All project module configs should be in config map
         config = [
-                applicationId    : "com.specure.rmbt.akos",
+                applicationId    : "at.alladin.rmbt.android.prod",
                 minSdkVersion    : 26,
-                targetSdkVersion : 34,
-                versionCode      : (project.hasProperty('buildVersionCode') ? Integer.parseInt(buildVersionCode) : 376),
-                versionName      : (project.hasProperty('buildVersionName') ? buildVersionName : 'V3.0.4')
+                targetSdkVersion : 35,
+                versionCode      : (project.hasProperty('buildVersionCode') ? Integer.parseInt(buildVersionCode) : 41302),
+                versionName      : (project.hasProperty('buildVersionName') ? buildVersionName : '4.13.2')
         ]
 
         // All project modules dependency versions should be in versions map
         versions = [
-                kotlin              : '1.9.23',
+                kotlin              : '1.9.24',
                 coroutines          : '1.8.0',
                 appcompat           : '1.7.0',
                 androidx_core       : '1.13.1',
