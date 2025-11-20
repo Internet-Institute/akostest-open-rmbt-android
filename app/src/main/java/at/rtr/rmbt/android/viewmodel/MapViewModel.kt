@@ -14,10 +14,11 @@ import at.specure.location.LocationInfo
 import at.specure.location.LocationState
 import at.specure.location.LocationWatcher
 import javax.inject.Inject
+import javax.inject.Named
 
 class MapViewModel @Inject constructor(
     private val repository: MapRepository,
-    private val locationWatcher: LocationWatcher
+    @Named("GPSAndNetworkLocationProvider") private val locationWatcher: LocationWatcher
 ) : BaseViewModel() {
 
     val state = MapViewState()
@@ -43,7 +44,7 @@ class MapViewModel @Inject constructor(
 
     fun obtainFilters() {
         repository.obtainFilters {
-            this.state.isFilterLoaded.set(it.isNotEmpty())
+            this.state.isFilterLoaded.set(it.filterData.isNotEmpty())
             providerLiveData.postValue(RetrofitTileProvider(repository, state))
         }
     }
