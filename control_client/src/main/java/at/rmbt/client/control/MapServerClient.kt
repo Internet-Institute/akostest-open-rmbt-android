@@ -1,6 +1,7 @@
 package at.rmbt.client.control
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import at.rmbt.client.control.data.MapPresentationType
 import at.rmbt.util.Maybe
@@ -9,6 +10,7 @@ import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
 import androidx.core.net.toUri
+import java.util.Locale
 
 class MapServerClient @Inject constructor(
     private val endpointProvider: MapEndpointProvider,
@@ -36,7 +38,14 @@ class MapServerClient @Inject constructor(
     }
 
     fun prepareDetailsLink(openUUID: String) =
-        MutableLiveData<String>().apply { postValue(String.format(endpointProvider.mapMarkerShowDetailsUrl, openUUID)) }
+        MutableLiveData<String>().apply {
+
+            var language = "en"
+            if (Locale.getDefault().language == "sl"){
+                language = "sl"
+            }
+
+            postValue(String.format(endpointProvider.mapMarkerShowDetailsUrl, language, openUUID)) }
 
     fun obtainMapFiltersInfo(body: FilterLanguageRequestBody): Maybe<MapFilterResponse> = api.getFilters(endpointProvider.mapFilterInfoUrl, body).exec()
 
