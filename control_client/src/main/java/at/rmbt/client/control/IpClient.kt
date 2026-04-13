@@ -1,17 +1,19 @@
 package at.rmbt.client.control
 
-import android.annotation.SuppressLint
 import android.net.ConnectivityManager
 import android.net.Network
 import at.rmbt.util.Maybe
 import at.rmbt.util.exception.HandledException
 import at.rmbt.util.exception.NoConnectionException
 import com.google.gson.Gson
+import kotlinx.coroutines.CancellationException
 import timber.log.Timber
-import java.net.*
+import java.net.HttpURLConnection
+import java.net.InetSocketAddress
+import java.net.Socket
+import java.net.URL
 import java.nio.charset.Charset
 import javax.inject.Inject
-
 
 private const val SOCKET_TIME_OUT_MS = 5000
 private const val CONNECTION_TIME_OUT_MS = 10000
@@ -28,7 +30,6 @@ class IpClient @Inject constructor(
     fun getPrivateIpV6Address() = getPrivateIpAddress(InetSocketAddress(endpoint.checkPrivateIPv6Host, endpoint.port), IpProtocol.V6)
 
     private fun getPrivateIpAddress(address: InetSocketAddress, protocol: IpProtocol): Maybe<IpInfoResponse> {
-
         return try {
             val socket = Socket()
             socket.connect(address, SOCKET_TIME_OUT_MS)
@@ -37,51 +38,14 @@ class IpClient @Inject constructor(
             Maybe(IpInfoResponse(protocol.intValue, privateIp.hostAddress))
         } catch (ex: Exception) {
             Timber.w("Failed to get ip address: ${ex.message}")
-
-            if (protocol == IpProtocol.V4){
-                val ip = getIpAddress()
-                Maybe(IpInfoResponse(protocol.intValue, ip))
+            if (ex is CancellationException) {
+                throw ex
             }
-            else{
-                Maybe(HandledException.from(ex))
-            }
+            Maybe(HandledException.from(ex))
         }
     }
-
-    private fun getIpAddress_1(): String? {
-
-        try {
-            val socket = Socket()
-            socket.connect(InetSocketAddress("8.8.8.8", 53), SOCKET_TIME_OUT_MS)
-            val privateIp = socket.localAddress
-            socket.close()
-            return privateIp.hostAddress
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-        return null
-    }
-
-    private fun getIpAddress(): String? {
-
-        val testIp = endpoint.checkPrivateIPv4Host.replace("/","")
-
-        try {
-            val socket = Socket()
-            socket.connect(InetSocketAddress(testIp, endpoint.port), SOCKET_TIME_OUT_MS)
-            val privateIp = socket.localAddress
-            socket.close()
-            return privateIp.hostAddress
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-        return null
-    }
-
-
 
     fun getPublicIpV4Address(body: IpRequestBody, network: Network): Maybe<IpInfoResponse> {
-
         return try {
             val connection = network.openConnection(URL(endpoint.checkPublicIPv4Url)) as HttpURLConnection
             connection.requestMethod = "POST"
@@ -105,6 +69,9 @@ class IpClient @Inject constructor(
             val response = gson.fromJson(output, IpInfoResponse::class.java)
             Maybe(response)
         } catch (ex: Exception) {
+            if (ex is CancellationException) {
+                throw ex
+            }
             Maybe<IpInfoResponse>(NoConnectionException())
         }
     }

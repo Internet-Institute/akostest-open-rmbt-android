@@ -8,6 +8,7 @@ import at.rmbt.client.control.QosTestResultDetailBody
 import at.rmbt.client.control.ServerTestResultBody
 import at.rmbt.client.control.TestResultDetailBody
 import at.rmbt.util.Maybe
+import at.rmbt.util.exception.HandledException
 import at.specure.config.Config
 import at.specure.data.Classification
 import at.specure.data.ClientUUID
@@ -76,20 +77,29 @@ class TestResultsRepositoryImpl(
         return qosTestGoalDao.get(testUUID, testItemId)
     }
 
+    @Deprecated("use open data instead")
     override fun loadTestDetailsResult(testUUID: String) = flow {
         val clientUUID = clientUUID.value
         if (clientUUID == null) {
             Timber.w("Unable to load data; client uuid is null")
             throw DataMissingException("ClientUUID is null")
         } else {
-            val body = TestResultDetailBody(testUUID, clientUUID, Locale.getDefault().language)
-            val result = client.getTestResultDetail(body)
-            result.onSuccess {
-                testResultDetailsDao.insert(it.toModelList(testUUID))
-                emit(result.ok)
-            }
+            try {
+                val body = TestResultDetailBody(testUUID, clientUUID, Locale.getDefault().language)
+                val result = client.getTestResultDetail(body)
+                result.onSuccess {
+                    testResultDetailsDao.insert(it.toModelList(testUUID))
+                    emit(result.ok)
+                }
 
-            result.onFailure { throw it }
+                result.onFailure {
+                    Timber.e(it, "Failed to load test details for $testUUID")
+                    emit(false)
+                }
+            } catch (e: HandledException) {
+                Timber.e(e, "Completely failed to load test details for $testUUID")
+                emit(false)
+            }
         }
     }
 
@@ -165,34 +175,42 @@ class TestResultsRepositoryImpl(
             Timber.w("Unable to update test results client uuid is null")
             throw DataMissingException("ClientUUID is null")
         } else {
-            val response = client.getTestResult(
-                ServerTestResultBody(
-                    testUUID = testUUID,
-                    clientUUID = clientUUID,
-                    language = Locale.getDefault().language,
-                    capabilities = CapabilitiesBody()
+            try {
+                val response = client.getTestResult(
+                    ServerTestResultBody(
+                        testUUID = testUUID,
+                        clientUUID = clientUUID,
+                        language = Locale.getDefault().language,
+                        capabilities = CapabilitiesBody()
+                    )
                 )
-            )
 
-            response.onSuccess {
-                try {
-                    val testResult = it.toModel(testUUID)
-                    val qoeRecords = it.toQoeModel(testUUID)
+                response.onSuccess {
+                    try {
+                        val testResult = it.toModel(testUUID)
+                        val qoeRecords = it.toQoeModel(testUUID)
 
-                    testResultDao.insert(testResult)
-                    qoeInfoDao.clearInsert(qoeRecords)
-                    getServerTestResult(testUUID)
-                    loadOpenDataTestResults(testResult.testOpenUUID, testUUID)
-                    loadQosTestResults(testUUID, clientUUID)
-                    emit(true)
-                } catch (e: NullPointerException) {
-                    throw (KotlinNullPointerException(
-                        message = "TestUUID: $testUUID,\n response: $it"
-                    ))
+                        testResultDao.insert(testResult)
+                        qoeInfoDao.clearInsert(qoeRecords)
+                        getServerTestResult(testUUID)
+                        loadOpenDataTestResults(testResult.testOpenUUID, testUUID)
+                        loadQosTestResults(testUUID, clientUUID)
+                        emit(true)
+                    } catch (e: NullPointerException) {
+                        throw (KotlinNullPointerException(
+                            message = "TestUUID: $testUUID,\n response: $it"
+                        ))
+                    }
                 }
-            }
 
-            response.onFailure { throw it }
+                response.onFailure {
+                    Timber.e(it, "Failed to load test results for $testUUID")
+                    emit(false)
+                }
+            } catch (e: HandledException) {
+                Timber.e(e, "Completely failed to load test results for $testUUID")
+                emit(false)
+            }
         }
     }
 
@@ -220,25 +238,27 @@ class TestResultsRepositoryImpl(
 
         if (isONTBasedApp) {
             val qosTestResults = client.getTestResultDetailONT(testUUID)
-            val overallQosPercentage = qosTestResults.success.overallQosPercentage
-            val partialQosResults = qosTestResults.success.partialQosResults
-            saveOverallQosItem(overallQosPercentage, qosTestResults.success.testUUID)
+            qosTestResults.onSuccess { result ->
+                val overallQosPercentage = result.overallQosPercentage
+                val partialQosResults = result.partialQosResults
+                saveOverallQosItem(overallQosPercentage, result.testUUID)
 
-            partialQosResults.forEach { qosResultItem ->
-                qosCategoryDao.insert(
-                    QosCategoryRecord(
-                        testUUID = qosTestResults.success.testUUID,
-                        category = qosResultItem.testType?.let { QoSCategory.fromString(it) }
-                            ?: QoSCategory.QOS_UNKNOWN,
-                        categoryName = "",
-                        categoryDescription = "",
-                        language = "",
-                        failedCount = qosResultItem.totalCount?.let {
-                            it - (qosResultItem.successCount ?: 0)
-                        } ?: 0,
-                        successCount = qosResultItem.successCount ?: 0
+                partialQosResults.forEach { qosResultItem ->
+                    qosCategoryDao.insert(
+                        QosCategoryRecord(
+                            testUUID = result.testUUID,
+                            category = qosResultItem.testType?.let { QoSCategory.fromString(it) }
+                                ?: QoSCategory.QOS_UNKNOWN,
+                            categoryName = "",
+                            categoryDescription = "",
+                            language = "",
+                            failedCount = qosResultItem.totalCount?.let {
+                                it - (qosResultItem.successCount ?: 0)
+                            } ?: 0,
+                            successCount = qosResultItem.successCount ?: 0
+                        )
                     )
-                )
+                }
             }
             return qosTestResults
         } else {

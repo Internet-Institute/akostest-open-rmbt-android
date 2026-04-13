@@ -1,7 +1,5 @@
 package at.rmbt.client.control
 
-import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import at.rmbt.client.control.data.MapPresentationType
 import at.rmbt.util.Maybe
@@ -10,6 +8,7 @@ import retrofit2.Response
 import timber.log.Timber
 import javax.inject.Inject
 import androidx.core.net.toUri
+import kotlinx.coroutines.CancellationException
 import java.util.Locale
 
 class MapServerClient @Inject constructor(
@@ -33,6 +32,9 @@ class MapServerClient @Inject constructor(
             api.loadTiles(uriBuilder.build().toString()).execute()
         } catch(e: Exception) {
             Timber.e("Map tiles loading exception ${e.localizedMessage}")
+            if (e is CancellationException) {
+                throw e
+            }
             null
         }
     }

@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -133,7 +134,7 @@ class ResultsActivity : BaseActivity() {
             binding.qoeResultsRecyclerView?.addItemDecoration(itemDecoration)
         }
         binding.buttonBack.setOnClickListener {
-            onBackPressed()
+            onBackPressedDispatcher.onBackPressed()
         }
         binding.buttonShare.setOnClickListener {
             val shareIntent = Intent()
@@ -217,6 +218,16 @@ class ResultsActivity : BaseActivity() {
                 binding.buttonDownloadPdf.isEnabled = true
             }
         }
+
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                when (viewModel.state.returnPoint) {
+                    ReturnPoint.HOME -> HomeActivity.startWithFragment(this@ResultsActivity, HomeActivity.Companion.HomeNavigationTarget.HOME_FRAGMENT_TO_SHOW)
+                    ReturnPoint.HISTORY -> HomeActivity.startWithFragment(this@ResultsActivity, HomeActivity.Companion.HomeNavigationTarget.HISTORY_FRAGMENT_TO_SHOW)
+                }
+                this@ResultsActivity.finish()
+            }
+        })
 
         refreshResults()
     }
@@ -324,14 +335,6 @@ class ResultsActivity : BaseActivity() {
     override fun onDestroy() {
         super.onDestroy()
         binding.map.onDestroy()
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        when (viewModel.state.returnPoint) {
-            ReturnPoint.HOME -> HomeActivity.startWithFragment(this, HomeActivity.Companion.HomeNavigationTarget.HOME_FRAGMENT_TO_SHOW)
-            ReturnPoint.HISTORY -> HomeActivity.startWithFragment(this, HomeActivity.Companion.HomeNavigationTarget.HISTORY_FRAGMENT_TO_SHOW)
-        }
     }
 
     enum class ReturnPoint {
