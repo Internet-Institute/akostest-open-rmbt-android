@@ -189,6 +189,7 @@
     </string-array>
 
     <string name="strength_signal_value" translatable="false">%d dBm</string>
+    <string name="scale_value_10000">10G</string>
     <string name="scale_value_1000" translatable="false">1G</string>
     <string name="scale_value_100" translatable="false">100M</string>
     <string name="scale_value_10" translatable="false">10M</string>
@@ -523,4 +524,36 @@
     <string name="confirm">Potrdi</string>
     <string name="wrong_network_type_active_dialog_title">Ni na mobilnem</string>
     <string name="wrong_network_type_active_dialog_text">Deaktivirajte Wifi (ali katero drugo nemobilno povezavo)</string>
+    <string name="stop_signal_measurement_title">Končaj merjenje signala</string>
+    <string name="stop_signal_measurement_text">Ali želite končati merjenje?</string>
+    <string name="no_gps_or_insufficient_precision">Ni GPS signala ali je njegova kakovost nezadostna. Premaknite se na prosto.</string>
+    <string name="noSignal">Ni signala</string>
+    <string name="coverage_result">Rezultat pokritosti</string>
+    <string name="number_of_fences_is">Število ograd je</string>
+    <string name="title_coverage_loop_mode">Serija pokritosti</string>
+    <string name="title_filters_loading_error">Nalaganje filtrov ni uspelo</string>
+    <string name="loading_map_filters_failed">Filtrov zemljevida ni bilo mogoče naložiti. Poskusite znova.</string>
+    <string name="coverage_measurement_error_title">Napaka pri merjenju pokritosti</string>
+    <string name="coverage_measurement_error_unknown">Pri merjenju pokritosti je prišlo do napake. Poskusite znova.</string>
+    <string name="dismiss">Opusti</string>
+    <string name="wrong_network_message">Trenutno ste na povezavi %1$s. Preklopite na mobilno podatkovno povezavo.</string>
+    <string name="coverage_results_title">Pokritost</string>
+    <string name="text_fence_radius">Faktor polmera ograde:</string>
+    <string name="text_meters">%1$dm</string>
+    <string name="fence_radius_slider_content_description">Drsnik polmera ograde, vrednost %1$d metrov</string>
+    <string name="accuracy_radius_slider_content_description">Drsnik polmera natančnosti, vrednost %1$d metrov</string>
+    <string name="text_accuracy_radius">Natančnost:</string>
+    <string name="points">Točke</string>
+    <string name="text_loading_results_failed">Nalaganje rezultatov ni uspelo</string>
+    <string name="text_connection_count">%1$d povezav</string>
+    <string name="text_fence_count">%1$d ograd</string>
+    <string name="text_unknown">Brez</string>
+    <string name="ipv4_short">IPv4</string>
+    <string name="ipv6_short">IPv6</string>
+    <string name="sending_results">Shranjevanje rezultatov</string>
+    <string name="no_gps_value" />
+    <string name="error_sending_data">Shranjevanje rezultatov ni uspelo!</string>
+    <string name="location_usage_always_warning_message">Za uporabo te funkcije dovolite dostop do lokacije v ozadju.</string>
+    <string name="allow">Dovoli</string>
+    <string name="measuring">Merjenje …</string>
 </resources>

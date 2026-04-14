@@ -13,7 +13,7 @@
   ~ limitations under the License.
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <string name="toolbar_title">RTR-NetTest</string>
+    <string name="toolbar_title">AKOS Test Net</string>
     <!-- Navigation menu titles -->
     <string name="menu_button_title_page">Inizio</string>
     <string name="menu_button_history">Cronologia</string>
@@ -24,7 +24,7 @@
     <string name="error_unknown">Scarsa connessione. Riprova più tardi</string>
     <string name="no_internet_connection_not_load_data">Nessuna connessione Internet. Impossibile caricare i dati.</string>
     <!-- Home screen -->
-    <string name="tc_tobottom">Scroll down</string>
+    <string name="tc_tobottom">Scorri verso il basso</string>
     <string name="home_signal">Segnale</string>
     <string name="home_frequency">Frequenza</string>
     <string name="home_no_internet_connection">Nessuna connessione a Internet!</string>
@@ -32,14 +32,14 @@
     <string name="home_signal_value">%1$d dBm</string>
     <string name="home_start_test_info">Premi il pulsante per iniziare il test ora!</string>
     <string name="home_wifi">WLAN</string>
-    <string name="home_coverage_mode">Coverage mode</string>
+    <string name="home_coverage_mode">Modalità copertura</string>
     <string name="public_ip_address">Indirizzo pubblico</string>
     <string name="private_ip_address">Indirizzo privato</string>
     <!-- Preference titles -->
-    <string name="home_ipv4">IPv4 address</string>
-    <string name="home_ipv6">IPv6 address</string>
-    <string name="home_location">Location</string>
-    <string name="home_settings">Settings</string>
+    <string name="home_ipv4">Indirizzo IPv4</string>
+    <string name="home_ipv6">Indirizzo IPv6</string>
+    <string name="home_location">Posizione</string>
+    <string name="home_settings">Impostazioni</string>
     <string name="options">Opzioni</string>
     <string name="preferences_general_settings">Impostazioni generali</string>
     <string name="preferences_ndt">NDT</string>
@@ -82,8 +82,8 @@
     <string name="preferences_override_control_server_ssl_sum">Usa la connessione crittografata per il server di controllo</string>
     <string name="preferences_developer_options_disabled">Opzioni sviluppatore disabilitate</string>
     <string name="preferences_developer_options_available">Opzioni sviluppatore disponibili</string>
-    <string name="preferences_coverage_mode_disabled">Coverage mode disabled</string>
-    <string name="preferences_coverage_mode_available">Coverage mode enabled</string>
+    <string name="preferences_coverage_mode_disabled">Modalità copertura disabilitata</string>
+    <string name="preferences_coverage_mode_available">Modalità copertura abilitata</string>
     <string name="preferences_developer_try_again">Riprova!</string>
     <string name="preferences_developer_map_server">Server mappe</string>
     <string name="preferences_developer_map_override">Sovrascrivi server mappe</string>
@@ -95,7 +95,7 @@
     <string name="preferences_category_developer_qos_server">Server QoS</string>
     <string name="preferences_developer_qos_ssl">SSL del server QoS</string>
     <string name="preferences_developer_qos_ssl_sum">Usa connessione crittografata al server QoS</string>
-    <string name="preferences_all_disabled">All deactivated.</string>
+    <string name="preferences_all_disabled">Tutto disattivato.</string>
     <string name="preferences_server_selection">Selezione server</string>
     <string name="preferences_default_server_selection">Predefinito</string>
     <string name="label_server_selection">Selezione del server</string>
@@ -121,7 +121,7 @@
     <string name="location_location_direction_e">E %1$s</string>
     <string name="location_location_direction_s">S %1$s</string>
     <string name="location_location_direction_w">W %1$s</string>
-    <string name="open_location_permission_dialog_label_location_not_permitted">RTR-NetTest non è autorizzato a utilizzare la tua posizione. Consentire a RTR-NetTest di utilizzare la tua posizione?</string>
+    <string name="open_location_permission_dialog_label_location_not_permitted">AKOS Test Net non è autorizzato a utilizzare la tua posizione. Consentire a AKOS Test Net di utilizzare la tua posizione?</string>
     <string name="open_location_permission_dialog_label_open_permission_setting">Apri impostazioni applicazione</string>
     <string name="text_ip_address_not_available">Indirizzo non disponibile</string>
     <string name="input_setting_dialog_ok">OK</string>
@@ -171,10 +171,10 @@
     <string name="text_continue_measurement">Continua la misurazione</string>
     <string name="text_cancel_measurement">Annulla la misurazione</string>
     <string name="text_stop_measurement">Interrompi la misurazione</string>
-    <string name="notification_test_title">RTR-NetTest è in esecuzione</string>
+    <string name="notification_test_title">AKOS Test Net è in esecuzione</string>
     <string name="test_dialog_error_text">Test fallito. Riprova più tardi.</string>
     <!-- History -->
-    <string name="measurement_cancel">Cancel</string>
+    <string name="measurement_cancel">Annulla</string>
     <string name="history_item_header_test">Test</string>
     <string name="history_item_header_down">Down</string>
     <string name="history_item_header_up">Up</string>
@@ -182,9 +182,9 @@
     <string name="history_item_header_ms">ms</string>
     <string name="history_no_data">Nessun dato disponibile.</string>
     <!-- Results -->
-    <string name="history_settings">Settings</string>
-    <string name="history_sync">Sync</string>
-    <string name="history_items">History items</string>
+    <string name="history_settings">Impostazioni</string>
+    <string name="history_sync">Sincronizzazione</string>
+    <string name="history_items">Elementi della cronologia</string>
     <string name="results_other_details">Maggiori dettagli</string>
     <string name="results_qoe_videos_sd">Video SD</string>
     <string name="results_qoe_videos_hd">Video HD</string>
@@ -223,11 +223,11 @@
     <string name="map_search_location_dialog_info">Cerca un indirizzo o una città:</string>
     <string name="map_search_location_dialog_not_found">Indirizzo non trovato.</string>
     <string name="map_search_location_not_supported">Spiacenti, questa funzione non è supportata dal tuo dispositivo.</string>
-    <string name="map_filters">Map filter</string>
-    <string name="map_layers">Change layer</string>
-    <string name="map_location">Center on current location</string>
-    <string name="map_search">Search location</string>
-    <string name="text_wait_loading">Loading results</string>
+    <string name="map_filters">Filtro mappa</string>
+    <string name="map_layers">Cambia livello</string>
+    <string name="map_location">Centra sulla posizione attuale</string>
+    <string name="map_search">Cerca posizione</string>
+    <string name="text_wait_loading">Caricamento dei risultati</string>
     <string name="title_sync">Sincronizzazione</string>
     <string name="text_sync_info">Hai la possibilità di unire i risultati da diversi dispositivi. Per farlo, è necessario inserire un codice di sincronizzazione già richiesto o richiederne uno nuovo.</string>
     <string name="button_sync_request_code">Richiedere un codice</string>
@@ -239,7 +239,7 @@
     <string name="hint_sync_code">Codice</string>
     <string name="error_sync_code_short">Il codice deve essere composto da dodici caratteri</string>
     <string name="notification_signal_test_title">La misurazione del segnale è in esecuzione</string>
-    <string name="notification_signal_test_text">La misurazione del segnale da parte di RTR-NetTest è in esecuzione in background</string>
+    <string name="notification_signal_test_text">La misurazione del segnale da parte di AKOS Test Net è in esecuzione in background</string>
     <string name="notification_loop_mode_finished_title">Modalità ciclo terminata</string>
     <string name="toast_signal_measurement_enabled">Misurazione del segnale avviata.</string>
     <string name="error_no_connection">Nessuna connessione Internet. Impossibile caricare i dati.</string>
@@ -259,12 +259,12 @@
     <string name="text_loop_mode">Nuovo test dopo l\'attesa o aver percorso la distanza. Max. 2 giorni</string>
     <string name="text_button_decline">Rifiuta</string>
     <string name="text_button_accept">Accetta</string>
-    <string name="text_loop_instruction_1">La modalità loop per gli utenti tecnicamente interessati consente la ripetizione automatica di RTR-NetTest. La prima prova inizia subito dopo l’attivazione della modalità loop; ulteriori prove sono effettuate quando è trascorso il tempo di attesa o quando è stata percorsa la distanza specificata. Le prove saranno eseguite fino al raggiungimento del numero configurato di prove. L\'intensità del segnale viene misurata continuamente, anche tra due prove. La modalità loop può essere interrotta in qualsiasi momento e si ferma comunque dopo 48 ore. Va sottolineato esplicitamente che a causa della modalità loop non si può escludere che il tester sia identificato.</string>
+    <string name="text_loop_instruction_1">La modalità loop per gli utenti tecnicamente interessati consente la ripetizione automatica di AKOS Test Net. La prima prova inizia subito dopo l’attivazione della modalità loop; ulteriori prove sono effettuate quando è trascorso il tempo di attesa o quando è stata percorsa la distanza specificata. Le prove saranno eseguite fino al raggiungimento del numero configurato di prove. L\'intensità del segnale viene misurata continuamente, anche tra due prove. La modalità loop può essere interrotta in qualsiasi momento e si ferma comunque dopo 48 ore. Va sottolineato esplicitamente che a causa della modalità loop non si può escludere che il tester sia identificato.</string>
     <string name="text_loop_instruction_2">Nel caso di una grande domanda o di un numero molto elevato di test in un determinato settore, la modalità loop può essere rifiutata dal sistema di prova per evitare sovraccarichi. Si prega di notare che il loop-modus è (solo) destinato all\'uso all\'interno dell\'UE e del SEE. Il loop-modus consuma una grande quantità di dati. Con connessioni rapide, 10 test possono consumare 1 GB o più di dati. Si raccomanda pertanto vivamente che il loop-modus venga utilizzato solo con tariffe forfettarie reali, dove il volume di dati aggiuntivi non comporta costi aggiuntivi. Il loop-modus svuota rapidamente la batteria. Nelle pause tra le prove, il GPS e il display rimangono attivi e le misurazioni del segnale continuano, il che significa che l\'energia viene utilizzata molto più velocemente che durante la modalità stand-by. Il loop-modus dovrebbe pertanto essere utilizzato solo se è disponibile un alimentatore esterno.</string>
-    <string name="text_loop_instruction_3">AKOS Test Net uses the location permission only during the measurement, the background permission is required to allow to run the loop mode in background.\n\nAKOS Test Net collects location data in order to record the location of a measurement during the loop mode, even when the app is running in background.</string>
+    <string name="text_loop_instruction_3">AKOS Test Net utilizza il permesso di localizzazione solo durante la misurazione, il permesso in background è necessario per consentire l\'esecuzione della modalità loop in background.\n\nAKOS Test Net raccoglie i dati di localizzazione per registrare la posizione di una misurazione durante la modalità loop, anche quando l\'app è in esecuzione in background.</string>
     <string name="title_loop_instruction_1">Attivazione</string>
     <string name="title_loop_instruction_2">Utilizzo</string>
-    <string name="title_loop_instruction_3">Permissions</string>
+    <string name="title_loop_instruction_3">Autorizzazioni</string>
     <string name="text_filter_devices">Dispositivi</string>
     <string name="text_filter_networks">Reti</string>
     <string name="label_filter_options">Opzioni</string>
@@ -274,11 +274,11 @@
     <string name="loop_mode_meters">Metri</string>
     <string name="loop_mode_no_gps">Nessun Gps</string>
     <string name="or">o</string>
-    <string name="loop_mode_finished">Modalità loop RTR-NetTest terminata!</string>
+    <string name="loop_mode_finished">Modalità loop AKOS Test Net terminata!</string>
     <string name="loop_continue_to_results">Prosegui al risultato</string>
     <string name="loop_run_again">Esegui nuovamente</string>
     <string name="title_privacy_policy">Informativa privacy</string>
-    <string name="text_terms_agree">Accetto l\'informativa sulla privacy di RTR e i termini d\'uso di RTR-NetTest.</string>
+    <string name="text_terms_agree">Accetto l\'informativa sulla privacy di AKOS e i termini d\'uso di AKOS Test Net.</string>
     <string name="text_terms_agree_empty">Devi accettare l\'informativa sulla privacy e i termini di utilizzo per continuare.</string>
     <string name="dialog_title_config_check">Si prega di modificare i seguenti valori:</string>
     <string name="label_ip_processing">Elaborazione…</string>
@@ -286,32 +286,32 @@
     <string name="radio_info_warning_message">Attenzione: la modifica delle impostazioni avanzate della configurazione radio potrebbe essere dannosa per la stabilità e le prestazioni del dispositivo.</string>
     <string name="accept_risk">Accetto il rischio</string>
     <string name="preferences_connection_details_not_supported">I dettagli estesi di connessione non sono supportati su questo dispositivo</string>
-    <string name="preferences_unable_to_find_browser_app">Unable to open default browser application.</string>
+    <string name="preferences_unable_to_find_browser_app">Impossibile aprire l\'applicazione browser predefinita.</string>
     <string name="dialog_signal_info_band">Banda</string>
     <string name="dialog_signal_info_channel">Canale</string>
     <string name="text_local_results">Solo risultati locali</string>
     <string name="signal_measurement_terms_title">Attivazione e utilizzo</string>
     <string name="signal_measurement_terms_content">La modalità loop solo segnale per gli utenti tecnicamente interessati, consente la ripetizione automatica delle misurazioni del segnale senza l\'esecuzione alcuna test di velocità o di qualità. La modalità loop del segnale può essere interrotta in qualsiasi momento e si ferma automaticamente dopo 48 oreLa modalità loop del segnale è solamente destinata all\'utilizzo all\'interno dell\'UE e del SEE. La batteria viene rapidamente scaricata dalle misurazioni del solo segnale. Nelle pause tra le prove, il GPS e il display rimangono attivi e le misurazioni del segnale continuano, il che significa che l\'energia viene utilizzata molto più velocemente che in modalità stand-by. La modalità loop dovrebbe pertanto essere utilizzato solo se è disponibile un alimentatore esterno. Va sottolineato esplicitamente che, a causa della modalità loop solo segnale, non si può escludere che il tester sia identificato.</string>
     <!-- Signal details -->
-    <string name="content_label_close">Close</string>
-    <string name="ip_info_ip_address">IP address</string>
+    <string name="content_label_close">Chiudi</string>
+    <string name="ip_info_ip_address">Indirizzo IP</string>
     <string name="label_location_access_disabled">Autorizzazione alla posizione mancante</string>
     <string name="label_location_access_disabled_explanation">Concedi il permesso alla localizzazione nelle impostazioni.</string>
     <string name="label_some_permission_denied">Autorizzazioni dell\'app mancanti</string>
     <string name="label_some_permission_denied_explanation">Concedi i permessi nelle impostazioni.</string>
-    <string name="title_open_nettest_accuracy">Permessi per RTR-Netztest</string>
-    <string name="subtitle_open_nettest_accuracy">RTR-NetTest richiede alcune autorizzazioni per funzionare.</string>
+    <string name="title_open_nettest_accuracy">Permessi per AKOS Test Net</string>
+    <string name="subtitle_open_nettest_accuracy">AKOS Test Net richiede alcune autorizzazioni per funzionare.</string>
     <string name="phone_permission_title">1. Autorizzazione al telefono</string>
     <string name="location_permission_title">2. Autorizzazione alla posizione</string>
-    <string name="phone_permission_explanation">RTR-NetTest non effettua chiamate. L\'autorizzazione al telefono è necessaria per identificare il fornitore del servizio.</string>
-    <string name="location_permission_explanation">The location permission is necessary to identify the measurement location and to display it on the map. Without precise location permission, signal strength is unavailable on many devices. Use of loop mode while on the move is only possible with location permission.</string>
-    <string name="location_permissions_disclaimer">RTR-NetTest utilizza il permesso alla localizzazione solo durante la misurazione, il permesso all\'accesso in background è necessario per consentire l\'esecuzione della modalità loop in background.</string>
+    <string name="phone_permission_explanation">AKOS Test Net non effettua chiamate. L\'autorizzazione al telefono è necessaria per identificare il fornitore del servizio.</string>
+    <string name="location_permission_explanation">Il permesso di localizzazione è necessario per identificare la posizione della misurazione e per visualizzarla sulla mappa. Senza il permesso di localizzazione precisa, l\'intensità del segnale non è disponibile su molti dispositivi. L\'utilizzo della modalità loop in movimento è possibile solo con il permesso di localizzazione.</string>
+    <string name="location_permissions_disclaimer">AKOS Test Net utilizza il permesso alla localizzazione solo durante la misurazione, il permesso all\'accesso in background è necessario per consentire l\'esecuzione della modalità loop in background.</string>
     <string name="home_home">Navigazione principale: Home</string>
     <string name="home_map">Navigazione principale: Mappa</string>
     <string name="home_statistics">Navigazione principale: Statistiche</string>
     <string name="home_history">Navigazione principale: Cronologia</string>
-    <string name="home_loop_mode_active">Loop mode</string>
-    <string name="label_download_files">Export data</string>
+    <string name="home_loop_mode_active">Modalità loop attiva</string>
+    <string name="label_download_files">Esporta dati</string>
     <string name="error_during_download">Errore di download</string>
     <string name="error_opening_file">Errore nell\'apertura del file</string>
     <string name="download_complete">Download completato</string>
@@ -322,97 +322,129 @@
     <string name="notification_permission_title">3. Autorizzazione di notifica</string>
     <string name="notification_permission_explanation">Il permesso di notifica è necessario per mantenere attiva l\'app durante le misurazioni eseguite in background. Senza l\'autorizzazione alle notifiche, non sarai in grado di monitorare l\'avanzamento della misurazione quando l\'app è in background. L\'autorizzazione alla notifica è necessaria per consentire l\'esecuzione della modalità loop in background.</string>
 
-    <string name="unknown_signal_mobile">Unknown signal mobile</string>
-    <string name="unknown_signal_2G">Unknown signal 2G</string>
-    <string name="unknown_signal_3G">Unknown signal 3G</string>
-    <string name="unknown_signal_4G">Unknown signal 4G</string>
-    <string name="unknown_signal_5G">Unknown signal 5G</string>
-    <string name="unknown_signal_wifi">Unknown signal WIFI</string>
-    <string name="unknown_network_type">Unknown network type</string>
+    <string name="unknown_signal_mobile">Segnale mobile sconosciuto</string>
+    <string name="unknown_signal_2G">Segnale 2G sconosciuto</string>
+    <string name="unknown_signal_3G">Segnale 3G sconosciuto</string>
+    <string name="unknown_signal_4G">Segnale 4G sconosciuto</string>
+    <string name="unknown_signal_5G">Segnale 5G sconosciuto</string>
+    <string name="unknown_signal_wifi">Segnale Wi-Fi sconosciuto</string>
+    <string name="unknown_network_type">Tipo di rete sconosciuto</string>
 
-    <string name="bad_signal_2g">"2G bad signal "</string>
-    <string name="normal_signal_2g">2G normal signal</string>
-    <string name="good_signal_2g">2G good signal</string>
-    <string name="excellent_signal_2g">2G excellent signal</string>
+    <string name="bad_signal_2g">"Segnale 2G scarso "</string>
+    <string name="normal_signal_2g">Segnale 2G normale</string>
+    <string name="good_signal_2g">Segnale 2G buono</string>
+    <string name="excellent_signal_2g">Segnale 2G eccellente</string>
 
-    <string name="bad_signal_3g">"3G bad signal "</string>
-    <string name="normal_signal_3g">3G normal signal</string>
-    <string name="good_signal_3g">3G good signal</string>
-    <string name="excellent_signal_3g">3G excellent signal</string>
+    <string name="bad_signal_3g">"Segnale 3G scarso "</string>
+    <string name="normal_signal_3g">Segnale 3G normale</string>
+    <string name="good_signal_3g">Segnale 3G buono</string>
+    <string name="excellent_signal_3g">Segnale 3G eccellente</string>
 
-    <string name="bad_signal_4g">"4G bad signal "</string>
-    <string name="normal_signal_4g">4G normal signal</string>
-    <string name="good_signal_4g">4G good signal</string>
-    <string name="excellent_signal_4g">4G excellent signal</string>
+    <string name="bad_signal_4g">"Segnale 4G scarso "</string>
+    <string name="normal_signal_4g">Segnale 4G normale</string>
+    <string name="good_signal_4g">Segnale 4G buono</string>
+    <string name="excellent_signal_4g">Segnale 4G eccellente</string>
 
-    <string name="bad_signal_5g">"5G bad signal "</string>
-    <string name="normal_signal_5g">5G normal signal</string>
-    <string name="good_signal_5g">5G good signal</string>
-    <string name="excellent_signal_5g">5G excellent signal</string>
+    <string name="bad_signal_5g">"Segnale 5G scarso "</string>
+    <string name="normal_signal_5g">Segnale 5G normale</string>
+    <string name="good_signal_5g">Segnale 5G buono</string>
+    <string name="excellent_signal_5g">Segnale 5G eccellente</string>
 
-    <string name="bad_signal_wifi">"WIFI bad signal "</string>
-    <string name="normal_signal_wifi">WIFI normal signal</string>
-    <string name="good_signal_wifi">WIFI good signal</string>
-    <string name="excellent_signal_wifi">WIFI excellent signal</string>
+    <string name="bad_signal_wifi">"Segnale Wi-Fi scarso "</string>
+    <string name="normal_signal_wifi">Segnale Wi-Fi normale</string>
+    <string name="good_signal_wifi">Segnale Wi-Fi buono</string>
+    <string name="excellent_signal_wifi">Segnale Wi-Fi eccellente</string>
 
-    <string name="network_type_bluetooth">Bluetooth network type</string>
-    <string name="network_type_vpn">VPN network type</string>
-    <string name="network_type_lan">LAN network type</string>
-    <string name="network_type_browser">Browser network type</string>
+    <string name="network_type_bluetooth">Tipo di rete Bluetooth</string>
+    <string name="network_type_vpn">Tipo di rete VPN</string>
+    <string name="network_type_lan">Tipo di rete LAN</string>
+    <string name="network_type_browser">Tipo di rete browser</string>
 
-    <string name="toggle_loop_mode">Toggle loop mode</string>
+    <string name="toggle_loop_mode">Attiva/disattiva modalità loop</string>
 
-    <string name="previous_result">Previous result</string>
-    <string name="next_result">Next result</string>
+    <string name="previous_result">Risultato precedente</string>
+    <string name="next_result">Risultato successivo</string>
 
-    <string name="download_history_as_pdf">Download history as PDF</string>
-    <string name="download_history_as_xlsx">Download history as XLSX</string>
-    <string name="download_history_as_csv">Download history as CSV</string>
+    <string name="download_history_as_pdf">Scarica cronologia in PDF</string>
+    <string name="download_history_as_xlsx">Scarica cronologia in XLSX</string>
+    <string name="download_history_as_csv">Scarica cronologia in CSV</string>
 
-    <string name="history_list_header_date">History list header: date</string>
-    <string name="history_list_header_download_speed">History list header: download speed</string>
-    <string name="history_list_header_download_speed_units">History list header: download speed units: Mbit/s </string>
-    <string name="history_list_header_upload_speed">History list header: upload speed</string>
-    <string name="history_list_header_upload_speed_units">History list header: upload speed units: Mbit/s </string>
-    <string name="history_list_header_ping">History list header: ping</string>
-    <string name="history_list_header_ping_units">History list header: ping units: milliseconds </string>
+    <string name="history_list_header_date">Intestazione elenco cronologia: data</string>
+    <string name="history_list_header_download_speed">Intestazione elenco cronologia: velocità di download</string>
+    <string name="history_list_header_download_speed_units">Intestazione elenco cronologia: unità velocità di download: Mbit/s </string>
+    <string name="history_list_header_upload_speed">Intestazione elenco cronologia: velocità di upload</string>
+    <string name="history_list_header_upload_speed_units">Intestazione elenco cronologia: unità velocità di upload: Mbit/s </string>
+    <string name="history_list_header_ping">Intestazione elenco cronologia: ping</string>
+    <string name="history_list_header_ping_units">Intestazione elenco cronologia: unità ping: millisecondi </string>
 
-    <string name="home_start_measurement">Start measurement</string>
-    <string name="title">Title: </string>
-    <string name="subtitle">Subtitle: </string>
+    <string name="home_start_measurement">Avvia misurazione</string>
+    <string name="title">Titolo: </string>
+    <string name="subtitle">Sottotitolo: </string>
 
-    <string name="home_signal_measurement_toggle_on">Signal measurement toggle on</string>
-    <string name="home_signal_measurement_toggle_off">Signal measurement toggle off</string>
+    <string name="home_signal_measurement_toggle_on">Attiva misurazione del segnale</string>
+    <string name="home_signal_measurement_toggle_off">Disattiva misurazione del segnale</string>
 
-    <string name="ipv4_no_info">IP version 4: no information</string>
-    <string name="ipv4_no_address">IP version 4: no address</string>
-    <string name="ipv4_no_nat">IP version 4: no NAT</string>
-    <string name="ipv4">IP version 4: NAT</string>
-    <string name="ipv6_no_info">IP version 6: no information</string>
-    <string name="ipv6_no_address">IP version 6: no address</string>
-    <string name="ipv6_no_nat">IP version 6: no NAT</string>
-    <string name="ipv6">IP version 6: NAT</string>
+    <string name="ipv4_no_info">IP versione 4: nessuna informazione</string>
+    <string name="ipv4_no_address">IP versione 4: nessun indirizzo</string>
+    <string name="ipv4_no_nat">IP versione 4: nessun NAT</string>
+    <string name="ipv4">IP versione 4: NAT</string>
+    <string name="ipv6_no_info">IP versione 6: nessuna informazione</string>
+    <string name="ipv6_no_address">IP versione 6: nessun indirizzo</string>
+    <string name="ipv6_no_nat">IP versione 6: nessun NAT</string>
+    <string name="ipv6">IP versione 6: NAT</string>
 
-    <string name="bottom_navigation_area">Bottom navigation area</string>
-    <string name="active_history_filters_container">History filters container</string>
-    <string name="history_list_header_container">History list header container</string>
-    <string name="remove_filter">Remove filter</string>
+    <string name="bottom_navigation_area">Area di navigazione inferiore</string>
+    <string name="active_history_filters_container">Contenitore filtri cronologia</string>
+    <string name="history_list_header_container">Contenitore intestazione elenco cronologia</string>
+    <string name="remove_filter">Rimuovi filtro</string>
 
-    <string name="share_result">Share result</string>
-    <string name="test_result_from">"Test result from: "</string>
+    <string name="share_result">Condividi risultato</string>
+    <string name="test_result_from">"Risultato del test del: "</string>
 
-    <string name="classification_undefined">Classification: none</string>
-    <string name="classification_bad">Classification: bad</string>
-    <string name="classification_normal">Classification: normal</string>
-    <string name="classification_good">Classification: good</string>
-    <string name="classification_excellent">Classification: excellent</string>
-    <string name="title_test_details">Test details</string>
+    <string name="classification_undefined">Classificazione: nessuna</string>
+    <string name="classification_bad">Classificazione: scarsa</string>
+    <string name="classification_normal">Classificazione: normale</string>
+    <string name="classification_good">Classificazione: buona</string>
+    <string name="classification_excellent">Classificazione: eccellente</string>
+    <string name="title_test_details">Dettagli del test</string>
 
-    <string name="test_result_status">Test result status:</string>
-    <string name="more_sims_active_dialog_title">Dual SIM active</string>
-    <string name="more_sims_active_dialog_text">Signal measurement only supports single SIM. Please deactivate second SIM.</string>
-    <string name="confirm">Confirm</string>
-    <string name="wrong_network_type_active_dialog_title">Not on mobile</string>
-    <string name="wrong_network_type_active_dialog_text">Please deactivate Wifi (or some other non-mobile connection)</string>
+    <string name="test_result_status">Stato del risultato del test:</string>
+    <string name="more_sims_active_dialog_title">Dual SIM attivo</string>
+    <string name="more_sims_active_dialog_text">La misurazione del segnale supporta solo una SIM. Disattiva la seconda SIM.</string>
+    <string name="confirm">Conferma</string>
+    <string name="wrong_network_type_active_dialog_title">Non sulla rete mobile</string>
+    <string name="wrong_network_type_active_dialog_text">Disattiva il Wi-Fi (o altre connessioni non mobili)</string>
+    <string name="stop_signal_measurement_title">Termina misurazione del segnale</string>
+    <string name="stop_signal_measurement_text">Vuoi terminare la misurazione?</string>
+    <string name="no_gps_or_insufficient_precision">Nessun segnale GPS o la qualità del GPS è insufficiente. Spostati all\'aperto.</string>
+    <string name="noSignal">Nessun segnale</string>
+    <string name="coverage_result">Risultato copertura</string>
+    <string name="number_of_fences_is">Il numero di recinzioni è</string>
+    <string name="title_coverage_loop_mode">Serie di copertura</string>
+    <string name="title_filters_loading_error">Caricamento filtri non riuscito</string>
+    <string name="loading_map_filters_failed">Impossibile caricare i filtri della mappa. Riprova.</string>
+    <string name="coverage_measurement_error_title">Errore di misurazione della copertura</string>
+    <string name="coverage_measurement_error_unknown">Si è verificato un errore durante la misurazione della copertura. Riprova.</string>
+    <string name="dismiss">Ignora</string>
+    <string name="wrong_network_message">Stai utilizzando dati %1$s. Passa a una connessione dati mobile.</string>
+    <string name="coverage_results_title">Copertura</string>
+    <string name="text_fence_radius">Fattore raggio recinzione:</string>
+    <string name="text_meters">%1$dm</string>
+    <string name="fence_radius_slider_content_description">Cursore raggio recinzione, valore %1$d metri</string>
+    <string name="accuracy_radius_slider_content_description">Cursore raggio precisione, valore %1$d metri</string>
+    <string name="text_accuracy_radius">Precisione:</string>
+    <string name="points">Punti</string>
+    <string name="text_loading_results_failed">Caricamento dei risultati non riuscito</string>
+    <string name="text_connection_count">%1$d connessioni</string>
+    <string name="text_fence_count">%1$d recinzioni</string>
+    <string name="text_unknown">Nessuno</string>
+    <string name="ipv4_short">IPv4</string>
+    <string name="ipv6_short">IPv6</string>
+    <string name="sending_results">Salvataggio dei risultati</string>
+    <string name="no_gps_value" />
+    <string name="error_sending_data">Salvataggio dei risultati non riuscito!</string>
+    <string name="location_usage_always_warning_message">Consenti l\'accesso alla posizione in background per utilizzare questa funzione.</string>
+    <string name="allow">Consenti</string>
+    <string name="measuring">Misurazione in corso…</string>
 
 </resources>

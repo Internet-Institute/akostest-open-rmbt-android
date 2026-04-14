@@ -7,8 +7,8 @@ buildscript {
                 applicationId    : "com.specure.rmbt.akos",
                 minSdkVersion    : 26,
                 targetSdkVersion : 36,
-                versionCode      : (project.hasProperty('buildVersionCode') ? Integer.parseInt(buildVersionCode) : 382),
-                versionName      : (project.hasProperty('buildVersionName') ? buildVersionName : 'V3.0.6')
+                versionCode      : (project.hasProperty('buildVersionCode') ? Integer.parseInt(buildVersionCode) : 383),
+                versionName      : (project.hasProperty('buildVersionName') ? buildVersionName : 'V3.0.7')
         ]
 
         // All project modules dependency versions should be in versions map
