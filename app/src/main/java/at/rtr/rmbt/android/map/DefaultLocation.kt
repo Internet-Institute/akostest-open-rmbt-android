@@ -5,7 +5,7 @@ import com.google.android.gms.maps.model.LatLng
 
 private const val DEFAULT_LAT: Double = (46.46694444F + 46.28361111F) / 2.0
 private const val DEFAULT_LONG: Double = (14.1549516F + 15.6950152F) / 2.0
-private const val DEFAULT_ZOOM_LEVEL = 6F
+private const val DEFAULT_ZOOM_LEVEL = 7F
 
 object DefaultLocation {
 
