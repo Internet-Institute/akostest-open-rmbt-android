@@ -148,7 +148,7 @@ class SettingsRepositoryImpl(
 
     private fun String?.removeProtocol(): String? {
         this ?: return null
-        return this.removePrefix("http://").removePrefix("https://")
+        return this.removePrefix("http://").removePrefix("https://").trimEnd('/')
     }
 
     override fun getTermsAndConditions(): Flow<String> = flow {

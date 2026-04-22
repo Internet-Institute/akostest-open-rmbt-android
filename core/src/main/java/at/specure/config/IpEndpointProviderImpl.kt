@@ -16,10 +16,13 @@ class IpEndpointProviderImpl(private val config: Config) : IpEndpointProvider {
         get() = config.controlServerCheckPrivateIPv6Host
 
     override val checkPublicIPv4Url: String
-        get() = protocol + config.controlServerCheckPublicIPv4Url
+        get() = protocol + config.controlServerCheckPublicIPv4Url.stripProtocol()
 
     override val checkPublicIPv6Url: String
-        get() = protocol + config.controlServerCheckPublicIPv6Url
+        get() = protocol + config.controlServerCheckPublicIPv6Url.stripProtocol()
+
+    private fun String.stripProtocol(): String =
+        this.removePrefix("http://").removePrefix("https://")
 
     override val captivePortalWalledGardenUrl: String
         get() = config.captivePortalWalledGardenUrl
