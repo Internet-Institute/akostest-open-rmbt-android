@@ -7,7 +7,7 @@ buildscript {
                 applicationId    : "com.specure.rmbt.akos",
                 minSdkVersion    : 26,
                 targetSdkVersion : 36,
-                versionCode      : (project.hasProperty('buildVersionCode') ? Integer.parseInt(buildVersionCode) : 383),
+                versionCode      : (project.hasProperty('buildVersionCode') ? Integer.parseInt(buildVersionCode) : 384),
                 versionName      : (project.hasProperty('buildVersionName') ? buildVersionName : 'V3.0.7')
         ]
 
