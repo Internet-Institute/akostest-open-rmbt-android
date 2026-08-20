@@ -147,6 +147,8 @@
     <string name="measurement_ping">Ping</string>
     <string name="measurement_down">Down</string>
     <string name="measurement_up">Up</string>
+    <string name="measurement_results_down">Download</string>
+    <string name="measurement_results_up">Upload</string>
     <string name="measurement_qos">Servicequalität (QoS)</string>
     <string name="measurement_qos_web_site">Webseite</string>
     <string name="measurement_qos_transparent_connection">Transparente Verbindung</string>
@@ -219,6 +221,9 @@
     <string name="map_layer_points">Punkte</string>
     <string name="map_layer_automatic">Automatisch</string>
     <string name="map_label_overlay_type">Kartendetails</string>
+    <string name="map_style_hybrid">Hybrid</string>
+    <string name="map_style_satellite">Satellit</string>
+    <string name="map_style_standard">Standard</string>
     <string name="map_label_map_appearance">Kartenansicht</string>
     <string name="title_marker_item_details">Mehr Details anzeigen</string>
     <string name="map_search_location_dialog_title">Suche</string>
@@ -304,6 +309,7 @@
     <string name="phone_permission_title">1. Telefonberechtigung</string>
     <string name="location_permission_title">2. Standortberechtigung</string>
     <string name="phone_permission_explanation">Der AKOS Test Net tätigt keine Telefonanrufe. Die Telefonberechtigung ist jedoch notwendig, um die Messung einem Anbieter zuzuordnen.</string>
+    <string name="location_permission_explanation">Die Standortberechtigung ist notwendig, um den Messort zu bestimmen und auf der Karte anzuzeigen. Ohne die Berechtigung für den genauen Standort ist die Signalstärke auf vielen Geräten nicht verfügbar. Die Nutzung des Wiederholungsmodus während der Fahrt ist nur mit Standortberechtigung möglich.</string>
     <string name="location_permissions_disclaimer">Der AKOS Test Net verwendet die Standortberechtigung nur während der Messung, die Hintergrundberechtigung ist beim Wiederholungsmodus notwendig um diesen auch im Hintergrund ausführen zu können.</string>
     <string name="home_home">Hauptnavigation: Home</string>
     <string name="home_map">Hauptnavigation: Karte</string>

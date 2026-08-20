@@ -274,9 +274,9 @@
     <string name="map_layer_points">Points</string>
     <string name="map_layer_automatic">Automatic</string>
     <string name="map_label_overlay_type">Overlay type</string>
-    <string name="map_style_hybrid" translatable="false">Hybrid</string>
-    <string name="map_style_satellite" translatable="false">Satellite</string>
-    <string name="map_style_standard" translatable="false">Standard</string>
+    <string name="map_style_hybrid">Hybrid</string>
+    <string name="map_style_satellite">Satellite</string>
+    <string name="map_style_standard">Standard</string>
     <string name="map_label_map_appearance">Map appearance</string>
     <string name="title_marker_item_details">Show more details</string>
 
@@ -365,7 +365,7 @@
     <string name="radio_info_warning_message">Be careful: Changing advanced settings of your radio configuration might be harmful to the stability and performance of your device.</string>
     <string name="accept_risk">I accept the risk</string>
     <string name="preferences_connection_details_not_supported">Extended connection details are not supported on this device</string>
-    <string name="preferences_unable_to_find_browser_app" translatable="false">Unable to open default browser application.</string>
+    <string name="preferences_unable_to_find_browser_app">Unable to open default browser application.</string>
 
     <string name="dialog_signal_info_band">Band</string>
     <string name="dialog_signal_info_connection_status" translatable="false">Status</string>

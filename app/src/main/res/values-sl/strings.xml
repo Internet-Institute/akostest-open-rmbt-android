@@ -36,13 +36,8 @@
     <string name="home_no_internet_connection">Ni internetne povezave!</string>
     <string name="home_no_internet_connection_details">Testiranje je onemogočeno.</string>
     <string name="home_signal_value">%1$d dBm</string>
-    <string name="home_signal_secondary_value" translatable="false">%1$d/%2$d dBm</string>
-    <string name="home_frequency_value" translatable="false">%1$s MHz</string>
-<!--    <string name="home_start_test_info">Press the button to start the test now!</string>-->
     <string name="home_start_test_info">Pritisnite gumb za začetek meritve!</string>
     <string name="home_wifi">WLAN</string>
-    <string name="home_vpn" translatable="false">VPN</string>
-    <string name="home_bluetooth" translatable="false">Bluetooth</string>
     <string name="home_coverage_mode">Način pokritosti</string>
     <string name="public_ip_address">Javni naslov</string>
     <string name="private_ip_address">Lokalni naslov</string>
@@ -75,6 +70,12 @@
     <string name="preferences_expert_mode_summary">Prikaži naprednje nastavitve in informacije</string>
     <string name="preferences_ipv4_only">Samo IPv4</string>
     <string name="preferences_ipv4_only_sum">Nikoli ne uporabi IPv6</string>
+    <string name="preferences_ipv6_only">Samo IPv6</string>
+    <string name="preferences_ipv6_only_sum">Nikoli ne uporabi IPv4</string>
+    <string name="expert_mode_no_ipv4_connectivity">Ni povezljivosti IPv4</string>
+    <string name="expert_mode_no_ipv6_connectivity">Ni povezljivosti IPv6</string>
+    <string name="expert_mode_ipv4_only_not_available">Napredna nastavitev \"Samo IPv4\" je vklopljena, vendar povezljivost IPv4 ni na voljo. Prosimo, spremenite nastavitve.</string>
+    <string name="expert_mode_ipv6_only_not_available">Napredna nastavitev \"Samo IPv6\" je vklopljena, vendar povezljivost IPv6 ni na voljo. Prosimo, spremenite nastavitve.</string>
     <string name="preferences_radio_info">Radijske informacije</string>
     <string name="preferences_radio_info_sum">Podrobnejše informacije o radijskih nastavitvah</string>
     <string name="preferences_contact">Kontakt</string>
@@ -87,11 +88,8 @@
     <string name="preferences_source_code">Izvorna koda</string>
     <string name="preferences_data_protection">Splošni pogoji in politika zasebnosti</string>
     <string name="preferences_developed_by">Razvito s strani Internet Institute</string>
-    <string name="preferences_developer_page" translatable="false">https://iinstitute.eu/</string>
     <string name="preferences_design_by">Dizajnirano s strani Feinblick</string>
-    <string name="preferences_design_page" translatable="false">https://www.feinblick.com</string>
     <string name="preferences_network_info_by">Informacije o omrežju prek NetMonster Core</string>
-    <string name="preferences_network_info_page" translatable="false">https://netmonster.app/</string>
     <string name="preferences_version">Verzija</string>
     <string name="preferences_commit_hash">Unikaten ID verzije kode (commit hash)</string>
     <string name="preferences_enter_code">Vnesite tajno kodo</string>
@@ -140,7 +138,6 @@
     <string name="location_dialog_age">%1$s s</string>
     <string name="location_dialog_accuracy">%1$s m</string>
     <string name="location_dialog_speed">%1$s km/h</string>
-    <string name="location_dialog_position" translatable="false">%1$s %2$s</string>
     <string name="location_location_direction_n">S %1$s</string>
     <string name="location_location_direction_e">V %1$s</string>
     <string name="location_location_direction_s">J %1$s</string>
@@ -188,25 +185,16 @@
         <item>10G</item>
     </string-array>
 
-    <string name="strength_signal_value" translatable="false">%d dBm</string>
-    <string name="scale_value_10000">10G</string>
-    <string name="scale_value_1000" translatable="false">1G</string>
-    <string name="scale_value_100" translatable="false">100M</string>
-    <string name="scale_value_10" translatable="false">10M</string>
-    <string name="scale_value_1" translatable="false">1M</string>
-    <string name="scale_value_0_1" translatable="false">0</string>
 
     <string name="label_qos">QoS</string>
     <string name="label_upload">Gor</string>
     <string name="label_download">Dol</string>
     <string name="label_ping">Ping</string>
     <string name="label_init">Start</string>
-    <string name="measurement_progress_units" translatable="false">%</string>
     <string name="label_signal_strength">Signal</string>
     <string name="network_label">Omrežje</string>
     <string name="technology_label">Tehnologija</string>
 
-    <string name="speed_progress_units" translatable="false">Mbit/s</string>
     <string name="title_cancel_measurement">Ali želite zares prekiniti test?</string>
     <string name="text_continue_measurement">Nadaljuj s testom</string>
     <string name="text_cancel_measurement">Prekini test</string>
@@ -255,8 +243,6 @@
     <string name="results_network_provider">Ponudnik</string>
     <string name="results_network_ssid">SSID dostopne točke</string>
     <string name="result_test_details">Podrobnosti testa</string>
-    <string name="qos_result_success_count" translatable="false">%1$d / %2$d</string>
-    <string name="qos_test_number" translatable="false"># %1$d</string>
     <string name="label_information">Informacije</string>
     <string name="label_tests">Testi</string>
     <string name="label_succeeded">USPEŠNO</string>
@@ -269,9 +255,9 @@
     <string name="map_layer_points">Točke</string>
     <string name="map_layer_automatic">Samodejno</string>
     <string name="map_label_overlay_type">Vrsta prikaza</string>
-    <string name="map_style_hybrid" translatable="false">Hibridni</string>
-    <string name="map_style_satellite" translatable="false">Satelitski</string>
-    <string name="map_style_standard" translatable="false">Splošni</string>
+    <string name="map_style_hybrid">Hibridni</string>
+    <string name="map_style_satellite">Satelitski</string>
+    <string name="map_style_standard">Splošni</string>
     <string name="map_label_map_appearance">Videz zemljevida</string>
     <string name="title_marker_item_details">Pokaži več podrobnosti</string>
 
@@ -363,48 +349,19 @@
     <string name="preferences_unable_to_find_browser_app">Ni mogoče odpreti privzete aplikacije brskalnika.</string>
 
     <string name="dialog_signal_info_band">Pas</string>
-    <string name="dialog_signal_info_connection_status" translatable="false">Status</string>
     <string name="dialog_signal_info_channel">Kanal</string>
     <string name="text_local_results">Samo lokalni rezultati</string>
     <string name="signal_measurement_terms_title">Aktivacija in uporaba</string>
     <string name="signal_measurement_terms_content">Možnost ponovitvenega načina izključno za merjenje signala za tehnično zainteresirane uporabnike omogoča samodejno ponavljanje meritev signala - brez izvajanja kakršnih koli preskusov hitrosti ali kakovosti. Ponovitveni način meritve samo za signal je mogoče kadar koli ustaviti oziroma se samodejno ustavi po 48 urah. Ponovitveni način merjenja signala je namenjen samo v uporabi znotraj EU in EFTA. Meritve signala lahko hitro izpraznijo baterijo. V pavzah med testi ostaneta GPS in zaslon aktivna, meritve signala pa se nadaljujejo, kar pomeni, da se energija porablja veliko hitreje kot v stanju pripravljenosti. Ponovitveni način naj se zato uporablja samo, če je na voljo zunanji vir napajanja. Izrecno je treba poudariti, da zaradi izvajanja ponovitvenega načina merjenja signala ni mogoče izključiti identifikacijo testerja.</string>
-    <string name="home_ethernet" translatable="false">Ethernet</string>
 
     <!-- Other - content labeling -->
     <string name="content_label_close">Zapri</string>
     <string name="ip_info_ip_address">IP naslov</string>
 
     <!-- Signal details -->
-    <string name="cell_info_nr_arfcn" translatable="false">ARFCN</string>
-    <string name="cell_info_ssrsrp" translatable="false">RSRP</string>
-    <string name="cell_info_ssrsrq" translatable="false">RSRQ</string>
-    <string name="cell_info_earfcn" translatable="false">EARFCN</string>
-    <string name="cell_info_ci" translatable="false">CI</string>
-    <string name="cell_info_subscriptionId" translatable="false">SubId</string>
-    <string name="cell_info_eNB" translatable="false">eNB</string>
-    <string name="cell_info_cid" translatable="false">CID</string>
-    <string name="cell_info_tac" translatable="false">TAC</string>
-    <string name="cell_info_pci" translatable="false">PCI</string>
-    <string name="cell_info_bw" translatable="false">BW</string>
-    <string name="cell_info_rssi" translatable="false">RSSI</string>
-    <string name="cell_info_rsrp" translatable="false">RSRP</string>
-    <string name="cell_info_rsrq" translatable="false">RSRQ</string>
-    <string name="cell_info_snr" translatable="false">SNR</string>
-    <string name="cell_info_ta" translatable="false">TA</string>
 
-    <string name="cell_info_rnc" translatable="false">RNC</string>
-    <string name="cell_info_psc" translatable="false">PSC</string>
-    <string name="cell_info_lac" translatable="false">LAC</string>
-    <string name="cell_info_uarfcn" translatable="false">UARFCN</string>
-    <string name="cell_info_rscp" translatable="false">RSCP</string>
 
-    <string name="cell_info_bsic" translatable="false">BSIC</string>
-    <string name="cell_info_arfcn" translatable="false">ARFCN</string>
-    <string name="cell_info_rxl" translatable="false">RXL</string>
 
-    <string name="cell_info_BSSID" translatable="false">BSSID</string>
-    <string name="cell_info_SSID" translatable="false">SSID</string>
-    <string name="cell_info_NCI" translatable="false">NCI</string>
     
     <string name="label_location_access_disabled">Manjkajoče dovoljenje za uporabo lokacijskih storitev</string>
     <string name="label_location_access_disabled_explanation">V nastavitvah uredite dovoljenje za lokacijske storitve.</string>
@@ -418,9 +375,6 @@
     <string name="location_permission_explanation">Dovoljenje za lokacijo je potrebno za identifikacijo merilne lokacije in njen prikaz na zemljevidu. Brez natančnega dovoljenja za lokacijo moč signala v mnogih napravah ni na voljo. Uporaba ponovitvenega načina med premikanjem je mogoča le z dovoljenjem za lokacijo.</string>
     <string name="location_permissions_disclaimer">AKOS Test Net uporablja dovoljenje za lokacijo samo med meritvijo, dovoljenje za uporabo v ozadju je potrebno za izvajanje ponovitvenega načina.</string>
     <string name="label_download_files">Prenesi podatke</string>
-    <string name="PDF" translatable="false">PDF</string>
-    <string name="CSV" translatable="false">CSV</string>
-    <string name="XLSX" translatable="false">XLSX</string>
     <string name="error_during_download">Napaka pri prenosu</string>
     <string name="error_opening_file">Napak pri odpiranju datoteke</string>
     <string name="download_complete">Prenos končan</string>
@@ -524,6 +478,8 @@
     <string name="confirm">Potrdi</string>
     <string name="wrong_network_type_active_dialog_title">Ni na mobilnem</string>
     <string name="wrong_network_type_active_dialog_text">Deaktivirajte Wifi (ali katero drugo nemobilno povezavo)</string>
+    <string name="signal_measurement_not_possible_dialog_title">Merjenje signala ni mogoče</string>
+    <string name="signal_measurement_not_possible_dialog_text">Za merjenje signala mora biti Wi-Fi izklopljen in GPS-signal dober. Prosimo, poskusite znova.</string>
     <string name="stop_signal_measurement_title">Končaj merjenje signala</string>
     <string name="stop_signal_measurement_text">Ali želite končati merjenje?</string>
     <string name="no_gps_or_insufficient_precision">Ni GPS signala ali je njegova kakovost nezadostna. Premaknite se na prosto.</string>
@@ -537,7 +493,7 @@
     <string name="coverage_measurement_error_unknown">Pri merjenju pokritosti je prišlo do napake. Poskusite znova.</string>
     <string name="dismiss">Opusti</string>
     <string name="wrong_network_message">Trenutno ste na povezavi %1$s. Preklopite na mobilno podatkovno povezavo.</string>
-    <string name="coverage_results_title">Pokritost</string>
+    <string name="signal_result_title">Rezultat merjenja signala</string>
     <string name="text_fence_radius">Faktor polmera ograde:</string>
     <string name="text_meters">%1$dm</string>
     <string name="fence_radius_slider_content_description">Drsnik polmera ograde, vrednost %1$d metrov</string>
