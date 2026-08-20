@@ -8,6 +8,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.map
+import at.rmbt.client.control.ControlServerModule
+import at.rmbt.client.control.IpProtocol
 import at.rmbt.client.control.NewsItem
 import at.rtr.rmbt.android.config.AppConfig
 import at.rtr.rmbt.android.ui.viewstate.HomeViewState
@@ -16,10 +18,10 @@ import at.specure.data.MeasurementServers
 import at.specure.data.CoverageMeasurementSettings
 import at.specure.data.repository.NewsRepository
 import at.specure.data.repository.SettingsRepository
-import at.specure.data.repository.SignalMeasurementRepository
 import at.specure.info.TransportType
 import at.specure.info.cell.CellNetworkInfo
 import at.specure.info.connectivity.ConnectivityInfoLiveData
+import at.specure.info.ip.IpInfo
 import at.specure.info.ip.IpV4ChangeLiveData
 import at.specure.info.ip.IpV6ChangeLiveData
 import at.specure.info.network.ActiveNetworkLiveData
@@ -31,6 +33,7 @@ import at.specure.measurement.signal.SignalMeasurementProducer
 import at.specure.measurement.signal.SignalMeasurementService
 import at.rmbt.client.control.data.SignalMeasurementType
 import at.specure.util.permission.PermissionsWatcher
+import at.specure.worker.WorkLauncher
 import kotlinx.coroutines.CoroutineName
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -38,7 +41,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
-import javax.inject.Named
+import kotlin.time.Duration.Companion.milliseconds
 
 const val LOCATION_ACCURACY_WARNING_DIALOG_SILENCED_TIME_MILLIS = 60_000L
 
@@ -54,8 +57,8 @@ class HomeViewModel @Inject constructor(
     private val appConfig: AppConfig,
     private val newsRepository: NewsRepository,
     private val settingsRepository: SettingsRepository,
-    private val signalMeasurementRepository: SignalMeasurementRepository,
     private val coverageMeasurementSettings: CoverageMeasurementSettings,
+    private val controlServerModule: ControlServerModule,
     measurementServers: MeasurementServers,
 ) : BaseViewModel() {
 
@@ -103,11 +106,14 @@ class HomeViewModel @Inject constructor(
     val isalwaysAllowCellInfosOn: Boolean
         get() = appConfig.alwaysAllowCellInfos
 
+    val shouldRequestBackgroundLocationPermission: Boolean
+        get() = appConfig.shouldRequestBackgroundLocation
+
     private val serviceConnection = object : ServiceConnection {
 
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
             Timber.d("Signal measurement service connected")
-            producer = service as SignalMeasurementProducer
+            producer = service as SignalMeasurementProducer?
 
             if (producer != null && toggleService) {
                 toggleService = false
@@ -194,10 +200,11 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun stopSignalMeasurement() {
+    fun stopSignalMeasurement(): LiveData<Boolean>? {
         coverageMeasurementSettings.signalMeasurementIsRunning = false
         Timber.d("Stopping coverage session HVM2")
         producer?.stopMeasurement(false)
+        return producer?.activeStateLiveData
     }
 
     fun attach(context: Context) {
@@ -249,7 +256,7 @@ class HomeViewModel @Inject constructor(
     fun silenceLocationDialogWarning() {
         state.locationWarningDialogSilenced.set(true)
         launch(CoroutineName("SilenceLocationDialogWarning")) {
-            delay(LOCATION_ACCURACY_WARNING_DIALOG_SILENCED_TIME_MILLIS)
+            delay(LOCATION_ACCURACY_WARNING_DIALOG_SILENCED_TIME_MILLIS.milliseconds)
             state.locationWarningDialogSilenced.set(false)
         }
     }
@@ -257,18 +264,61 @@ class HomeViewModel @Inject constructor(
     fun silenceNetworkWarning() {
         state.networkWarningDialogSilenced.set(true)
         launch(CoroutineName("SilenceNetworkDialogWarning")) {
-            delay(LOCATION_ACCURACY_WARNING_DIALOG_SILENCED_TIME_MILLIS)
+            delay(LOCATION_ACCURACY_WARNING_DIALOG_SILENCED_TIME_MILLIS.milliseconds)
             state.networkWarningDialogSilenced.set(false)
         }
     }
 
     fun shouldOpenSignalMeasurementScreen(): Boolean {
         return state.isSignalMeasurementActive.get() == true
-//        return coverageMeasurementSettings.signalMeasurementIsRunning
     }
 
     fun setSignalMeasurementShouldContinueInLastSession(shouldContinueInLastSession: Boolean) {
         coverageMeasurementSettings.signalMeasurementShouldContinueInLastSession = shouldContinueInLastSession
     }
 
+    fun syncCoverageOnRequests(context: Context) {
+        controlServerModule.onResponseInterceptor = { response ->
+            if (response.isSuccessful && coverageMeasurementSettings.hasUnsyncedCoverage) {
+                coverageMeasurementSettings.hasUnsyncedCoverage = false
+                WorkLauncher.enqueueCoverageSyncRequest(context)
+            }
+        }
+    }
+
+    /**
+     * When IPv4-only or IPv6-only expert mode is active, returns the selected [IpProtocol] if that
+     * protocol currently has no connectivity (no public address in the latest /ip responses) - which
+     * would make the test fail, e.g. after switching to a network that lacks the forced protocol.
+     * Returns null when the selected protocol is available or no protocol restriction is active.
+     */
+    fun unavailableForcedIpProtocol(): IpProtocol? {
+        // only relevant in expert mode
+        if (!appConfig.expertModeEnabled) return null
+        // can't decide if no Internet at all
+        if (!hasConnectivity(ipV4ChangeLiveData.value) && !hasConnectivity(ipV6ChangeLiveData.value)) return null
+
+        return when {
+            appConfig.expertModeUseIpV4Only && !hasConnectivity(ipV4ChangeLiveData.value) -> IpProtocol.V4
+            appConfig.expertModeUseIpV6Only && !hasConnectivity(ipV6ChangeLiveData.value) -> IpProtocol.V6
+            else -> null
+        }
+    }
+
+    /** Connectivity for the protocol is assumed when a public address was reachable over it. */
+    private fun hasConnectivity(ipInfo: IpInfo?): Boolean = ipInfo?.publicAddress != null
+
+    /**
+     * Returns true when the current GPS fix is good enough to START a signal (coverage) measurement.
+     * Uses exactly the same minimum quality that is required for a fix to be usable DURING the
+     * measurement: not older than [Config.maxAgeOfLocationInformationForSignalMeasurementMillis] and
+     * accuracy better than [Config.minLocationAccuracyMetersDuringSignalMeasurement].
+     */
+    fun isGpsQualitySufficientForSignalMeasurement(): Boolean {
+        val location = locationLiveData.value ?: return false
+        if (!location.hasAccuracy) return false
+        val ageMillis = location.ageNanos / 1_000_000L
+        return location.accuracy <= appConfig.minLocationAccuracyMetersDuringSignalMeasurement &&
+            ageMillis <= appConfig.maxAgeOfLocationInformationForSignalMeasurementMillis
+    }
 }

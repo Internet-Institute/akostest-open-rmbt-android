@@ -30,6 +30,8 @@ android {
 
         buildConfigField "java.util.Date", "BUILD_TIME", "new java.util.Date(" + System.currentTimeMillis() + "L)"
         buildConfigField "String", "COMMIT_HASH", "\"${getGitHash()}\""
+        buildConfigField "String", "GIT_BRANCH_NAME", "\"${gitBranchName()}\""
+        buildConfigField "boolean", "GIT_IS_DIRTY", gitIsDirty()
         buildConfigField "int", "VERSION_CODE", "${versionCode}"
         buildConfigField "String", "VERSION_NAME", "\"${versionName}\""
 
@@ -105,7 +107,6 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$versions.timber"
 
     implementation "androidx.preference:preference-ktx:$versions.androidx_preference"
-    implementation "com.github.zcweng:switch-button:$versions.switch_button"
 
     implementation "androidx.core:core-splashscreen:$versions.splash_screen"
 

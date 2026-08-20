@@ -4,23 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Binder
-import android.telephony.SubscriptionManager
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import at.rmbt.client.control.data.SignalMeasurementType
 import at.rmbt.util.exception.HandledException
-import at.specure.config.Config
 import at.specure.data.entity.CoverageMeasurementSession
-import at.specure.data.repository.MeasurementRepository
-import at.specure.data.repository.SignalMeasurementRepository
-import at.specure.data.repository.TestDataRepository
-import at.specure.info.cell.CellInfoWatcher
 import at.specure.info.cell.CellNetworkInfo
-import at.specure.info.connectivity.ConnectivityWatcher
 import at.specure.info.network.DetailedNetworkInfo
 import at.specure.info.network.MobileNetworkType
-import at.specure.info.strength.SignalStrengthLiveData
 import at.specure.info.strength.SignalStrengthWatcher
 import at.specure.location.LocationInfo
 import at.specure.location.LocationWatcher
@@ -34,6 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
@@ -45,17 +37,9 @@ const val MAXIMUM_TIME_LOCATION_KEEP_MILLS = 3000
 @Singleton
 class SignalMeasurementProcessor @Inject constructor(
     private val context: Context,
-    private val config: Config,
-    private val repository: TestDataRepository,
     private val locationWatcher: LocationWatcher,
-    private val signalStrengthLiveData: SignalStrengthLiveData,
     private val signalStrengthWatcher: SignalStrengthWatcher,
-    private val subscriptionManager: SubscriptionManager,
-    private val signalRepository: SignalMeasurementRepository,
-    private val connectivityWatcher: ConnectivityWatcher,
-    private val measurementRepository: MeasurementRepository,
     private val rtrCoverageMeasurementProcessor: RtrCoverageMeasurementProcessor,
-    private val cellInfoWatcher: CellInfoWatcher
 ) : Binder(), SignalMeasurementProducer, CoroutineScope {
 
     private var globalNetworkInfo: DetailedNetworkInfo? = null
@@ -96,14 +80,20 @@ class SignalMeasurementProcessor @Inject constructor(
     override val signalMeasurementSessionErrorLiveData: LiveData<Exception?>
         get() = _signalMeasurementSessionErrorLiveData
 
-    val measurementSessionInitializedCallback: (sessionId: CoverageMeasurementSession) -> Unit = { coverageMeasurementSession ->
-        _signalMeasurementSessionIdLiveData.postValue(coverageMeasurementSession.localMeasurementId)
-        rtrCoverageMeasurementProcessor.onNewLocation(globalLocationInfo, globalNetworkInfo, batteryInfo.getTemp())
-    }
+    val measurementSessionInitializedCallback: (sessionId: CoverageMeasurementSession) -> Unit =
+        { coverageMeasurementSession ->
+            _signalMeasurementSessionIdLiveData.postValue(coverageMeasurementSession.localMeasurementId)
+            rtrCoverageMeasurementProcessor.onNewLocation(
+                globalLocationInfo,
+                globalNetworkInfo,
+                batteryInfo.getTemp()
+            )
+        }
 
-    val measurementSessionInitializationErrorCallback: (exception: Exception) -> Unit = { exception ->
-        _signalMeasurementSessionErrorLiveData.postValue(exception)
-    }
+    val measurementSessionInitializationErrorCallback: (exception: Exception) -> Unit =
+        { exception ->
+            _signalMeasurementSessionErrorLiveData.postValue(exception)
+        }
 
     val measurementSessionStoppedCallback: () -> Unit = {
         stopMeasurement(false)
@@ -119,7 +109,7 @@ class SignalMeasurementProcessor @Inject constructor(
         }
     }
 
-    val signalStrengthListener = object: SignalStrengthWatcher.SignalStrengthListener {
+    val signalStrengthListener = object : SignalStrengthWatcher.SignalStrengthListener {
         override fun onSignalStrengthChanged(signalInfo: DetailedNetworkInfo?) {
             updateNetworkInfo(signalInfo)
         }
@@ -138,36 +128,67 @@ class SignalMeasurementProcessor @Inject constructor(
 
     fun updateLocation(newValue: LocationInfo?) {
         globalLocationInfo = newValue
-        rtrCoverageMeasurementProcessor.onNewLocation(globalLocationInfo, globalNetworkInfo, batteryInfo.getTemp())
+        rtrCoverageMeasurementProcessor.onNewLocation(
+            globalLocationInfo,
+            globalNetworkInfo,
+            batteryInfo.getTemp()
+        )
 
         // restart timer
         locationResetJob?.cancel()
         locationResetJob = launch {
-            delay(MAXIMUM_TIME_LOCATION_KEEP_MILLS.toLong())
-            globalLocationInfo = null
-            rtrCoverageMeasurementProcessor.onNewLocation(globalLocationInfo, globalNetworkInfo, batteryInfo.getTemp())
+            while (isActive) {
+                delay(MAXIMUM_TIME_LOCATION_KEEP_MILLS.toLong())
+                // Double-check: If we still have satellites used in fix,
+                // we are likely just stationary, so we keep the last location.
+                if (locationWatcher.satellitesCount == 0) {
+                    globalLocationInfo = null
+                    rtrCoverageMeasurementProcessor.onNewLocation(
+                        null,
+                        globalNetworkInfo,
+                        batteryInfo.getTemp()
+                    )
+                    break
+                }
+            }
         }
     }
 
     fun updateNetworkInfo(newValue: DetailedNetworkInfo?) {
 
-        val isKnownCellularNetwork = (newValue != null) && (newValue.networkInfo != null) && (newValue.networkInfo is CellNetworkInfo && newValue.networkInfo.networkType.intValue != MobileNetworkType.UNKNOWN.intValue)
+        val isKnownCellularNetwork =
+            (newValue != null) && (newValue.networkInfo != null) && (newValue.networkInfo is CellNetworkInfo && newValue.networkInfo.networkType.intValue != MobileNetworkType.UNKNOWN.intValue)
         if (isKnownCellularNetwork) {
             globalNetworkInfo = newValue
             networkInfoResetJob?.cancel()
         }
 
-        val isNonCellularNetwork = (newValue != null) && (newValue.networkInfo != null) && newValue.networkInfo !is CellNetworkInfo
-        if  (isNonCellularNetwork) {
+        val isNonCellularNetwork =
+            (newValue != null) && (newValue.networkInfo != null) && newValue.networkInfo !is CellNetworkInfo
+        if (isNonCellularNetwork) {
             globalNetworkInfo = newValue
             networkInfoResetJob?.cancel()
         }
 
-        val isNullOrUnknownNetwork = newValue == null || newValue.networkInfo == null || (newValue.networkInfo is CellNetworkInfo && newValue.networkInfo.networkType.intValue == MobileNetworkType.UNKNOWN.intValue)
-        if (isNullOrUnknownNetwork) {
+        val isNoSignal =
+                    newValue == null
+                    || newValue.networkInfo == null
+                    || (
+                        newValue.networkInfo is CellNetworkInfo
+                        && newValue.networkInfo.networkType.intValue == MobileNetworkType.UNKNOWN.intValue
+                        && newValue.networkInfo.signalStrength?.value == null
+                        )
+        val isUnknownNetwork =
+                    (
+                    newValue?.networkInfo is CellNetworkInfo
+                    && newValue.networkInfo.networkType.intValue == MobileNetworkType.UNKNOWN.intValue
+                    && newValue.networkInfo.signalStrength?.value != null
+                    )
+        if (isNoSignal || isUnknownNetwork) {
+            networkInfoResetJob?.cancel()
             networkInfoResetJob = launch {
                 delay(MAXIMUM_TIME_NETWORK_KEEP_MILLS.toLong())
-                globalNetworkInfo = newValue
+                globalNetworkInfo = if (isNoSignal) null else newValue
             }
         }
     }
@@ -176,24 +197,27 @@ class SignalMeasurementProcessor @Inject constructor(
         unstoppable: Boolean,
         signalMeasurementType: SignalMeasurementType,
     ) {
-        registerBatteryInfoReceiver(batteryInfo)
         val shouldStartCoverage = !_isActive
         Timber.w("startMeasurement $shouldStartCoverage")
-        _isActive = true
-        isUnstoppable = unstoppable
-        postStateData()
-
-        locationWatcher.addListener(locationListener)
-        signalStrengthWatcher.addListener(signalStrengthListener)
 
         if (shouldStartCoverage) {
+            _isActive = true
+            isUnstoppable = unstoppable
+            postStateData()
+            registerBatteryInfoReceiver(batteryInfo)
+            locationWatcher.addListener(locationListener)
+            signalStrengthWatcher.addListener(signalStrengthListener)
             Timber.d("Starting coverage session")
             rtrCoverageMeasurementProcessor.startCoverageSession(
                 sessionCreated = measurementSessionInitializedCallback,
                 sessionCreationError = measurementSessionInitializationErrorCallback,
                 sessionStopped = measurementSessionStoppedCallback,
             )
-            rtrCoverageMeasurementProcessor.onNewLocation(globalLocationInfo, globalNetworkInfo, batteryInfo.getTemp())
+            rtrCoverageMeasurementProcessor.onNewLocation(
+                globalLocationInfo,
+                globalNetworkInfo,
+                batteryInfo.getTemp()
+            )
         }
     }
 
@@ -217,12 +241,6 @@ class SignalMeasurementProcessor @Inject constructor(
         _activeStateLiveData.postValue(_isActive)
         _pausedStateLiveData.postValue(_isPaused)
     }
-
-    fun bind(owner: LifecycleOwner) {
-
-    }
-
-    private fun isSignalMeasurementRunning() = isActive
 
     private fun registerBatteryInfoReceiver(batteryInfoReceiver: BatteryInfoReceiver) {
         Timber.d("REGISTERING TEMPERATURE")

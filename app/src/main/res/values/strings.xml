@@ -74,6 +74,12 @@
     <string name="preferences_expert_mode_summary">Show advanced settings and information</string>
     <string name="preferences_ipv4_only">IPv4 only</string>
     <string name="preferences_ipv4_only_sum">Do not use IPv6</string>
+    <string name="preferences_ipv6_only">IPv6 only</string>
+    <string name="preferences_ipv6_only_sum">Do not use IPv4</string>
+    <string name="expert_mode_no_ipv4_connectivity">No IPv4 connectivity</string>
+    <string name="expert_mode_no_ipv6_connectivity">No IPv6 connectivity</string>
+    <string name="expert_mode_ipv4_only_not_available">Expert setting \"IPv4-only\" is active, but no IPv4 connectivity. Please change the configuration.</string>
+    <string name="expert_mode_ipv6_only_not_available">Expert setting \"IPv6-only\" is active, but no IPv6 connectivity. Please change the configuration.</string>
     <string name="preferences_radio_info">Radio info</string>
     <string name="preferences_radio_info_sum">Details on radio configuration</string>
     <string name="preferences_contact">Contact</string>
@@ -307,7 +313,7 @@
     <string name="notification_loop_mode_finished_title">Loop mode finished</string>
 
     <string name="toast_signal_measurement_enabled">Coverage measurement started.</string>
-    <string name="error_no_connection">No Internet connection. Could not load data.</string>
+    <string name="error_no_connection">Could not load data. Please check your internet connection.</string>
 
     <string name="label_map_filters">Map settings</string>
     <string name="text_filter_confirm">Accept</string>
@@ -359,14 +365,14 @@
     <string name="radio_info_warning_message">Be careful: Changing advanced settings of your radio configuration might be harmful to the stability and performance of your device.</string>
     <string name="accept_risk">I accept the risk</string>
     <string name="preferences_connection_details_not_supported">Extended connection details are not supported on this device</string>
-    <string name="preferences_unable_to_find_browser_app">Unable to open default browser application.</string>
+    <string name="preferences_unable_to_find_browser_app" translatable="false">Unable to open default browser application.</string>
 
     <string name="dialog_signal_info_band">Band</string>
     <string name="dialog_signal_info_connection_status" translatable="false">Status</string>
     <string name="dialog_signal_info_channel">Channel</string>
     <string name="text_local_results">Local results only</string>
-    <string name="signal_measurement_terms_title">Activation and usage</string>
-    <string name="signal_measurement_terms_content">The signal-only loop mode option for technically interested users allows the automatic repetition of signal measurements - without any speed- or quality tests being carried out. The signal-only loop-modus can be stopped at any time respectively it stops automatically after 48 hours. The signal-only loop-modus is (only) intended for use within the EU and the EEA. The battery is quickly drained by the signal-only measurements. In the pauses between tests, the GPS and the display remain active and signal measurements continue, which means that the energy is used up much faster than in stand-by mode. The loop-modus should therefore only be used if an external power supply is available. It needs to be explicitly pointed out that due to the signal-only loop mode it cannot be excluded that the tester is identified.</string>
+    <string name="signal_measurement_terms_title">Signal measurement</string>
+    <string name="signal_measurement_terms_content">The signal measurement allows outdoor mobile network measurements along a path. It monitors connectivity, technology and signal strength. Connectivity is measured using regular network pings. The measurement requires good GPS coverage and Wifi must be turned off. It consumes much less data compared to speed measurement. The signal measurment is (only) intended for use within the EU and the EEA.</string>
     <string name="home_ethernet" translatable="false">Ethernet</string>
 
     <!-- Other - content labeling -->
@@ -493,8 +499,8 @@
     <string name="title">Title: </string>
     <string name="subtitle">Subtitle: </string>
 
-    <string name="home_signal_measurement_toggle_on">Coverage measurement conditions to start are met</string>
-    <string name="home_signal_measurement_toggle_off">Coverage measurement conditions to start are not met</string>
+    <string name="home_signal_measurement_toggle_on">The signal measurmeent is possible</string>
+    <string name="home_signal_measurement_toggle_off">The signal measurment is not possible</string>
 
     <string name="ipv4_no_info">IP version 4: no information</string>
     <string name="ipv4_no_address">IP version 4: no address</string>
@@ -526,35 +532,37 @@
     <string name="confirm">Confirm</string>
     <string name="wrong_network_type_active_dialog_title">Not on mobile</string>
     <string name="wrong_network_type_active_dialog_text">Please deactivate Wifi (or some other non-mobile connection)</string>
+    <string name="signal_measurement_not_possible_dialog_title">Signal measurement not possible</string>
+    <string name="signal_measurement_not_possible_dialog_text">The signal measurement requires that WIFI is turned off and good GPS coverage. Please try again.</string>
     <string name="stop_signal_measurement_title">End signal measurement</string>
     <string name="stop_signal_measurement_text">Do you want to end the measurement?</string>
     <string name="no_gps_or_insufficient_precision">No GPS signal or GPS quality is insufficient. Please move outdoors.</string>
     <string name="noSignal">No signal</string>
-    <string name="coverage_result">Coverage result</string>
-    <string name="number_of_fences_is">Number of fences is</string>
-    <string name="title_coverage_loop_mode">Coverage series</string>
+    <string name="coverage_result">Result</string>
+    <string name="number_of_fences_is">Number of points is</string>
+    <string name="title_coverage_loop_mode">Signal measurement series</string>
     <string name="title_filters_loading_error">Loading filters failed</string>
     <string name="loading_map_filters_failed">Unable to load map filters. Please, try again.</string>
-    <string name="coverage_measurement_error_title">Coverage measurement error</string>
-    <string name="coverage_measurement_error_unknown">There was an error during coverage measurement. Please, try again.</string>
+    <string name="coverage_measurement_error_title">Signal measurement error</string>
+    <string name="coverage_measurement_error_unknown">There was an error during signal measurement. Please, try again.</string>
     <string name="dismiss">Dismiss</string>
     <string name="wrong_network_message">You are on %1$s data now. Please change to mobile data connection.</string>
-    <string name="coverage_results_title">Coverage</string>
-    <string name="text_fence_radius">Fence radius factor:</string>
+    <string name="signal_result_title">Signal measurement result</string>
+    <string name="text_fence_radius">Point radius factor:</string>
     <string name="text_meters">%1$dm</string>
-    <string name="fence_radius_slider_content_description">Fence radius slider value %1$d meters</string>
+    <string name="fence_radius_slider_content_description">Point radius slider value %1$d meters</string>
     <string name="accuracy_radius_slider_content_description">Accuracy radius slider value %1$d meters</string>
-    <string name="text_accuracy_radius">Accuracy:</string>
+    <string name="text_accuracy_radius">Accuracy threshold:</string>
     <string name="points">Points</string>
     <string name="text_loading_results_failed">Loading results failed</string>
     <string name="text_connection_count">%1$d connections</string>
-    <string name="text_fence_count">%1$d fences</string>
+    <string name="text_fence_count">%1$d points</string>
     <string name="text_unknown">None</string>
     <string name="ipv4_short">IPv4</string>
     <string name="ipv6_short">IPv6</string>
     <string name="sending_results">Storing results</string>
     <string name="no_gps_value" />
-    <string name="error_sending_data">Storing results failed!</string>
+    <string name="error_sending_data">Results could not be saved. The app will retry later.</string>
     <string name="location_usage_always_warning_message">Allow location access in the background to use this feature.</string>
     <string name="allow">Allow</string>
     <string name="measuring">Measuring…</string>

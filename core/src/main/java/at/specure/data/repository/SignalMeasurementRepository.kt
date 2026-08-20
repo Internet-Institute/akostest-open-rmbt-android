@@ -59,7 +59,7 @@ interface SignalMeasurementRepository {
 
     suspend fun createMeasurementPointRecordWithNewSequenceNumber(point: CoverageMeasurementFenceRecord)
 
-    suspend fun createMeasurementPointRecordWithNewSequenceNumberAndUpdateLastOneTransaction(
+    suspend fun createMeasurementPointRecordWithNewSequenceNumber(
         point: CoverageMeasurementFenceRecord,
         leaveTimestampMillis: Long,
         avgPingMillis: Double?,
@@ -94,6 +94,9 @@ interface SignalMeasurementRepository {
     suspend fun retrySendFences()
 
     suspend fun removeOldFencesAndSessions()
+
+    /** Prunes historic test + coverage data down to the retention policy and compacts the DB. */
+    suspend fun runDatabaseRetention()
 
     suspend fun registerNotRegisteredMeasurementsWithSomeFences()
 }

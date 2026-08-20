@@ -56,6 +56,12 @@
     <string name="preferences_expert_mode_summary">Erweitere Einstellungen und Informationen</string>
     <string name="preferences_ipv4_only">Nur IPv4</string>
     <string name="preferences_ipv4_only_sum">Keine Verwendung von IPv6</string>
+    <string name="preferences_ipv6_only">Nur IPv6</string>
+    <string name="preferences_ipv6_only_sum">Keine Verwendung von IPv4</string>
+    <string name="expert_mode_no_ipv4_connectivity">Keine IPv4-Verbindung</string>
+    <string name="expert_mode_no_ipv6_connectivity">Keine IPv6-Verbindung</string>
+    <string name="expert_mode_ipv4_only_not_available">Experteneinstellung \"Nur IPv4\" ist aktiv, aber keine IPv4-Verbindung. Bitte ändern Sie die Konfiguration.</string>
+    <string name="expert_mode_ipv6_only_not_available">Experteneinstellung \"Nur IPv6\" ist aktiv, aber keine IPv6-Verbindung. Bitte ändern Sie die Konfiguration.</string>
     <string name="preferences_radio_info">Mobilfunkinformation</string>
     <string name="preferences_radio_info_sum">Details der Mobilfunkkonfiguration</string>
     <string name="preferences_contact">Kontakt</string>
@@ -141,8 +147,6 @@
     <string name="measurement_ping">Ping</string>
     <string name="measurement_down">Down</string>
     <string name="measurement_up">Up</string>
-    <string name="measurement_results_down">Down</string>
-    <string name="measurement_results_up">Up</string>
     <string name="measurement_qos">Servicequalität (QoS)</string>
     <string name="measurement_qos_web_site">Webseite</string>
     <string name="measurement_qos_transparent_connection">Transparente Verbindung</string>
@@ -181,7 +185,6 @@
     <string name="history_item_header_ping">Ping</string>
     <string name="history_item_header_ms">ms</string>
     <string name="history_no_data">Keine Daten verfügbar.</string>
-    <!-- Results -->
     <string name="history_settings">Einstellungen</string>
     <string name="history_sync">Synchronisieren</string>
     <string name="history_items">Einträge des Verlaufs</string>
@@ -212,7 +215,6 @@
     <string name="label_failed">GESCHEITERT</string>
     <string name="label_description">BESCHREIBUNG</string>
     <string name="label_detail">DETAILS</string>
-    <!-- Map -->
     <string name="map_layer_communities">Gemeinden</string>
     <string name="map_layer_points">Punkte</string>
     <string name="map_layer_automatic">Automatisch</string>
@@ -286,13 +288,11 @@
     <string name="radio_info_warning_message">Achtung: Änderungen in den erweiterten Einstellungen der Mobilfunkkonfiguration können Auswirkungen auf Funktion, Stabilität und Performance Ihres Gerätes haben.</string>
     <string name="accept_risk">Ich bin mir der Gefahren bewusst</string>
     <string name="preferences_connection_details_not_supported">Erweiterte Verbindungsdetails werden auf diesem Gerät nicht unterstützt</string>
-    <string name="preferences_unable_to_find_browser_app">Standard-Browseranwendung kann nicht geöffnet werden.</string>
     <string name="dialog_signal_info_band">Band</string>
     <string name="dialog_signal_info_channel">Kanal</string>
     <string name="text_local_results">Nur lokale Ergebnisse</string>
-    <string name="signal_measurement_terms_title">Aktivierung und Nutzung</string>
-    <string name="signal_measurement_terms_content">Die Nur-Signalmessung für technisch Interessierte ermöglicht, dass die Signalstärke automatisiert wiederholt gemessen wird – ohne, dass dabei Geschwindigkeits- oder Qualitätstests durchgeführt werden. Die Nur-Signalmessung kann jederzeit gestoppt werden bzw endet automatisch nach 48 Stunden. Sie ist (nur) zur Nutzung innerhalb der EU- und des EWR gedacht ist. Während der Signalmessung bleiben GPS und die Anzeige aktiv, deshalb wird die Batterie schnell entleert. Daher sollte sie nur genutzt werden, wenn externe Stromversorgung zur Verfügung steht. Es wird ausdrücklich darauf hingewiesen, dass aufgrund der Nur-Signalmessung ein Rückschluss auf die testende Person nicht ausgeschlossen ist.\n Damit Messungen stattfinden und einem Standort zugeordnet werden können, wenn sich die Anwendung im Hintergrund befindet, ist die Systemberechtigung zum Erfassen des Standorts bei Hintergrundnutzung notwendig. Diese Standortberechtigung wird verwendet, um den erfolgten Messungen Standorte zuzuordnen.</string>
-    <!-- Signal details -->
+    <string name="signal_measurement_terms_title">Signalmessung</string>
+    <string name="signal_measurement_terms_content">Die Signalmessung ermöglicht Messungen von Mobilfunknetzen im Freien entlang eines Messpfads. Sie überwacht Konnektivität, Technologie und Signalstärke. Die Konnektivität wird mittels regelmäßiger Netzwerk-Pings gemessen. Die Messung erfordert guten GPS-Empfang und deaktiviertes WLAN. Sie verbraucht deutlich weniger Daten als Geschwindigkeitsmessungen. Die Signalmessung ist ausschließlich für die Nutzung innerhalb der EU und des EWR vorgesehen.</string>
     <string name="content_label_close">Schließen</string>
     <string name="ip_info_ip_address">IP-Adresse</string>
     <string name="label_location_access_disabled">Standortberechtigung fehlt</string>
@@ -304,7 +304,6 @@
     <string name="phone_permission_title">1. Telefonberechtigung</string>
     <string name="location_permission_title">2. Standortberechtigung</string>
     <string name="phone_permission_explanation">Der AKOS Test Net tätigt keine Telefonanrufe. Die Telefonberechtigung ist jedoch notwendig, um die Messung einem Anbieter zuzuordnen.</string>
-    <string name="location_permission_explanation">Die Standortberechtigung wird für die Bestimmung des Mess-Standorts und zur Darstellung auf der Karte benötigt. Ohne Berechtigung für den genauen Standort kann die Signalstärke auf vielen Geräten nicht angezeigt werden. Die Verwendung des Wiederholungsmodus in Bewegung ist nur mit Standortberechtigung möglich.</string>
     <string name="location_permissions_disclaimer">Der AKOS Test Net verwendet die Standortberechtigung nur während der Messung, die Hintergrundberechtigung ist beim Wiederholungsmodus notwendig um diesen auch im Hintergrund ausführen zu können.</string>
     <string name="home_home">Hauptnavigation: Home</string>
     <string name="home_map">Hauptnavigation: Karte</string>
@@ -320,6 +319,10 @@
     <string name="download_progress">%1$d%% heruntergeladen</string>
     <string name="history_filename">AKOS-history</string>
     <string name="notification_permission_title">3. Benachrichtigungsberechtigung</string>
+    <string name="signal_measurement_not_possible_dialog_title">Signalmessung nicht möglich</string>
+    <string name="signal_measurement_not_possible_dialog_text">Die Signalmessung erfordert, dass WLAN ausgeschaltet ist und ein guter GPS-Empfang besteht. Bitte versuchen Sie es erneut.</string>
+    <string name="signal_result_title">Ergebnis der Signalmessung</string>
+    <string name="preferences_unable_to_find_browser_app">Der Standard-Web-Browser ist nicht verfügbar.</string>
     <string name="notification_permission_explanation">Die Benachrichtigungsberechtigung ist erforderlich, um die App während im Hintergrund ausgeführter Messungen am Leben zu halten. Ohne Benachrichtigungsberechtigung können Sie den Messfortschritt nicht verfolgen, wenn die App im Hintergrund läuft. Die Benachrichtigungsberechtigung ist erforderlich, damit der Schleifenmodus im Hintergrund ausgeführt werden kann.</string>
 
     <string name="unknown_signal_mobile">Unbekanntes Mobilfunksignal</string>
@@ -427,7 +430,6 @@
     <string name="coverage_measurement_error_unknown">Während der Abdeckungsmessung ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut.</string>
     <string name="dismiss">Schließen</string>
     <string name="wrong_network_message">Sie nutzen derzeit %1$s-Daten. Bitte wechseln Sie zur mobilen Datenverbindung.</string>
-    <string name="coverage_results_title">Abdeckung</string>
     <string name="text_fence_radius">Zaunradius-Faktor:</string>
     <string name="text_meters">%1$dm</string>
     <string name="fence_radius_slider_content_description">Zaunradius-Schieberegler-Wert %1$d Meter</string>

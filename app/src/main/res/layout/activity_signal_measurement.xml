@@ -35,6 +35,7 @@
             android:layout_height="match_parent">
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/measurementInfoCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="10dp"
@@ -54,20 +55,20 @@
                         android:id="@+id/result_title"
                         style="@style/RobotoMediumStyle.ExtraLarge"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="@string/coverage_results_title"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        android:layout_height="wrap_content"
+                        android:text="@string/signal_result_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/result_time"
                         style="@style/RobotoMediumStyle.ExtraLarge"
                         android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:paddingStart="4sp"
-                        android:paddingEnd="4sp"
+                        android:layout_height="wrap_content"
                         app:timeString="@{state.coverageSessionStart}"
                         tools:text="20.11.18, 12:00:45"
-                        app:layout_constraintStart_toEndOf="@+id/result_title" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/result_title" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -78,65 +79,144 @@
                     android:layout_height="wrap_content"
                     android:padding="@dimen/margin_medium">
 
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_column_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.33"/>
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guideline_column_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_percent="0.66"/>
+
                     <!-- Technology -->
                     <TextView
                         android:id="@+id/technology_label"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/network_label"
+                        android:gravity="start"
                         style="@style/RobotoBoldStyle.Medium"
                         app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@id/guideline_column_1"
                         app:layout_constraintTop_toTopOf="parent"/>
 
                     <TextView
                         android:id="@+id/technology_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:background="@drawable/bg_pill_tech_color"
+                        android:paddingHorizontal="@dimen/padding_medium_large"
+                        android:paddingVertical="@dimen/padding_small"
                         tools:text="5G"
                         style="@style/RobotoBoldStyle.Medium"
+                        app:layout_constrainedWidth="true"
+                        app:layout_constraintHorizontal_bias="0"
                         app:layout_constraintStart_toStartOf="@id/technology_label"
+                        app:layout_constraintEnd_toEndOf="@id/technology_label"
                         app:layout_constraintTop_toBottomOf="@id/technology_label"/>
 
                     <!-- Ping -->
                     <TextView
                         android:id="@+id/ping_label"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/label_ping"
+                        android:gravity="center_horizontal"
                         style="@style/RobotoBoldStyle.Medium"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.5"/>
+                        app:layout_constraintStart_toEndOf="@id/guideline_column_1"
+                        app:layout_constraintEnd_toStartOf="@id/guideline_column_2"/>
 
                     <TextView
                         android:id="@+id/ping_value"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:gravity="center_horizontal"
                         tools:text="10 ms"
                         style="@style/RobotoBoldStyle.Medium"
-                        app:layout_constraintTop_toBottomOf="@id/ping_label"
+                        app:layout_constraintTop_toTopOf="@id/technology_value"
+                        app:layout_constraintBottom_toBottomOf="@id/technology_value"
                         app:layout_constraintStart_toStartOf="@id/ping_label"
                         app:layout_constraintEnd_toEndOf="@id/ping_label"/>
 
                     <!-- Accuracy -->
                     <TextView
                         android:id="@+id/accuracy_label"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="@string/location_dialog_label_accuracy"
+                        android:gravity="end"
                         style="@style/RobotoBoldStyle.Medium"
                         app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/guideline_column_2"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                     <TextView
                         android:id="@+id/accuracy_value"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        android:gravity="end"
                         tools:text="19.6m"
                         style="@style/RobotoBoldStyle.Medium"
-                        app:layout_constraintTop_toBottomOf="@id/accuracy_label"
+                        app:layout_constraintTop_toTopOf="@id/technology_value"
+                        app:layout_constraintBottom_toBottomOf="@id/technology_value"
+                        app:layout_constraintStart_toStartOf="@id/accuracy_label"
                         app:layout_constraintEnd_toEndOf="@id/accuracy_label"/>
+
+                    <androidx.constraintlayout.widget.Barrier
+                        android:id="@+id/row_1_bottom_barrier"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:barrierDirection="bottom"
+                        app:constraint_referenced_ids="technology_value,ping_value,accuracy_value"/>
+
+                    <!-- Signal -->
+                    <TextView
+                        android:id="@+id/signal_label"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_small"
+                        android:gravity="start"
+                        android:text="@string/label_signal_strength"
+                        style="@style/RobotoBoldStyle.Medium"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/row_1_bottom_barrier"/>
+
+                    <TextView
+                        android:id="@+id/signal_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        tools:text="-85 dBm"
+                        style="@style/RobotoBoldStyle.Medium"
+                        app:layout_constraintStart_toStartOf="@id/signal_label"
+                        app:layout_constraintTop_toBottomOf="@id/signal_label"/>
+
+                    <at.rtr.rmbt.android.ui.view.SignalLevelBarsView
+                        android:id="@+id/signal_bars_indicator"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:layout_marginStart="@dimen/margin_medium"
+                        android:translationX="10dp"
+                        app:layout_constraintStart_toEndOf="@id/signal_value"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@id/signal_value"
+                        app:layout_constraintBottom_toBottomOf="@id/signal_value"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

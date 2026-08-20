@@ -46,13 +46,9 @@ import kotlinx.coroutines.launch
 import timber.log.Timber
 import kotlin.math.abs
 import androidx.core.view.isVisible
-import androidx.core.view.marginLeft
-import androidx.core.view.marginRight
-import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import at.rtr.rmbt.android.map.DefaultLocation
-import kotlin.math.max
 
 const val START_ZOOM_LEVEL = 12f
 
@@ -151,7 +147,7 @@ class MapFragment : BaseFragment(), MapMarkerDetailsAdapter.MarkerDetailsCallbac
                 mapViewModel.state.type.get()!!.ordinal,
                 noSatelliteOrHybrid = !mapW().supportSatelliteAndHybridView()
             )
-                .show(fragmentManager)
+                .show(childFragmentManager)
         }
 
         setFiltersOnClickListener()
@@ -181,7 +177,7 @@ class MapFragment : BaseFragment(), MapMarkerDetailsAdapter.MarkerDetailsCallbac
 
     private fun setFiltersOnClickListener() {
         binding.fabFilters.setOnClickListener {
-            MapFiltersDialog.instance(this, CODE_FILTERS_DIALOG).show(fragmentManager)
+            MapFiltersDialog.instance(this, CODE_FILTERS_DIALOG).show(childFragmentManager)
         }
     }
 
@@ -426,6 +422,7 @@ class MapFragment : BaseFragment(), MapMarkerDetailsAdapter.MarkerDetailsCallbac
                 val icon = when (NetworkTypeCompat.fromString(it)) {
                     NetworkTypeCompat.TYPE_BLUETOOTH,
                     NetworkTypeCompat.TYPE_VPN,
+                    NetworkTypeCompat.TYPE_OFFLINE,
                     NetworkTypeCompat.TYPE_UNKNOWN -> R.drawable.ic_marker_empty
                     NetworkTypeCompat.TYPE_LAN -> R.drawable.ic_marker_ethernet
                     NetworkTypeCompat.TYPE_BROWSER -> R.drawable.ic_marker_browser
@@ -600,6 +597,6 @@ class MapFragment : BaseFragment(), MapMarkerDetailsAdapter.MarkerDetailsCallbac
             ).show()
             return
         }
-        MapSearchDialog.instance(this, CODE_SEARCH_DIALOG).show(fragmentManager)
+        MapSearchDialog.instance(this, CODE_SEARCH_DIALOG).show(childFragmentManager)
     }
 }

@@ -38,8 +38,8 @@ class RtrCoverageLoopManager @Inject constructor(
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
     private var registrationJob: Job? = null
 
-    private val MAX_RETRY = 100
     private val RETRY_DELAY_MS = 2_000L
+    private val MAX_RETRY = 1_800 // 1_800 * 2s = 3600s = 1 hour
 
     /**
      * Starts the first measurement in loop or continue in the last one
@@ -63,9 +63,13 @@ class RtrCoverageLoopManager @Inject constructor(
     /**
      * Creates a new measurement in the loop
      */
-    override fun createNewMeasurementInLoop(lastCoverageMeasurementSession: CoverageMeasurementSession) {
+    override fun createNewMeasurementInLoop(
+        lastCoverageMeasurementSession: CoverageMeasurementSession,
+        forceNewSession: Boolean
+    ) {
         scope.launch {
-            val newMeasurement = prepareNextMeasurementOrKeepCurrent(lastCoverageMeasurementSession)
+            val newMeasurement =
+                prepareNextMeasurementOrKeepCurrent(lastCoverageMeasurementSession, forceNewSession)
             handleMeasurementReady(newMeasurement)
         }
     }
@@ -91,14 +95,17 @@ class RtrCoverageLoopManager @Inject constructor(
         _sessionEvents.emit(CoverageMeasurementEvent.MeasurementLoopEnded)
     }
 
-    private fun prepareNextMeasurementOrKeepCurrent(lastCoverageMeasurementSession: CoverageMeasurementSession): CoverageMeasurementSession {
+    private fun prepareNextMeasurementOrKeepCurrent(
+        lastCoverageMeasurementSession: CoverageMeasurementSession,
+        forceNewSession: Boolean = false
+    ): CoverageMeasurementSession {
         val fencesCount = signalMeasurementRepository
             .loadSignalMeasurementPointRecordsForMeasurementList(lastCoverageMeasurementSession.localMeasurementId)
             .size
         val previousWasNotRegistered = lastCoverageMeasurementSession.isRegistered().not()
         val noRecordedFences = fencesCount == 0
 
-        val newMeasurement = if (previousWasNotRegistered || noRecordedFences) {
+        val newMeasurement = if (!forceNewSession && (previousWasNotRegistered || noRecordedFences)) {
             Timber.d("SDT Continue in previous session ${lastCoverageMeasurementSession.localMeasurementId} as it was not registered ${previousWasNotRegistered} or no fences were recorded ${noRecordedFences}")
             lastCoverageMeasurementSession
         } else {
@@ -149,6 +156,10 @@ class RtrCoverageLoopManager @Inject constructor(
         scope.launch {
             _sessionEvents.emit(CoverageMeasurementEvent.MeasurementCreated(session))
         }
+
+        // Cancel any still-running retry loop (e.g. from a session that got superseded by a network change)
+        registrationJob?.cancel()
+        registrationJob = null
 
         if (session.serverMeasurementId != null) {
             scope.launch {

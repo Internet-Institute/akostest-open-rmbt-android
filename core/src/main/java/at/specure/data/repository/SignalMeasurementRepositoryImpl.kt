@@ -8,6 +8,7 @@ import at.rmbt.util.io
 import at.specure.config.Config
 import at.specure.data.ClientUUID
 import at.specure.data.CoreDatabase
+import at.specure.data.CoverageMeasurementSettings
 import at.specure.data.RequestFilters.Companion.createRadioInfoBody
 import at.specure.data.entity.CellInfoRecord
 import at.specure.data.entity.SignalMeasurementChunk
@@ -22,8 +23,6 @@ import at.specure.data.toCoverageRequest
 import at.specure.data.toCoverageResultRequest
 import at.specure.data.toRequest
 import at.specure.info.TransportType
-import at.specure.info.network.MobileNetworkType
-import at.specure.info.network.NetworkInfo
 import at.specure.measurement.coverage.domain.models.MobileSignalTechnologyTimestamp
 import at.specure.measurement.signal.SignalMeasurementChunkReadyCallback
 import at.specure.measurement.signal.SignalMeasurementChunkResultCallback
@@ -31,26 +30,59 @@ import at.specure.measurement.signal.ValidChunkPostProcessing
 import at.specure.test.DeviceInfo
 import at.specure.util.exception.DataMissingException
 import at.specure.worker.WorkLauncher
+import at.specure.info.network.WifiNetworkInfo
+import at.specure.info.cell.CellNetworkInfo
+import at.specure.info.ip.IpChangeWatcher
+import at.specure.info.network.ActiveNetworkWatcher
+import at.specure.data.dao.COVERAGE_UNSENT_SESSION_MAX_AGE_MILLIS
+import java.text.DecimalFormat
+import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 import kotlin.coroutines.cancellation.CancellationException
+
+// ~40 MB of free pages before we bother compacting the file (VACUUM rewrites the whole DB).
+private const val DATABASE_VACUUM_FREELIST_THRESHOLD_PAGES = 10_000L
 
 class SignalMeasurementRepositoryImpl(
     private val db: CoreDatabase,
     private val context: Context,
     private val clientUUID: ClientUUID,
     private val client: ControlServerClient,
-    private val config: Config
+    private val config: Config,
+    private val coverageSettings: CoverageMeasurementSettings,
+    private val activeNetworkWatcher: ActiveNetworkWatcher,
+    private val ipChangeWatcher: IpChangeWatcher
 ) : SignalMeasurementRepository {
 
     private val deviceInfo = DeviceInfo(context)
     private val dao = db.signalMeasurementDao()
     private val testDao = db.testDao()
 
+    // Prevents sendFences() and retrySendFences() from submitting the same session concurrently
+    private val sendFencesMutexes = ConcurrentHashMap<String, Mutex>()
+    private fun sendFencesMutexFor(localMeasurementId: String) =
+        sendFencesMutexes.computeIfAbsent(localMeasurementId) { Mutex() }
+
+    // Drop the per-session mutex once the session reaches a terminal state (synced or nothing left
+    // to send) so the map doesn't grow one entry per session for the lifetime of the process.
+    // Safe because the mutex only guards against concurrent submission and is recreated on demand.
+    private fun releaseSendFencesMutex(localMeasurementId: String) {
+        sendFencesMutexes.remove(localMeasurementId)
+    }
+
     // TODO: we should perform a new request for session, we need to discuss if new coverage is needed
-    override fun saveAndUpdateRegisteredRecord(record: SignalMeasurementRecord, newUuid: String, oldSession: CoverageMeasurementSession) = io {
+    override fun saveAndUpdateRegisteredRecord(
+        record: SignalMeasurementRecord,
+        newUuid: String,
+        oldSession: CoverageMeasurementSession
+    ) = io {
         dao.saveSignalMeasurementRecord(record)
         val newSession = oldSession.copy(
             localMeasurementId = record.id,
@@ -119,13 +151,13 @@ class SignalMeasurementRepositoryImpl(
         dao.insertFenceWithNextSequence(point)
     }
 
-    override suspend fun createMeasurementPointRecordWithNewSequenceNumberAndUpdateLastOneTransaction(
+    override suspend fun createMeasurementPointRecordWithNewSequenceNumber(
         point: CoverageMeasurementFenceRecord,
         leaveTimestampMillis: Long,
         avgPingMillis: Double?,
         lastFenceMinTechSignal: MobileSignalTechnologyTimestamp?,
     ) {
-        dao.insertFenceWithNextSequenceAndUpdateLastOne(
+        dao.insertFenceWithNextSequence(
             point,
             leaveTimestampMillis,
             avgPingMillis,
@@ -163,7 +195,10 @@ class SignalMeasurementRepositoryImpl(
         return dao.getFencesListForSessionLoop(localLoopSessionId)
     }
 
-    override fun loadLastSignalMeasurementPointRecordsForLoopMeasurementList(localLoopSessionId: String, limit: Int?): List<CoverageMeasurementFenceRecord> {
+    override fun loadLastSignalMeasurementPointRecordsForLoopMeasurementList(
+        localLoopSessionId: String,
+        limit: Int?
+    ): List<CoverageMeasurementFenceRecord> {
         return dao.getLastFencesListForSessionLoop(localLoopSessionId, limit)
     }
 
@@ -231,7 +266,8 @@ class SignalMeasurementRepositoryImpl(
             if (localMeasurementId == null) {
                 null
             } else {
-                val loadedMeasurement = dao.getCoverageMeasurementSessionForMeasurementId(localMeasurementId)
+                val loadedMeasurement =
+                    dao.getCoverageMeasurementSessionForMeasurementId(localMeasurementId)
                 // todo: check if measurement is still in max times defined or we are gonna create a new one
                 loadedMeasurement
             } ?: CoverageMeasurementSession() // if not created yet, we create one for registration
@@ -251,16 +287,60 @@ class SignalMeasurementRepositoryImpl(
         postProcessing: ValidChunkPostProcessing,
         callback: SignalMeasurementChunkReadyCallback
     ) = io {
-        val valid = validateMeasurementChunk(db.cellInfoDao().get(null, chunk.id), db.signalDao().get(null, chunk.id), chunk)
+        val valid = validateMeasurementChunk(
+            db.cellInfoDao().get(null, chunk.id),
+            db.signalDao().get(null, chunk.id),
+            chunk
+        )
         callback.onSignalMeasurementChunkReadyCheckResult(valid, chunk, postProcessing)
     }
 
-    private fun validateMeasurementChunk(cellInfos: List<CellInfoRecord>, signals: List<SignalRecord>, chunk: SignalMeasurementChunk): Boolean {
+    private fun validateMeasurementChunk(
+        cellInfos: List<CellInfoRecord>,
+        signals: List<SignalRecord>,
+        chunk: SignalMeasurementChunk
+    ): Boolean {
         val radioInfo = createRadioInfoBody(cellInfos, signals, chunk)
         return (radioInfo != null) && radioInfo.signals?.isNotEmpty() ?: false
     }
 
-    override fun sendMeasurementChunk(chunk: SignalMeasurementChunk, callBack: SignalMeasurementChunkResultCallback) = io {
+    private fun calculateSubmissionRetryCount(
+        session: CoverageMeasurementSession,
+        telephonyInfo: TestTelephonyRecord?,
+        wlanInfo: TestWlanRecord?
+    ): Int {
+        val currentNetworkInfo = activeNetworkWatcher.currentNetworkInfo
+
+        val previousWasWifi = wlanInfo != null
+        val previousWasMobile = telephonyInfo != null
+        val currentIsWifi = currentNetworkInfo is WifiNetworkInfo
+        val currentIsMobile = currentNetworkInfo is CellNetworkInfo
+        val typeChanged =
+            (previousWasWifi && currentIsMobile) || (previousWasMobile && currentIsWifi)
+
+        val currentPublicIp = ipChangeWatcher.lastIPv4Address?.publicAddress
+            ?: ipChangeWatcher.lastIPv6Address?.publicAddress
+        val previousIp = session.remoteIpAddress
+        val ipChanged = previousIp != currentPublicIp
+
+        var mccMncChanged = false
+        if (previousWasMobile && currentIsMobile) {
+            val info = currentNetworkInfo as CellNetworkInfo
+            val currentOperator = if (info.mcc != null && info.mnc != null) {
+                "${info.mcc}-${DecimalFormat("00").format(info.mnc)}"
+            } else null
+            val previousOperator = telephonyInfo?.networkSimOperator
+            mccMncChanged = previousOperator != currentOperator
+        }
+
+        val networkChanged = typeChanged || ipChanged || mccMncChanged
+        return session.retryCount + if (networkChanged) 1 else 0
+    }
+
+    override fun sendMeasurementChunk(
+        chunk: SignalMeasurementChunk,
+        callBack: SignalMeasurementChunkResultCallback
+    ) = io {
         dao.saveSignalMeasurementChunk(chunk)
         val session = dao.getCoverageMeasurementSessionForMeasurementId(chunk.measurementId)
         sendMeasurementChunk(chunk.id, callBack)
@@ -285,22 +365,47 @@ class SignalMeasurementRepositoryImpl(
     }
 
 
-    override suspend fun sendFences(localMeasurementId: String, onSendCompleted: ((Boolean) -> Unit)?) = io {
-        val coverageSession = retrieveCoverageMeasurementOrCreate(localMeasurementId)
-        if (coverageSession.isRegistered()) {
-            val localMeasurementId = coverageSession.localMeasurementId
-            val fencesForSession = dao.getCoverageMeasurementFencesList(localMeasurementId)
-            val telephonyRecord = db.testDao().getTelephonyRecord(localMeasurementId)
-            val locations = db.geoLocationDao().get(localMeasurementId, null)
-            val cellInfoList = db.cellInfoDao().getDistinctIgnoringUuidAndId(localMeasurementId, null)
-            val signalList = db.signalDao().get(localMeasurementId, null)
-            val cellLocationList = db.cellLocationDao().get(localMeasurementId, null)
-            val permissions = db.permissionStatusDao().get(localMeasurementId, null)
-            clientUUID.value?.let { clientUuid ->
-                fencesForSession.let { fences ->
-                    val cleanedFences = fences.removeUnfinishedFences()
-                    Timber.d("ENDING SESSION: FENCES COMPARE: ${cleanedFences.size} vs ${fences.size}")
-                    if (cleanedFences.isNotEmpty()) {
+    override suspend fun sendFences(
+        localMeasurementId: String,
+        onSendCompleted: ((Boolean) -> Unit)?
+    ) = io {
+        // Prune the mutex afterwards unless the send failed and will be retried (set false below).
+        var pruneMutex = true
+        sendFencesMutexFor(localMeasurementId).withLock {
+            val coverageSession = retrieveCoverageMeasurementOrCreate(localMeasurementId)
+            if (coverageSession.isRegistered()) {
+                val localMeasurementId = coverageSession.localMeasurementId
+                // Load fences first: sessions without fences to submit (e.g. orphaned sessions that
+                // still hold thousands of signal rows) must not pull their signals/locations/cells
+                // into memory - that was a major source of memory pressure / OOM.
+                val fencesForSession = dao.getCoverageMeasurementFencesList(localMeasurementId)
+                val cleanedFences = fencesForSession.removeUnfinishedFences()
+                Timber.d("ENDING SESSION: FENCES COMPARE: ${cleanedFences.size} vs ${fencesForSession.size}")
+                val clientUuid = clientUUID.value
+                when {
+                    cleanedFences.isEmpty() -> {
+                        // This is an end-of-measurement submit, so an empty session has nothing to
+                        // send and never will: retire it (mark synced) so it drops out of the retry
+                        // queue and is physically removed - together with its orphaned signal/
+                        // location/cell rows - by removeOldFencesAndSessions().
+                        dao.markSessionAsSynced(localMeasurementId)
+                        onSendCompleted?.invoke(true)
+                    }
+                    clientUuid == null -> onSendCompleted?.invoke(false)
+                    else -> {
+                        val telephonyRecord = db.testDao().getTelephonyRecord(localMeasurementId)
+                        val wlanInfo = db.testDao().getWlanRecord(localMeasurementId)
+                        val locations = db.geoLocationDao().get(localMeasurementId, null)
+                        val cellInfoList =
+                            db.cellInfoDao().getDistinctIgnoringUuidAndId(localMeasurementId, null)
+                        val signalList = db.signalDao().get(localMeasurementId, null)
+                        val cellLocationList = db.cellLocationDao().get(localMeasurementId, null)
+                        val permissions = db.permissionStatusDao().get(localMeasurementId, null)
+                        val submissionRetryCount = calculateSubmissionRetryCount(
+                            coverageSession,
+                            telephonyRecord,
+                            wlanInfo
+                        )
                         val requestBody = coverageSession.toCoverageResultRequest(
                             clientUUID = clientUuid,
                             deviceInfo = deviceInfo,
@@ -312,6 +417,7 @@ class SignalMeasurementRepositoryImpl(
                             signalList = signalList,
                             permissions = permissions,
                             cellLocationList = cellLocationList,
+                            submissionRetryCount = submissionRetryCount
                         )
                         val result = client.coverageResult(requestBody)
                         if (result.ok) {
@@ -320,33 +426,64 @@ class SignalMeasurementRepositoryImpl(
                         } else {
                             dao.incrementRetryCountForSession(localMeasurementId)
                             onSendCompleted?.invoke(false)
-                            // TODO: enqueue sending with worker in case of failed send
+                            coverageSettings.hasUnsyncedCoverage = true
+                            // Keep the mutex; this session will be retried later.
+                            pruneMutex = false
                         }
-                    } else {
-                        onSendCompleted?.invoke(true)
                     }
-                } ?: onSendCompleted?.invoke(true)
-            } ?: onSendCompleted?.invoke(false)
-        } else {
-            onSendCompleted?.invoke(true)
+                }
+            } else {
+                onSendCompleted?.invoke(true)
+            }
         }
+        if (pruneMutex) releaseSendFencesMutex(localMeasurementId)
     }
 
     override suspend fun retrySendFences() {
         val measurements = dao.getCoverageMeasurementsForRetrySend()
         measurements.forEach { coverageSessionMeasurement ->
             val localMeasurementId = coverageSessionMeasurement.localMeasurementId
-            val telephonyRecord = db.testDao().getTelephonyRecord(localMeasurementId)
-            val fencesForSession = dao.getCoverageMeasurementFencesList(coverageSessionMeasurement.localMeasurementId)
-            val locations = db.geoLocationDao().get(localMeasurementId, null)
-            val cellInfoList = db.cellInfoDao().getDistinctIgnoringUuidAndId(localMeasurementId, null)
-            val signalList = db.signalDao().get(localMeasurementId, null)
-            val cellLocationList = db.cellLocationDao().get(localMeasurementId, null)
-            val permissions = db.permissionStatusDao().get(localMeasurementId, null)
-
-            clientUUID.value?.let { clientUuid ->
-                fencesForSession.let { fences ->
-                    if (fences.isNotEmpty()) {
+            var pruneMutex = false
+            sendFencesMutexFor(localMeasurementId).withLock {
+                // Load fences first: an orphaned session with no fences must not pull its (possibly
+                // tens of thousands of) signal/location/cell rows into memory just to be skipped.
+                val fencesForSession =
+                    dao.getCoverageMeasurementFencesList(localMeasurementId)
+                val clientUuid = clientUUID.value
+                when {
+                    fencesForSession.isEmpty() -> {
+                        // Nothing to send; skip the heavy loads and stop tracking the mutex.
+                        // Retire the session only if its measurement window has already ended, so we
+                        // never delete the still-active measurement (which starts with zero fences).
+                        // Retired sessions are marked synced and physically removed - with their
+                        // orphaned signal/location/cell rows - by removeOldFencesAndSessions(), which
+                        // the sync worker runs right after retrySendFences().
+                        val maxSeconds = coverageSessionMeasurement.maxCoverageMeasurementSeconds
+                        val windowEnded = maxSeconds != null &&
+                            coverageSessionMeasurement.startMeasurementResponseReceivedMillis +
+                            maxSeconds * 1000L < System.currentTimeMillis()
+                        if (windowEnded) {
+                            dao.markSessionAsSynced(localMeasurementId)
+                        }
+                        pruneMutex = true
+                    }
+                    clientUuid == null -> {
+                        // No client UUID yet; keep the session queued for a later retry.
+                    }
+                    else -> {
+                        val telephonyRecord = db.testDao().getTelephonyRecord(localMeasurementId)
+                        val wlanInfo = db.testDao().getWlanRecord(localMeasurementId)
+                        val locations = db.geoLocationDao().get(localMeasurementId, null)
+                        val cellInfoList =
+                            db.cellInfoDao().getDistinctIgnoringUuidAndId(localMeasurementId, null)
+                        val signalList = db.signalDao().get(localMeasurementId, null)
+                        val cellLocationList = db.cellLocationDao().get(localMeasurementId, null)
+                        val permissions = db.permissionStatusDao().get(localMeasurementId, null)
+                        val submissionRetryCount = calculateSubmissionRetryCount(
+                            coverageSessionMeasurement,
+                            telephonyRecord,
+                            wlanInfo
+                        )
                         val requestBody = coverageSessionMeasurement.toCoverageResultRequest(
                             clientUUID = clientUuid,
                             deviceInfo = deviceInfo,
@@ -358,21 +495,53 @@ class SignalMeasurementRepositoryImpl(
                             signalList = signalList,
                             permissions = permissions,
                             cellLocationList = cellLocationList,
+                            submissionRetryCount = submissionRetryCount
                         )
                         val result = client.coverageResult(requestBody)
                         if (result.ok) {
                             dao.markSessionAsSynced(coverageSessionMeasurement.localMeasurementId)
+                            pruneMutex = true
                         } else {
                             dao.incrementRetryCountForSession(coverageSessionMeasurement.localMeasurementId)
+                            coverageSettings.hasUnsyncedCoverage = true
+                            if (result.failure is NoConnectionException) {
+                                throw result.failure
+                            }
                         }
                     }
-                    // TODO: enqueue sending with worker in case of failed send
                 }
             }
+            if (pruneMutex) releaseSendFencesMutex(localMeasurementId)
         }
     }
 
+    override suspend fun runDatabaseRetention() = withContext(Dispatchers.IO) {
+        // Regular tests: keep only recent-results summaries + payloads still awaiting submission.
+        runCatching { testDao.pruneTestData(System.currentTimeMillis()) }
+            .onFailure { Timber.e(it, "Test data retention failed") }
+        // Coverage: retire/purge synced, exhausted or unsendable sessions.
+        runCatching { removeOldFencesAndSessions() }
+            .onFailure { Timber.e(it, "Coverage retention failed") }
+        // Return freed pages to the OS once a meaningful amount has been deleted.
+        runCatching {
+            val supportDb = db.openHelper.writableDatabase
+            val freePages = supportDb.query("PRAGMA freelist_count").use { c ->
+                if (c.moveToFirst()) c.getLong(0) else 0L
+            }
+            if (freePages > DATABASE_VACUUM_FREELIST_THRESHOLD_PAGES) {
+                Timber.d("Compacting database (VACUUM); free pages=$freePages")
+                supportDb.execSQL("VACUUM")
+            }
+        }.onFailure { Timber.e(it, "Database VACUUM failed") }
+        Unit
+    }
+
     override suspend fun removeOldFencesAndSessions() {
+        val now = System.currentTimeMillis()
+        // Retire sessions that can never be submitted (window ended + no fences) or that are simply
+        // too old to keep, so unsendable coverage data can never accumulate; then purge everything
+        // that is synced or has exhausted its retries.
+        dao.retireUnsendableOrStaleCoverageSessions(now, now - COVERAGE_UNSENT_SESSION_MAX_AGE_MILLIS)
         dao.deleteSyncedOrFailedSessions()
     }
 
@@ -386,13 +555,17 @@ class SignalMeasurementRepositoryImpl(
                     registerCoverageMeasurement(it.localMeasurementId).collect { registered ->
                         if (!registered) {
                             Timber.e("Unable to register session")
+                            coverageSettings.hasUnsyncedCoverage = true
                         }
                     }
                 }
             } catch (e: CancellationException) {
                 throw e
+            } catch (e: NoConnectionException) {
+                coverageSettings.hasUnsyncedCoverage = true
+                throw e
             } catch (e: Exception) {
-
+                Timber.e(e, "Error retried registering measurement")
             }
         }
     }
@@ -400,8 +573,12 @@ class SignalMeasurementRepositoryImpl(
     /**
      *  TODO: add scenario when measurement chunk response with other uuid than it is already in the session
      */
-    override fun sendMeasurementChunk(chunkId: String, callback: SignalMeasurementChunkResultCallback): Flow<String?> = flow {
-        var chunk = dao.getSignalMeasurementChunk(chunkId) ?: throw DataMissingException("SignalMeasurementChunk not found with id: $chunkId")
+    override fun sendMeasurementChunk(
+        chunkId: String,
+        callback: SignalMeasurementChunkResultCallback
+    ): Flow<String?> = flow {
+        var chunk = dao.getSignalMeasurementChunk(chunkId)
+            ?: throw DataMissingException("SignalMeasurementChunk not found with id: $chunkId")
         val record = dao.getSignalMeasurementRecord(chunk.measurementId)
             ?: throw DataMissingException("SignalMeasurementRecord not found with id: ${chunk.measurementId}")
 
@@ -470,27 +647,6 @@ class SignalMeasurementRepositoryImpl(
                         session?.let { signalMeasurementInfo ->
                             callback.newUUIDSent(result.success.uuid, signalMeasurementInfo)
                         }
-
-                        /*
-                    info = SignalMeasurementInfo(
-                        measurementId = record.id,
-                        uuid = result.success.uuid,
-                        clientRemoteIp = info.clientRemoteIp,
-                        resultUrl = info.resultUrl,
-                        provider = info.provider
-                    )
-                    dao.saveSignalMeasurementInfo(info)
-                    SignalMeasurementRecord(
-                        id = record.id,
-                        networkUUID = record.networkUUID,
-                        location = record.location,
-                        transportType = record.transportType,
-                        mobileNetworkType = record.mobileNetworkType,
-                        resetChunkNumber = true
-                    ).also {
-                        dao.updateSignalMeasurementRecord(it)
-                        Timber.d("SM Chunk updating record to reset chunk sequence number")
-                    }*/
                     }
                 }
 

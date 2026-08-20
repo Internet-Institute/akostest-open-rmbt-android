@@ -62,7 +62,7 @@ import at.specure.util.exception.DataMissingException
 import com.google.gson.JsonArray
 import com.google.gson.JsonParser
 import java.util.UUID
-import kotlin.time.Duration.Companion.milliseconds
+
 
 const val UNKNOWN = "UNKNOWN"
 
@@ -502,7 +502,7 @@ fun CoverageMeasurementSession.toCoverageRequest(clientUUID: String, deviceInfo:
     platform = deviceInfo.platform,
     softwareVersionCode = deviceInfo.softwareVersionCode,
     softwareRevision = deviceInfo.softwareRevision,
-    softwareVersion = deviceInfo.softwareRevision,
+    softwareVersion = deviceInfo.softwareVersionName,
     timezone = deviceInfo.timezone ?: UNKNOWN,
     time = startTimeMeasurementMillis,
     measurementTypeFlag = SignalMeasurementType.DEDICATED.signalTypeName,
@@ -517,7 +517,7 @@ fun CoverageMeasurementSession.toCoverageRequest(clientUUID: String, deviceInfo:
         qos = QoSBody(config.capabilitiesQosSupportsInfo),
         rmbtHttpStatus = config.capabilitiesRmbtHttp
     ),
-    version = deviceInfo.clientVersionName,
+    version = null,
 )
 
 fun CoverageMeasurementSession.toCoverageResultRequest(
@@ -530,7 +530,8 @@ fun CoverageMeasurementSession.toCoverageResultRequest(
     cellInfoList: List<CellInfoRecord>,
     signalList: List<SignalRecord>,
     permissions: List<PermissionStatusRecord>,
-    cellLocationList: List<CellLocationRecord>
+    cellLocationList: List<CellLocationRecord>,
+    submissionRetryCount: Int
 ): CoverageResultRequestBody {
     val geoLocations: List<TestLocationBody>? = mapLocationsToRequest(locations)
     var radioInfo: RadioInfoBody? = createRadioInfoBody(cellInfoList, signalList, null, true)
@@ -555,7 +556,7 @@ fun CoverageMeasurementSession.toCoverageResultRequest(
             qos = QoSBody(config.capabilitiesQosSupportsInfo),
             rmbtHttpStatus = config.capabilitiesRmbtHttp
         ),
-        clientVersion = deviceInfo.clientVersionName,
+        clientVersion = null,
         clientLanguage = deviceInfo.language ?: UNKNOWN,
         product = deviceInfo.product ?: UNKNOWN,
         apiLevel = deviceInfo.apiLevel,
@@ -578,6 +579,7 @@ fun CoverageMeasurementSession.toCoverageResultRequest(
         telephonyDataState = telephonyInfo?.dataState,
         telephonyApn = telephonyInfo?.apn,
         telephonyNetworkSimCountry = telephonyInfo?.networkSimCountry,
+        submissionRetryCount = submissionRetryCount,
         measurementTerminationCause = this.reasonToTerminate
     )
 }
@@ -601,6 +603,11 @@ fun CoverageMeasurementFenceRecord.toRequest(measurementStartMillis: Long): Fenc
 fun DeviceInfo.Location.toSimpleLocation(): SimpleLocationBody = SimpleLocationBody(
     latitude = lat,
     longitude = long,
+    accuracy = accuracy,
+    altitude = altitude,
+    bearing = bearing,
+    speed = speed,
+    provider = provider,
 )
 
 fun DeviceInfo.Location.toRequest() = SignalMeasurementLocationBody(

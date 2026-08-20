@@ -70,8 +70,12 @@ class LoopInstructionsActivity : BaseActivity(), Callback {
     }
 
     override fun onSecondPageAccepted() {
-        binding.title.text = getString(R.string.title_loop_instruction_3)
-        binding.pager.setCurrentItem(2, true)
+        if (viewModel.shouldAskForBackgroundPermission()) {
+            binding.title.text = getString(R.string.title_loop_instruction_3)
+            binding.pager.setCurrentItem(2, true)
+        } else {
+            onThirdPageAccepted()
+        }
     }
 
     override fun onThirdPageAccepted() {
@@ -79,7 +83,7 @@ class LoopInstructionsActivity : BaseActivity(), Callback {
         if (isNeedToAskForNotificationPermission()) {
             checkNotificationPermission()
         } else {
-            checkBackgroundLocationPermission()
+            viewModel.checkBackgroundLocationPermission(this)
             finish()
         }
     }
@@ -91,7 +95,7 @@ class LoopInstructionsActivity : BaseActivity(), Callback {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_CODE_NOTIFICATION) {
-            checkBackgroundLocationPermission()
+            viewModel.checkBackgroundLocationPermission(this)
             finish()
         }
     }
@@ -124,50 +128,16 @@ class LoopInstructionsActivity : BaseActivity(), Callback {
         }
     }
 
-    //@TODO: De-duplicate from LoopConfigurationActivity
-    private fun checkBackgroundLocationPermission() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val hasForegroundLocationPermission =
-                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
-            if (hasForegroundLocationPermission) {
-                val hasBackgroundLocationPermission = ActivityCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                ) == PackageManager.PERMISSION_GRANTED
-                if (hasBackgroundLocationPermission) {
-                    // handle location update
-                } else {
-                    if (viewModel.shouldAskForBackgroundPermission()) {
-                        ActivityCompat.requestPermissions(
-                            this,
-                            arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION),
-                            REQUEST_CODE_BACKGROUND
-                        )
-                        viewModel.backgroundPermissionsWereAsked()
-                    }
-                }
-            } else {
-                if (viewModel.shouldAskForPermission()) {
-                    ActivityCompat.requestPermissions(
-                        this,
-                        arrayOf(
-                            Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                        ), REQUEST_CODE_BACKGROUND
-                    )
-                    viewModel.backgroundPermissionsWereAsked()
-                }
-            }
-        }
-    }
-
     inner class InstructionsAdapter(context: Context, private val callback: Callback) : PagerAdapter() {
 
-        private var items = listOf(
+        private var items = mutableListOf(
             context.getString(R.string.text_loop_instruction_1),
-            context.getString(R.string.text_loop_instruction_2),
-            context.getString(R.string.text_loop_instruction_3),
-        )
+            context.getString(R.string.text_loop_instruction_2)
+        ).apply {
+            if (viewModel.shouldAskForBackgroundPermission()) {
+                add(context.getString(R.string.text_loop_instruction_3))
+            }
+        }
 
         override fun isViewFromObject(view: View, o: Any) = view == o
         override fun getCount() = items.size
@@ -196,7 +166,6 @@ class LoopInstructionsActivity : BaseActivity(), Callback {
 
     companion object {
         fun start(context: Context): Intent = Intent(context, LoopInstructionsActivity::class.java)
-        private const val REQUEST_CODE_BACKGROUND = 1
         private const val REQUEST_CODE_NOTIFICATION = 2
     }
 }

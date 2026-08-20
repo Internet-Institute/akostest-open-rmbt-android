@@ -12,6 +12,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -20,8 +21,11 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.retryWhen
 import kotlinx.coroutines.flow.sample
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import timber.log.Timber
 import javax.inject.Singleton
+import kotlin.time.Duration.Companion.milliseconds
 
 private const val PING_INTERVAL_MILLIS: Long = 100
 private const val PING_TIMEOUT_MILLIS: Long = 2000
@@ -30,13 +34,39 @@ private const val PING_PROTOCOL_SUCCESS_RESPONSE_HEADER: String = "RR01"
 private const val PING_PROTOCOL_ERROR_RESPONSE_HEADER: String = "RE01"
 private const val PING_EVALUATE_LAST_N_ITEMS: Int = 10
 
+/**
+ * Number of consecutive server errors after which the ping flow is force-restarted
+ * (fresh socket + fresh evaluator state), since a [at.specure.client.PingResult.ServerError]
+ * is not an exception and would otherwise never trigger [kotlinx.coroutines.flow.retryWhen].
+ */
+private const val PING_CONSECUTIVE_ERROR_RESTART_THRESHOLD: Int = 5
+
+/**
+ * Thrown internally to force a restart of the ping flow when the server keeps responding
+ * with errors (e.g. a stale/invalid token from a previous session), so the flow doesn't
+ * keep reporting null pings indefinitely.
+ */
+private class PingConsecutiveServerErrorsException(count: Int) :
+    Exception("Restarting ping flow after $count consecutive server errors")
+
 @Singleton
 class RtrPingProcessor : PingProcessor {
 
     private var pingEvaluator: PingEvaluator? = null
     private var pingClient: UdpHmacPingFlow? = null
     private var pingJob: Job? = null
+    private var currentSessionId: String? = null
     private val debug = true
+
+    /**
+     * Serializes lifecycle mutations of [pingJob]/[pingClient]/[pingEvaluator]/[currentSessionId].
+     * [startPing] and [stopPing] now suspend at [kotlinx.coroutines.cancelAndJoin] points, so without
+     * this lock a concurrent stop/start (or two starts) could interleave and orphan a collecting job.
+     *
+     * Must NOT be acquired by the collecting coroutine's body (e.g. [getCurrentPingStats]); otherwise
+     * a [stopPing] holding the lock while awaiting [pingJob] completion would deadlock.
+     */
+    private val lifecycleMutex = Mutex()
 
     private val pingDataFlow = MutableSharedFlow<PingData>(replay = 0)
 
@@ -62,34 +92,47 @@ class RtrPingProcessor : PingProcessor {
             errorResponseHeader = PING_PROTOCOL_ERROR_RESPONSE_HEADER
         )
 
-        if (configuration != pingClient?.configuration) {
-            pingEvaluator?.cancel()
-            pingClient = UdpHmacPingFlow(configuration)
-            pingEvaluator = PingEvaluator(pingClient!!.pingFlow())
+        lifecycleMutex.withLock {
+            val sessionChanged = coverageMeasurementSession.localMeasurementId != currentSessionId
 
-            pingJob?.cancel()
-            // Start collecting and emitting to the hot flow
-            pingJob = CoroutineScope(Dispatchers.IO).launch {
-                pingEvaluator?.start()
-                    ?.onEach {
-                        if (it is PingResult.ServerError) {
-                            Timber.e(it.exception, "Server error in ping flow")
-                            pingDataFlow.emit(PingData(getCurrentPingStats(), it.exception))
+            if (sessionChanged || configuration != pingClient?.configuration || pingJob?.isActive != true) {
+                pingEvaluator?.cancel()
+                pingClient = UdpHmacPingFlow(configuration)
+                pingEvaluator = PingEvaluator(pingClient!!.pingFlow())
+                currentSessionId = coverageMeasurementSession.localMeasurementId
+
+                pingJob?.cancelAndJoin()
+                // Start collecting and emitting to the hot flow
+                pingJob = CoroutineScope(Dispatchers.IO).launch {
+                    var consecutiveServerErrors = 0
+                    pingEvaluator?.start()
+                        ?.onEach {
+                            if (it is PingResult.ServerError) {
+                                consecutiveServerErrors++
+                                Timber.e(it.exception, "Server error in ping flow (consecutive: $consecutiveServerErrors)")
+                                pingDataFlow.emit(PingData(getCurrentPingStats(), it.exception))
+                                if (consecutiveServerErrors >= PING_CONSECUTIVE_ERROR_RESTART_THRESHOLD) {
+                                    consecutiveServerErrors = 0
+                                    throw PingConsecutiveServerErrorsException(PING_CONSECUTIVE_ERROR_RESTART_THRESHOLD)
+                                }
+                            } else {
+                                consecutiveServerErrors = 0
+                            }
                         }
-                    }
-                    ?.sample(1000)
-                    ?.retryWhen { cause, attempt ->
-                        Timber.e(cause, "Error in ping flow, restarting attempt #$attempt")
-                        delay(1000)
-                        true
-                    }
-                    ?.catch { e ->
-                        Timber.e(e, "Error in ping flow after retries")
-                        pingDataFlow.emit(PingData(null, e))
-                    }
-                    ?.collect {
-                        pingDataFlow.emit(PingData(getCurrentPingStats(), null))
-                    }
+                        ?.sample(1000.milliseconds)
+                        ?.retryWhen { cause, attempt ->
+                            Timber.e(cause, "Error in ping flow, restarting attempt #$attempt")
+                            delay(1000.milliseconds)
+                            true
+                        }
+                        ?.catch { e ->
+                            Timber.e(e, "Error in ping flow after retries")
+                            pingDataFlow.emit(PingData(null, e))
+                        }
+                        ?.collect {
+                            pingDataFlow.emit(PingData(getCurrentPingStats(), null))
+                        }
+                }
             }
         }
 
@@ -97,10 +140,10 @@ class RtrPingProcessor : PingProcessor {
     }
 
 
-    override suspend fun stopPing(): PingStats? {
+    override suspend fun stopPing(): PingStats? = lifecycleMutex.withLock {
         val results = pingEvaluator?.evaluateAndStop()
-        pingJob?.cancel()
-        return results
+        pingJob?.cancelAndJoin()
+        results
     }
 
     override suspend fun getCurrentPingStats(): PingStats? {

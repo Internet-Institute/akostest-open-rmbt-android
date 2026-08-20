@@ -7,7 +7,6 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.core.app.NotificationCompat
 import at.rtr.rmbt.android.BuildConfig
 import at.rtr.rmbt.android.R
@@ -55,12 +54,10 @@ class NotificationProviderImpl(private val context: Context) : NotificationProvi
 
     private fun measurementChannelId(): String {
         val channelId = BuildConfig.APPLICATION_ID + "_measurement_channel"
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val notificationChannel = NotificationChannel(channelId, "Measurements", NotificationManager.IMPORTANCE_LOW)
-            notificationChannel.description = "Channel for foreground notifications while tests are running"
-            notificationManager.createNotificationChannel(notificationChannel)
-        }
+        val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notificationChannel = NotificationChannel(channelId, "Measurements", NotificationManager.IMPORTANCE_LOW)
+        notificationChannel.description = "Channel for foreground notifications while tests are running"
+        notificationManager.createNotificationChannel(notificationChannel)
         return channelId
     }
 
@@ -125,6 +122,7 @@ class NotificationProviderImpl(private val context: Context) : NotificationProvi
         return measurementRunningNotification?.build()!!
     }
 
+    @SuppressLint("DefaultLocale")
     override fun loopCountDownNotification(
         timePassedMillis: Long,
         metersPassed: Int,
@@ -188,7 +186,7 @@ class NotificationProviderImpl(private val context: Context) : NotificationProvi
             .setContentText(context.getString(R.string.notification_signal_test_text))
             .setContentIntent(intent)
             .setContentTitle(context.getString(R.string.notification_signal_test_title))
-            .build()!!
+            .build()
     }
 
     override fun loopModeFinishedNotification(): Notification {
@@ -201,7 +199,7 @@ class NotificationProviderImpl(private val context: Context) : NotificationProvi
             .setSmallIcon(R.drawable.ic_notification)
             .setContentIntent(intent)
             .setContentTitle(context.getString(R.string.notification_loop_mode_finished_title))
-            .build()!!
+            .build()
     }
 
     @SuppressLint("RestrictedApi")
